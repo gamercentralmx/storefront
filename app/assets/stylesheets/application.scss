@@ -16,4 +16,10 @@
 @import "theme/variables-custom";
 @import "bootstrap/scss/bootstrap";
 @import "theme/responsive";
-@import "theme/ui"
+@import "theme/ui";
+$fa-font-path: '@fortawesome/fontawesome-free/webfonts';
+@import '@fortawesome/fontawesome-free/scss/fontawesome';
+@import '@fortawesome/fontawesome-free/scss/solid';
+@import '@fortawesome/fontawesome-free/scss/regular';
+@import '@fortawesome/fontawesome-free/scss/brands';
+@import '@fortawesome/fontawesome-free/scss/v4-shims';
