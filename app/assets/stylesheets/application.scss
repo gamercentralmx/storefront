@@ -16,45 +16,4 @@
 @import "theme/variables-custom";
 @import "bootstrap/scss/bootstrap";
 @import "theme/responsive";
-
-/* ==== BASE STYLES ====*/
-
-/* ==================== GLOBAL STYLES ======================= */
-// @import url('../fonts/roboto/font.css');
-
-@import url('https://rsms.me/inter/inter.css');
-
-html { font-family: 'Inter', sans-serif; font-size: 15px; }
-
-/* ================== HELPERS  =================== */
-@import "theme/ui-assets/helpers/mixins";
-@import "theme/ui-assets/helpers/helper-classes";
-@import "theme/ui-assets/helpers/bg";
-@import "theme/ui-assets/helpers/typography";
-
-
-/* ================== SECTIONS =================== */
-@import "theme/ui-assets/sections/header";
-@import "theme/ui-assets/sections/footer";
-@import "theme/ui-assets/sections/sidebar";
-
-
-/* ================== COMPONENTS =================== */
-@import "theme/ui-assets/components/plugin-styles";
-@import "theme/ui-assets/components/buttons";
-@import "theme/ui-assets/components/items";
-@import "theme/ui-assets/components/lists";
-@import "theme/ui-assets/components/cards-product";
-@import "theme/ui-assets/components/elements.scss";
-@import "theme/ui-assets/components/menu";
-@import "theme/ui-assets/components/forms";
-
-/* ================== PAGES =================== */
-@import "theme/ui-assets/pages/page-account";
-@import "theme/ui-assets/pages/page-base";
-@import "theme/ui-assets/pages/page-home";
-@import "theme/ui-assets/pages/page-detail";
-@import "theme/ui-assets/pages/page-listing";
-@import "theme/ui-assets/pages/page-order";
-
-
+@import "theme/ui"
