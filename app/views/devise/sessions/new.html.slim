@@ -1,18 +1,29 @@
-h2
-  | Log in
-= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-  .field
-    = f.label :email
-    br
-    = f.email_field :email, autofocus: true, autocomplete: "email"
-  .field
-    = f.label :password
-    br
-    = f.password_field :password, autocomplete: "current-password"
-  - if devise_mapping.rememberable?
-    .field
-      = f.check_box :remember_me
-      = f.label :remember_me
-  .actions
-    = f.submit "Log in"
-= render "devise/shared/links"
+section.section-conten.padding-y style="min-height:84vh"
+  .card.mx-auto style=("max-width: 380px; margin-top:100px;")
+    .card-body
+      h4.card-title.mb-4 Sign in
+      = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+        a.btn.btn-facebook.btn-block.mb-2 href="#"
+          i.fab.fa-facebook-f
+          | &nbsp;  Sign in with Facebook
+        a.btn.btn-google.btn-block.mb-4 href="#"
+          i.fab.fa-google
+          | &nbsp;  Sign in with Google
+        .form-group
+          = f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', placeholder: "Email"
+        .form-group
+          = f.password_field :password, autocomplete: "current-password", class: 'form-control', placeholder: "Password"
+
+        .form-group
+          = link_to "Forgot password?", new_password_path(resource_name), class: 'float-right'
+
+          label.float-left.custom-control.custom-checkbox
+            = f.check_box :remember_me, class: 'custom-control-input'
+            .custom-control-label Remember
+
+        .form-group
+          = f.submit "Log in", class: 'btn btn-primary btn-block'
+  p.text-center.mt-4
+    | Don't have account?
+    | &nbsp;
+    = link_to "Sign up", new_user_registration_path
