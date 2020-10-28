@@ -7,6 +7,9 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: %i[facebook google_oauth2]
 
   has_many :auth_providers, dependent: :nullify
+  has_many :addresses, dependent: :destroy
+  has_many :orders, dependent: :nullify
+  has_many :invoice_infos, dependent: :nullify
 
   def name
     first_name.present? ? first_name : email.split('@')[0]
