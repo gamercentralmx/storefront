@@ -3,8 +3,8 @@ header.section-header
     .container
       .row.align-items-center
         .col-lg-2.col-4
-          a.brand-wrap href="http://bootstrap-ecommerce.com"
-            img.logo src="assets/logo.png"
+          = link_to root_path, class: 'brand-wrap' do
+            = image_tag "logo.png", class: 'logo'
 
         .col-lg-6.col-sm-12
           form.search action="#"
@@ -25,41 +25,49 @@ header.section-header
               a.icon.icon-sm.rounded-circle.border href="#"
                 i.fa.fa-user
               .text
-                span.text-muted Welcome!
-                div
-                  a href="#"  Sign in
-                  |
-                  a href="#"  Register
+                - if user_signed_in?
+                  span.text-muted Welcome #{current_user.name}!
+                  div
+                    = link_to "Sign out", destroy_user_session_path, method: :delete
+                - else
+                  span.text-muted Welcome!
+                  div
+                    = link_to "Sign in", new_user_session_path
+                    | &nbsp;|&nbsp;
+                    = link_to "Register", new_user_registration_path
 
-nav.navbar.navbar-main.navbar-expand-lg.navbar-light
-  .container
-    button.navbar-toggler aria-controls="main_nav" aria-expanded="false" aria-label=("Toggle navigation") data-target="#main_nav" data-toggle="collapse" type="button"
-      span.navbar-toggler-icon
-    #main_nav.collapse.navbar-collapse
-      ul.navbar-nav
-        li.nav-item.dropdown
-          a.nav-link.pl-0 data-toggle="dropdown" href="#"
-            strong
-              i.fa.fa-bars
-              | &nbsp  All category
-          .dropdown-menu
-            a.dropdown-item href="#"  Foods and Drink
-            a.dropdown-item href="#"  Home interior
-            .dropdown-divider
-            a.dropdown-item href="#"  Category 1
-            a.dropdown-item href="#"  Category 2
-            a.dropdown-item href="#"  Category 3
-        li.nav-item
-          a.nav-link href="#"  Fashion
-        li.nav-item
-          a.nav-link href="#"  Supermarket
-        li.nav-item
-          a.nav-link href="#"  Electronics
-        li.nav-item
-          a.nav-link href="#"  Baby &amp Toys
-        li.nav-item
-          a.nav-link href="#"  Fitness sport
-        li.nav-item
-          a.nav-link href="#"  Clothing
-        li.nav-item
-          a.nav-link href="#"  Furnitures
+= render 'layouts/alerts'
+
+- unless params[:controller].match? 'devise'
+  nav.navbar.navbar-main.navbar-expand-lg.navbar-light
+    .container
+      button.navbar-toggler aria-controls="main_nav" aria-expanded="false" aria-label=("Toggle navigation") data-target="#main_nav" data-toggle="collapse" type="button"
+        span.navbar-toggler-icon
+      #main_nav.collapse.navbar-collapse
+        ul.navbar-nav
+          li.nav-item.dropdown-
+            a.nav-link.pl-0 data-toggle="dropdown" href="#"
+              strong
+                i.fa.fa-bars
+                | &nbsp  All category
+            .dropdown-menu
+              a.dropdown-item href="#"  Foods and Drink
+              a.dropdown-item href="#"  Home interior
+              .dropdown-divider
+              a.dropdown-item href="#"  Category 1
+              a.dropdown-item href="#"  Category 2
+              a.dropdown-item href="#"  Category 3
+          li.nav-item
+            a.nav-link href="#"  Fashion
+          li.nav-item
+            a.nav-link href="#"  Supermarket
+          li.nav-item
+            a.nav-link href="#"  Electronics
+          li.nav-item
+            a.nav-link href="#"  Baby &amp Toys
+          li.nav-item
+            a.nav-link href="#"  Fitness sport
+          li.nav-item
+            a.nav-link href="#"  Clothing
+          li.nav-item
+            a.nav-link href="#"  Furnitures

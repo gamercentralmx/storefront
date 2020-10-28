@@ -1,0 +1,15 @@
+section.section-content.padding-y style="min-height:84vh"
+  .card.mx-auto style=("max-width: 380px; margin-top:100px;")
+      .card-body
+        h4.card-title.mb-4 Forgot your password?
+        = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+          = render "devise/shared/error_messages", resource: resource
+          .form-group
+            = f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', placeholder: 'Email'
+          .form-group
+            = f.submit "Send me reset password instructions", class: 'btn btn-primary btn-block'
+
+  p.text-center.mt-4
+    = link_to "Log in", new_user_session_path
+    | &nbsp;or&nbsp;
+    = link_to "Sign up", new_user_registration_path
