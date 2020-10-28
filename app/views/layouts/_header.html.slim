@@ -3,8 +3,8 @@ header.section-header
     .container
       .row.align-items-center
         .col-lg-2.col-4
-          a.brand-wrap href="http://bootstrap-ecommerce.com"
-            img.logo src="assets/logo.png"
+          = link_to root_path, class: 'brand-wrap' do
+            = image_tag "logo.png", class: 'logo'
 
         .col-lg-6.col-sm-12
           form.search action="#"
@@ -27,9 +27,9 @@ header.section-header
               .text
                 span.text-muted Welcome!
                 div
-                  a href="#"  Sign in
-                  |
-                  a href="#"  Register
+                  = link_to "Sign in", new_user_session_path
+                  | &nbsp;
+                  = link_to "Register", new_user_registration_path
 
 nav.navbar.navbar-main.navbar-expand-lg.navbar-light
   .container
@@ -37,7 +37,7 @@ nav.navbar.navbar-main.navbar-expand-lg.navbar-light
       span.navbar-toggler-icon
     #main_nav.collapse.navbar-collapse
       ul.navbar-nav
-        li.nav-item.dropdown
+        li.nav-item.dropdown-
           a.nav-link.pl-0 data-toggle="dropdown" href="#"
             strong
               i.fa.fa-bars
