@@ -3,10 +3,11 @@ section.section-content.padding-y style="min-height:84vh"
     .card-body
       h4.card-title.mb-4 Sign in
       = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-        a.btn.btn-facebook.btn-block.mb-2 href="#"
+        = link_to user_facebook_omniauth_authorize_path, class: 'btn btn-facebook btn-block mb-2' do
           i.fab.fa-facebook-f
           | &nbsp;  Sign in with Facebook
-        a.btn.btn-google.btn-block.mb-4 href="#"
+
+        = link_to user_google_oauth2_omniauth_authorize_path, class: 'btn btn-google btn-block mb-2' do
           i.fab.fa-google
           | &nbsp;  Sign in with Google
         .form-group
