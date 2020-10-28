@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :auth_providers, dependent: :nullify
   has_many :addresses, dependent: :destroy
   has_many :orders, dependent: :nullify
+  has_many :invoice_infos, dependent: :nullify
 
   def name
     first_name.present? ? first_name : email.split('@')[0]
