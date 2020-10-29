@@ -1,0 +1,30 @@
+nav.navbar.navbar-expand-lg.navbar-absolute.fixed-top.navbar-transparent
+  .container-fluid
+    .navbar-wrapper
+      .navbar-toggle
+        button.navbar-toggler type="button"
+          span.navbar-toggler-bar.bar1
+          span.navbar-toggler-bar.bar2
+          span.navbar-toggler-bar.bar3
+      a.navbar-brand href="javascript:;"  Title
+    button.navbar-toggler aria-controls="navigation-index" aria-expanded="false" aria-label=("Toggle navigation") data-target="#navigation" data-toggle="collapse" type="button"
+      span.navbar-toggler-bar.navbar-kebab
+      span.navbar-toggler-bar.navbar-kebab
+      span.navbar-toggler-bar.navbar-kebab
+    #navigation.collapse.navbar-collapse.justify-content-end
+      form
+        .input-group.no-border
+          input.form-control placeholder="Search..." type="text" value=""
+          .input-group-append
+            .input-group-text
+              i.nc-icon.nc-zoom-split
+      ul.navbar-nav
+        li.nav-item.btn-rotate.dropdown
+          a#navbarDropdownMenuLink.nav-link.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="http://example.com"
+            i.nc-icon.nc-bell-55
+            p
+              span.d-lg-none.d-md-block Some Actions
+          .dropdown-menu.dropdown-menu-right aria-labelledby="navbarDropdownMenuLink"
+            a.dropdown-item href="#"  Action
+            a.dropdown-item href="#"  Another action
+            a.dropdown-item href="#"  Something else here

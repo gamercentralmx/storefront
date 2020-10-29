@@ -36,7 +36,7 @@ header.section-header
                     | &nbsp;|&nbsp;
                     = link_to "Registrate", new_user_registration_path
 
-= render 'layouts/alerts'
+= render 'layouts/application/alerts'
 
 - unless params[:controller].match? 'devise'
   nav.navbar.navbar-main.navbar-expand-lg.navbar-light

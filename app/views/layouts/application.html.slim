@@ -13,8 +13,8 @@ html lang="en"
 
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
-    = render 'layouts/pixels'
+    = render 'layouts/application/pixels'
   body
-    = render 'layouts/header'
+    = render 'layouts/application/header'
     = yield
-    = render 'layouts/footer'
+    = render 'layouts/application/footer'
