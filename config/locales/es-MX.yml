@@ -29,6 +29,12 @@ es-MX:
       user:
         one: Usuario
         other: Usuarios
+      product:
+        one: Producto
+        other: Productos
+      category:
+        one: Categoria
+        other: Categorias
     errors:
       models:
         user:
