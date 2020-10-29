@@ -13,7 +13,7 @@ header.section-header
               .input-group-append
                 button.btn.btn-primary type="submit"
                   i.fa.fa-search
-                  | Search
+                  | Buscar
 
         .col-lg-4.col-sm-6.col-12
           .widgets-wrap.float-md-right
@@ -26,15 +26,15 @@ header.section-header
                 i.fa.fa-user
               .text
                 - if user_signed_in?
-                  span.text-muted Welcome #{current_user.name}!
+                  span.text-muted Bienvenido #{current_user.name}!
                   div
-                    = link_to "Sign out", destroy_user_session_path, method: :delete
+                    = link_to "Cerrar sesión", destroy_user_session_path, method: :delete
                 - else
-                  span.text-muted Welcome!
+                  span.text-muted Bienvenido!
                   div
-                    = link_to "Sign in", new_user_session_path
+                    = link_to "Inicia sesión", new_user_session_path
                     | &nbsp;|&nbsp;
-                    = link_to "Register", new_user_registration_path
+                    = link_to "Registrate", new_user_registration_path
 
 = render 'layouts/alerts'
 
@@ -45,7 +45,7 @@ header.section-header
         span.navbar-toggler-icon
       #main_nav.collapse.navbar-collapse
         ul.navbar-nav
-          li.nav-item.dropdown-
+          li.nav-item.dropdown-show
             a.nav-link.pl-0 data-toggle="dropdown" href="#"
               strong
                 i.fa.fa-bars

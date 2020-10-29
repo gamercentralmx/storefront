@@ -2,18 +2,18 @@ section.section-content.padding-y
   .card.mx-auto style=("max-width:520px; margin-top:40px;")
     article.card-body
       header.mb-4
-        h4.card-title Sign up
+        h4.card-title Registrate
         = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
           = render "devise/shared/error_messages", resource: resource
           .form-group
-            = f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', placeholder: 'Email'
+            = f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', placeholder: 'Correo electrónico'
           .form-group
-            = f.password_field :password, autocomplete: "new-password", class: 'form-control', placeholder: 'Password'
+            = f.password_field :password, autocomplete: "new-password", class: 'form-control', placeholder: 'Contraseña'
           .form-group
-            = f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control', placeholder: 'Password confirmation'
+            = f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control', placeholder: 'Confirma tu contraseña'
           .form-group
-            = f.submit "Sign up", class: 'btn btn-primary btn-block'
+            = f.submit "Crear cuenta", class: 'btn btn-primary btn-block'
   p.text-center.mt-4
-    | Have an account?
+    | ¿Ya tienes cuenta?
     | &nbsp;
-    = link_to "Log In", new_user_session_path
+    = link_to "Inicia sesión", new_user_session_path

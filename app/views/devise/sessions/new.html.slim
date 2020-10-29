@@ -1,30 +1,30 @@
 section.section-content.padding-y style="min-height:84vh"
   .card.mx-auto style=("max-width: 380px; margin-top:100px;")
     .card-body
-      h4.card-title.mb-4 Sign in
+      h4.card-title.mb-4 Iniciar sesión
       = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
         = link_to user_facebook_omniauth_authorize_path, class: 'btn btn-facebook btn-block mb-2' do
           i.fab.fa-facebook-f
-          | &nbsp;  Sign in with Facebook
+          | &nbsp;  Inicia sesión con Facebook
 
         = link_to user_google_oauth2_omniauth_authorize_path, class: 'btn btn-google btn-block mb-2' do
           i.fab.fa-google
-          | &nbsp;  Sign in with Google
+          | &nbsp;  Inicia sesión con Google
         .form-group
-          = f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', placeholder: "Email"
+          = f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', placeholder: "Correo electrónico"
         .form-group
-          = f.password_field :password, autocomplete: "current-password", class: 'form-control', placeholder: "Password"
+          = f.password_field :password, autocomplete: "current-password", class: 'form-control', placeholder: "Contraseña"
 
         .form-group
-          = link_to "Forgot password?", new_password_path(resource_name), class: 'float-right'
+          = link_to "¿Olvidaste tu contraseña?", new_password_path(resource_name), class: 'float-right'
 
           label.float-left.custom-control.custom-checkbox
             = f.check_box :remember_me, class: 'custom-control-input'
-            .custom-control-label Remember
+            .custom-control-label Recordar
 
         .form-group
-          = f.submit "Log in", class: 'btn btn-primary btn-block'
+          = f.submit "Iniciar sesión", class: 'btn btn-primary btn-block'
   p.text-center.mt-4
-    | Don't have account?
+    | ¿No tienes cuenta?
     | &nbsp;
-    = link_to "Sign up", new_user_registration_path
+    = link_to "Registrate", new_user_registration_path
