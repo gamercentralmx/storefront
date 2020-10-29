@@ -9,7 +9,4 @@ section.section-content.padding-y style="min-height:84vh"
           .form-group
             = f.submit "Reestablecer contraseña", class: 'btn btn-primary btn-block'
 
-  p.text-center.mt-4
-    = link_to "Inicia sesión", new_user_session_path
-    | &nbsp;o&nbsp;
-    = link_to "Registrate", new_user_registration_path
+  = render "devise/shared/links"

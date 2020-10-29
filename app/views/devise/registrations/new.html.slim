@@ -8,6 +8,9 @@ section.section-content.padding-y
           .form-group
             = f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', placeholder: 'Correo electrónico'
           .form-group
+            - if @minimum_password_length
+              em
+                | (Minimo #{@minimum_password_length} caracteres)
             = f.password_field :password, autocomplete: "new-password", class: 'form-control', placeholder: 'Contraseña'
           .form-group
             = f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control', placeholder: 'Confirma tu contraseña'
