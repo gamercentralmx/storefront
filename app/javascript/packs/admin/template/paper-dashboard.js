@@ -1,3 +1,4 @@
+import PerfectScrollbar from "perfect-scrollbar"
 /*!
 
  =========================================================
@@ -16,13 +17,13 @@
  */
 
 (function() {
-  isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
+  var isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
 
   if (isWindows) {
     // if we are on windows OS we activate the perfectScrollbar function
-    var ps = new PerfectScrollbar('.sidebar');
-    var ps1 = new PerfectScrollbar('.sidebar-wrapper');
-    var ps2 = new PerfectScrollbar('.main-panel');
+    var ps = new PerfectScrollbar(document.querySelector('.sidebar'));
+    var ps1 = new PerfectScrollbar(document.querySelector('.sidebar-wrapper'));
+    var ps2 = new PerfectScrollbar(document.querySelector('.main-panel'));
     $('html').addClass('perfect-scrollbar-on');
 
   } else {
