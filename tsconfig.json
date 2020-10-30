@@ -11,7 +11,9 @@
         "*": ["node_modules/*", "app/javascript/*"]
     },
     "sourceMap": true,
-    "target": "es5"
+    "target": "es5",
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true
   },
   "exclude": [
     "**/*.spec.ts",
