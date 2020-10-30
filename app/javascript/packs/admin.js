@@ -12,7 +12,10 @@ require("popper.js")
 require("bootstrap/dist/js/bootstrap")
 require("perfect-scrollbar")
 require("chart.js")
-require("./admin/plugins/bootstrap-notify")
+require("./admin/template/plugins/bootstrap-notify")
+require("./admin/template/paper-dashboard")
+require("./admin/template/demo")
+
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference
