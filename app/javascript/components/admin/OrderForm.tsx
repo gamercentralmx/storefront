@@ -140,7 +140,7 @@ export default function OrderForm () {
       </Col>
     </Row>
 
-    <Button variant='secondary' href='/admin/products'>Cancelar</Button>
+    <Button variant='secondary' href='/admin/orders'>Cancelar</Button>
     <Button variant='primary' type='submit' className='float-right'>Guardar</Button>
   </Form>
 }

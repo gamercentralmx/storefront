@@ -6,5 +6,15 @@
     hr
 
     - if @orders.any?
+      table.table.table-striped
+        thead
+          tr
+            th No
+            th Cliente
+            th Articulos
+            th Total
+            th Acciones
+        tbody
+          = render @orders
     - else
       h6 No existen ordenes en este momento
