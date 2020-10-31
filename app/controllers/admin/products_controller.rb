@@ -30,7 +30,14 @@ module Admin
     private
 
     def product_params
-      params.require(:product).permit(:name, :description, :category_id, metadata: @category.property_names)
+      params.require(:product).permit(
+        :name,
+        :description,
+        :price,
+        :cost,
+        :stock,
+        :category_id,
+        metadata: @category.property_names)
     end
   end
 end

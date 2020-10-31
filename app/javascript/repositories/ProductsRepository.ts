@@ -1,8 +1,11 @@
 interface ProductData {
   name: string
-  category_id: number
   description: string
+  cost: number
+  price: number
+  stock: number
   metadata: any
+  category_id: number
 }
 
 export default class ProductsRepository {
