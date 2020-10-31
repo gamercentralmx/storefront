@@ -16,6 +16,10 @@ class User < ApplicationRecord
     first_name.present? ? first_name : email.split('@')[0]
   end
 
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
   def method_missing(method_name, *arguments, &block)
     if method_name.to_s =~ /is_(\w*)\?/
       has_role? Regexp.last_match(1)

@@ -5,6 +5,13 @@ class Order < ApplicationRecord
 
   accepts_nested_attributes_for :order_items
 
+  enum :status, {
+    pending: 'pending',
+    processing: 'processing',
+    shipped: 'shipped',
+    complete: 'complete'
+  }
+
   def total
     order_items.map(&:total).sum
   end

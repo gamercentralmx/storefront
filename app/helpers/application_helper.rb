@@ -12,4 +12,10 @@ module ApplicationHelper
       end
     end
   end
+
+  def user_display_string(user)
+    return 'No asignado' if user.nil?
+
+    "#{user.id}. #{user.full_name} - #{user.email}"
+  end
 end

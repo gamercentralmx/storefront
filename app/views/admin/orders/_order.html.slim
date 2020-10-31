@@ -1,6 +1,6 @@
 tr
   td= order.id
-  td= order.user&.name || 'No asignado'
+  td= user_display_string(order.user)
   td= order.order_items.count
   td= number_to_currency(order.total.to_f / 100, precision: 2)
   td
