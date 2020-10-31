@@ -18,6 +18,7 @@ module Admin
       @product = Product.new(product_params)
 
       if @product.save
+        flash[:notice] = 'Se ha creado el producto de manera exitosa'
         render json: @product, status: :created
       else
         render json: @product.errors.full_messages, status: :unprocessable_entity

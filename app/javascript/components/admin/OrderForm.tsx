@@ -6,6 +6,7 @@ import { NumberUtils } from 'helpers/NumberUtils'
 import { find, sum } from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap'
+import OrdersRepository from 'repositories/OrdersRepository'
 import ProductsRepository from 'repositories/ProductsRepository'
 import UsersRepository from 'repositories/UsersRepository'
 import { convertToObject } from 'typescript'
@@ -47,6 +48,21 @@ export default function OrderForm () {
     setTick(tick + 1)
   }
 
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    const user_id = user?.id
+    const order_items_attributes = orderItems.map((item) => { return { qty: item.qty, product_id: item.product.id } })
+
+    try {
+      await OrdersRepository.save({ user_id, order_items_attributes })
+
+      location.href = '/admin/orders'
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   useEffect(() => {
     UsersRepository.all()
       .then((users) => setUsers(users))
@@ -60,12 +76,10 @@ export default function OrderForm () {
   useEffect(() => {
     const total = calculateGrandTotal(orderItems)
 
-    console.log(orderItems, total)
-
     setGrandTotal(total)
   }, [tick])
 
-  return <Form>
+  return <Form onSubmit={handleSubmit}>
     <Form.Group>
       <Form.Label>Cliente</Form.Label>
       <Form.Control as='select' onChange={handleUserSelect}>
