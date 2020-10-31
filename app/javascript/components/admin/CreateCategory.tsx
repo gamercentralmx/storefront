@@ -111,7 +111,6 @@ function PropertyForm ({ property, index, onChange, onRemoveProperty }) {
 
       <Col xs={5}>
         <Form.Control as='select' name='type' defaultValue={property.type} onChange={handleChange}>
-          <option>string</option>
           <option>text</option>
           <option>number</option>
         </Form.Control>

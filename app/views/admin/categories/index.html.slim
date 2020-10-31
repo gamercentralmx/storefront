@@ -2,6 +2,8 @@
   .card-body
     = react_component "admin/CreateCategory"
 
+    hr
+
     - if @categories.any?
       table.table.table-striped.table-condensed
         thead
@@ -12,5 +14,4 @@
         tbody
           = render @categories
     - else
-      <hr />
-      h5 Aún no has creado ninguna categoria
+      h6 Aún no has creado ninguna categoria

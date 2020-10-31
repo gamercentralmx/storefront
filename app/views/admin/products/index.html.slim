@@ -1,0 +1,9 @@
+.card
+  .card-body
+    = link_to "Crear nuevo producto", new_admin_product_path, class: 'btn btn-primary'
+
+    hr
+
+    - if @products.any?
+    - else
+      h6 No has creado ningun producto aún

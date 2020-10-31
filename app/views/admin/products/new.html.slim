@@ -1,0 +1,5 @@
+.card
+  .card-header
+    h4.card-title Crear nuevo producto
+  .card-body
+    = react_component 'admin/ProductForm', { categories: @categories }, { camelize_props: true }

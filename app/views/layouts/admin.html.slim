@@ -17,7 +17,7 @@ html lang="en"
   body
     .wrapper
       = render "layouts/admin/sidebar"
-      .main-panel style=("height: 100vh;")
+      .main-panel style=("min-height: 100vh;")
         = render "layouts/admin/header"
         .content
           = yield

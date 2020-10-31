@@ -5,6 +5,10 @@ class Category < ApplicationRecord
 
   before_save :process_properties
 
+  def property_names
+    properties.map { |property| property['name'] }
+  end
+
   private
 
   def process_properties
