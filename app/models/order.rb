@@ -12,6 +12,13 @@ class Order < ApplicationRecord
     complete: 'complete'
   }
 
+  STATUS_INTENTS = {
+    'pending' => 'secondary',
+    'processing' => 'info',
+    'shipped' => 'primary',
+    'complete' => 'success'
+  }
+
   def total
     order_items.map(&:total).sum
   end
