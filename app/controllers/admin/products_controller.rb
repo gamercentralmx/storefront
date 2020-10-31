@@ -1,7 +1,12 @@
 module Admin
   class ProductsController < BaseController
     def index
-      @products = Product.all
+      @products = Product.includes(:category).all
+
+      respond_to do |format|
+        format.html
+        format.json
+      end
     end
 
     def new
@@ -37,7 +42,8 @@ module Admin
         :cost,
         :stock,
         :category_id,
-        metadata: @category.property_names)
+        metadata: @category.property_names
+      )
     end
   end
 end

@@ -9,6 +9,10 @@ interface ProductData {
 }
 
 export default class ProductsRepository {
+  static async all () {
+    return $.ajax({ url: '/admin/products' })
+  }
+
   static async save (data: ProductData) {
     return $.ajax({ url: '/admin/products', method: 'POST', data: { product: data } })
   }
