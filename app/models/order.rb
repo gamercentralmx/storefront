@@ -5,7 +5,7 @@ class Order < ApplicationRecord
 
   accepts_nested_attributes_for :order_items
 
-  enum :status, {
+  enum status: {
     pending: 'pending',
     processing: 'processing',
     shipped: 'shipped',
