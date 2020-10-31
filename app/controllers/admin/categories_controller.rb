@@ -10,7 +10,7 @@ module Admin
       if @category.save
         render json: @category, status: :created
       else
-        rende json: @category.errors.full_messages
+        rende json: @category.errors.full_messages, status: :unprocessable_entity
       end
     end
 

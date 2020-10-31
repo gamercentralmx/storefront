@@ -5,5 +5,15 @@
     hr
 
     - if @products.any?
+      table.table.table-striped
+        thead
+          tr
+            th Nombre
+            th Descripción
+            th Caracteristicas
+            th Acciones
+        tbody
+          = render @products
+
     - else
       h6 No has creado ningun producto aún
