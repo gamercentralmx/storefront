@@ -30,13 +30,13 @@ header.section-header
                   div
                     = link_to "Cerrar sesión", destroy_user_session_path, method: :delete
                 - else
-                  span.text-muted Bienvenido!
+                  span.text-muted ¡Bienvenido!
                   div
                     = link_to "Inicia sesión", new_user_session_path
                     | &nbsp;|&nbsp;
                     = link_to "Registrate", new_user_registration_path
 
-= render 'layouts/alerts'
+= render 'layouts/application/alerts'
 
 - unless params[:controller].match? 'devise'
   nav.navbar.navbar-main.navbar-expand-lg.navbar-light

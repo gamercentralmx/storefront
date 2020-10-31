@@ -1,11 +1,11 @@
-h2
-  | Resend confirmation instructions
-= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f|
-  = render "devise/shared/error_messages", resource: resource
-  .field
-    = f.label :email
-    br
-    = f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email)
-  .actions
-    = f.submit "Resend confirmation instructions"
-= render "devise/shared/links"
+section.section-content.padding-y style="min-height:84vh"
+  .card.mx-auto style=("max-width: 520px; margin-top:100px;")
+      .card-body
+        h4.card-title.mb-4 Reenviar correo de confirmación
+        = form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f|
+          = render "devise/shared/error_messages", resource: resource
+          .form-group
+            = f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), class: 'form-control', placeholder: 'Correo electrónico'
+          .form-group
+            = f.submit "Reenviar correo de confirmación", class: 'btn btn-primary btn-block'
+  = render "devise/shared/links"
