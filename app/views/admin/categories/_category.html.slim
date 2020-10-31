@@ -1,0 +1,10 @@
+tr
+  td= category.name
+  td
+    - category.properties.each do |property|
+      span.badge.badge-primary
+        = property['name']
+      | &nbsp;
+  td
+    = link_to admin_category_path(category.id), class: 'btn btn-danger btn-sm', method: 'DELETE', data: { confirm: 'Seguro que quieres borrar esta categoria? Esta acción no puede deshacerse', toggle: 'tooltip', placement: 'top' }, title: 'Eliminar' do
+      .fa.fa-trash-alt

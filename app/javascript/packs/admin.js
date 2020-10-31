@@ -23,3 +23,7 @@ import "@fortawesome/fontawesome-free/js/all";
 var componentRequireContext = require.context("components", true);
 var ReactRailsUJS = require("react_ujs");
 ReactRailsUJS.useContext(componentRequireContext);
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})

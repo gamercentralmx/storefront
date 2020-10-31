@@ -1,1 +1,16 @@
-= react_component "admin/CreateCategory"
+.card
+  .card-body
+    = react_component "admin/CreateCategory"
+
+    - if @categories.any?
+      table.table.table-striped.table-condensed
+        thead
+          tr
+            th Nombre
+            th Propiedades
+            th Acciones
+        tbody
+          = render @categories
+    - else
+      <hr />
+      h5 Aún no has creado ninguna categoria
