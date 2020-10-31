@@ -7,4 +7,12 @@ class Product < ApplicationRecord
   def specs
     metadata.map { |_, description| description }
   end
+
+  def price_in_currency
+    price.to_f / 100
+  end
+
+  def cost_in_currency
+    cost.to_f / 100
+  end
 end
