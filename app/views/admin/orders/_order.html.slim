@@ -19,8 +19,3 @@ tr
     = link_to admin_order_path(order.id), class: 'btn btn-primary btn-sm', data: { toggle: 'tooltip', placement: 'top' }, title: 'Ver' do
       .fa.fa-file-invoice-dollar
     | &nbsp;
-    = link_to edit_admin_order_path(order.id), class: 'btn btn-secondary btn-sm', data: { toggle: 'tooltip', placement: 'top' }, title: 'Editar' do
-      .fa.fa-edit
-    | &nbsp;
-    = link_to admin_order_path(order.id), class: 'btn btn-danger btn-sm', data: { toggle: 'tooltip', placement: 'top' }, title: 'Cancelar' do
-      .fa.fa-ban

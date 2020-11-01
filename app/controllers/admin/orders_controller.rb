@@ -1,5 +1,7 @@
 module Admin
   class OrdersController < BaseController
+    before_action :find_order!, only: %i[show update destroy]
+
     def index
       @orders = Order.all.order(created_at: :desc)
     end
@@ -16,8 +18,6 @@ module Admin
     end
 
     def update
-      @order = Order.find(params[:id])
-
       respond_to do |format|
         if @order.update(order_params)
           format.html { redirect_to request.referer, notice: "Orden #{@order.id} actualizada con éxito" }
@@ -30,6 +30,10 @@ module Admin
     end
 
     private
+
+    def find_order!
+      @order = Order.find(params[:id])
+    end
 
     def order_params
       params.require(:order).permit(:user_id, :status, order_items_attributes: %i[qty product_id])
