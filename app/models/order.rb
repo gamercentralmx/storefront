@@ -21,7 +21,19 @@ class Order < ApplicationRecord
     'canceled' => 'danger'
   }
 
+  before_create :set_uid
+
   def total
     order_items.map(&:total).sum
+  end
+
+  def total_in_currency
+    total.to_f / 100
+  end
+
+  private
+
+  def set_uid
+    self.uid = SecureRandom.alphanumeric(10)
   end
 end

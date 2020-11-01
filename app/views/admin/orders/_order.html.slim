@@ -18,5 +18,9 @@ tr
 
   td
     = link_to admin_order_path(order.id), class: 'btn btn-primary btn-sm', data: { toggle: 'tooltip', placement: 'top' }, title: 'Ver' do
+      .fa.fa-eye
+    | &nbsp;
+
+    = link_to checkout_order_path(order.uid), class: 'btn btn-success btn-sm', data: { toggle: 'tooltip', placement: 'top' }, title: 'Ver Pagina de Pago' do
       .fa.fa-file-invoice-dollar
     | &nbsp;

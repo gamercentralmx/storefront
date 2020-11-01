@@ -1,0 +1,18 @@
+- product = order_item.product
+tr
+  td
+    figure.itemside.align-items-center
+      .aside
+        = image_tag 'gunslinger.jpg', class: 'img-sm'
+      figcaption.info
+        span.title-text-dark #{product.category_name} - #{product.name}
+        p.text-muted.small
+          - product.metadata.each do |property, value|
+            | #{property}: #{value}
+            br
+
+  td
+    input.form-control.form-control-sm.col-md-4(type='number' disabled='true' value="#{order_item.qty}")
+
+  td= number_to_currency product.price_in_currency, precision: 2
+  td= number_to_currency order_item.total_in_currency, precision: 2

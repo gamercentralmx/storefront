@@ -1208,6 +1208,14 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-stripe-elements@^6.0.4":
+  version "6.0.4"
+  resolved "https://registry.yarnpkg.com/@types/react-stripe-elements/-/react-stripe-elements-6.0.4.tgz#0931064941b4f74e25edb8955703eee90774a057"
+  integrity sha512-EzEeBiOwQJ0fPzZhtg9zqyy5GJbEbi0sFNFCowFXmRwraRcMRyZ4p2UK8nylzfCR2KtMPZ2fgUVH9xD/VL/StQ==
+  dependencies:
+    "@types/react" "*"
+    "@types/stripe-v3" "*"
+
 "@types/react-transition-group@^4.4.0":
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/@types/react-transition-group/-/react-transition-group-4.4.0.tgz#882839db465df1320e4753e6e9f70ca7e9b4d46d"
@@ -1227,6 +1235,11 @@
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/@types/sizzle/-/sizzle-2.3.2.tgz#a811b8c18e2babab7d542b3365887ae2e4d9de47"
   integrity sha512-7EJYyKTL7tFR8+gDbB6Wwz/arpGa0Mywk1TJbNzKzHtzbwVmY4HR9WqS5VV7dsBUKQmPNr192jHr/VpBluj/hg==
+
+"@types/stripe-v3@*":
+  version "3.1.21"
+  resolved "https://registry.yarnpkg.com/@types/stripe-v3/-/stripe-v3-3.1.21.tgz#24bce837d7e3bc6c959d0b7b77bffac8153953e9"
+  integrity sha512-lvGDxj4ninw8k7gX0PTU49Hr4sEuYPTNdxpJdF8aKLtSj3W/tUDTeBnkl1ozXkHG+YwflyTUZovWRp/gnqmzcQ==
 
 "@types/warning@^3.0.0":
   version "3.0.0"
@@ -6889,7 +6902,7 @@ prop-types-extra@^1.1.0:
     react-is "^16.3.2"
     warning "^4.0.0"
 
-prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@15.7.2, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -7097,6 +7110,13 @@ react-overlays@^4.1.0:
     prop-types "^15.7.2"
     uncontrollable "^7.0.0"
     warning "^4.0.3"
+
+react-stripe-elements@^6.1.2:
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/react-stripe-elements/-/react-stripe-elements-6.1.2.tgz#bd277e86d0b868a6fac9358df09e0d38149b6736"
+  integrity sha512-gYbYhVVJm3Woc84TgmuiqUj44rI/BZGUVUTTmS0U6kZyZa5fYMPlKKIsVZdQZufQ7Ab4BXLO2LSxBlGY0s2jew==
+  dependencies:
+    prop-types "15.7.2"
 
 react-transition-group@^4.4.1:
   version "4.4.1"

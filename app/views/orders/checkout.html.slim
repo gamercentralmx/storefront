@@ -1,0 +1,43 @@
+script src="https://js.stripe.com/v3/"
+javascript:
+  window.stripeApiKey = "#{Rails.application.credentials.stripe[:publishable_key]}"
+
+section.section-specials.padding-y
+  .container
+    .row
+      .col-md-10.offset-md-1
+        .card
+          .card-header
+            h4.card-title(style='display: inline-block;')
+              | Orden
+              | &nbsp;
+              small ##{@order.uid}
+            .float-right(style='display: inline-block;')
+              span.text-muted Fecha: #{@order.created_at.strftime("%d/%M/%Y")}
+          .card-body
+
+            table.table.table-borderless.table-shopping-cart
+              thead.text-muted
+                tr
+                  th(scope='col') Producto
+                  th(scope='col') Cantidad
+                  th(scope='col') Precio Unitario
+                  th(scope='col') Total
+                  th.text-right.d-none.d-md.block(scope='col' width='200')
+
+              tbody
+                = render @order.order_items
+          .card-body.border-top
+            dl.row
+              dt.col-sm-10
+                | Total:
+                span.float-right.text-muted
+                  | (Todos los precios incluyen IVA 16%)
+              dd.col-sm-2
+                strong= number_to_currency @order.total_in_currency, precision: 2
+
+          .card-body.border-top
+            h5 Método de pago
+
+            = react_component 'store/Checkout'
+
