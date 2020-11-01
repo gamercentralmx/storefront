@@ -1,6 +1,8 @@
 import { PaymentMethod } from 'definitions/PaymentMethod'
+import StringUtils from 'helpers/StringUtils'
+import { find } from 'lodash'
 import React, { useEffect, useState } from 'react'
-import { Form, Col, Table, Button } from 'react-bootstrap'
+import { Form, Col, Table, Button, Dropdown } from 'react-bootstrap'
 import { StripeProvider, Elements } from 'react-stripe-elements'
 import PaymentMethodsRepository from 'repositories/PaymentMethodsRepository'
 import PaymentForm from './PaymentForm'
@@ -11,9 +13,11 @@ declare global {
 
 interface Props {
   defaultSource: string
+  amount: number
 }
 
 export default function Checkout (props: Props) {
+  const { amount } = props
   const [defaultSource, setDefaultSource] = useState(props.defaultSource)
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([])
   const [showForm, setShowForm] = useState(false)
@@ -40,24 +44,24 @@ export default function Checkout (props: Props) {
   }, [0])
 
   return <div>
-    <Col sm='6'>
-      {showForm && <StripeForm onPaymentMethodAdded={handlePaymentMethod} />}
-      {!showForm && <PaymentMethodsTable defaultSource={defaultSource} paymentMethods={paymentMethods} onDisplayForm={() => setShowForm(true)} onPaymentMethodSelected={handlePaymentMethodSelected} />}
-    </Col>
+    <h5>Método de pago</h5>
+    {showForm && <StripeForm onPaymentMethodAdded={handlePaymentMethod} onClose={() => setShowForm(false)} />}
+    {!showForm && <PaymentMethodsTable defaultSource={defaultSource} paymentMethods={paymentMethods} onDisplayForm={() => setShowForm(true)} onPaymentMethodSelected={handlePaymentMethodSelected} />}
   </div>
 }
 
 interface StripeFormProps {
   onPaymentMethodAdded: (paymentMethod: PaymentMethod) => void
+  onClose: () => void
 }
 
 function StripeForm (props: StripeFormProps) {
-  const { onPaymentMethodAdded } = props
+  const { onPaymentMethodAdded, onClose } = props
 
   return <StripeProvider apiKey={window.stripeApiKey}>
     <div className='example'>
       <Elements>
-        <PaymentForm onPaymentMethodAdded={onPaymentMethodAdded} />
+        <PaymentForm onPaymentMethodAdded={onPaymentMethodAdded} onClose={onClose} />
       </Elements>
     </div>
   </StripeProvider>
@@ -73,30 +77,37 @@ interface PaymentMethodsTableProps {
 function PaymentMethodsTable (props: PaymentMethodsTableProps) {
   const { defaultSource, paymentMethods, onDisplayForm, onPaymentMethodSelected } = props
 
-  return <div>
-    <Table striped={true} size='sm'>
-      <thead>
-        <tr>
-          <th></th>
-          <th>Nombre</th>
-          <th>Terminación</th>
-          <th>Expira</th>
-        </tr>
-      </thead>
-      <tbody>
-        {paymentMethods.map((paymentMethod) => {
-          return <tr key={`payment-method-${paymentMethod.id}`}>
-            <td><Form.Check type='radio' value={paymentMethod.id} name='selectCard' defaultChecked={defaultSource === paymentMethod.stripe_id} onClick={() => onPaymentMethodSelected(paymentMethod)} /></td>
-            <td>{paymentMethod.metadata.name}</td>
-            <td>
-              <i className={`fab fa-cc-${paymentMethod.metadata.brand.toLowerCase()}`}></i> **** {paymentMethod.metadata.last4}
-            </td>
-            <td>{paymentMethod.metadata.exp_month}/{paymentMethod.metadata.exp_year}</td>
-          </tr>
-        })}
-      </tbody>
-    </Table>
+  const selectedPaymentMethod = find(paymentMethods, { stripe_id: defaultSource })
 
-    <Button variant='primary' onClick={() => onDisplayForm()}>Agregar nueva tarjeta</Button>
+  if (!selectedPaymentMethod) return <></>
+
+  return <div>
+    <Dropdown>
+      <Dropdown.Toggle variant='outline-dark' className='btn-block'>
+        <FormattedPaymentMethod paymentMethod={selectedPaymentMethod} />
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu className='full-width'>
+        {paymentMethods.map((paymentMethod) => {
+          return <Dropdown.Item onClick={() => onPaymentMethodSelected(paymentMethod)} active={selectedPaymentMethod.id === paymentMethod.id}>
+            <FormattedPaymentMethod paymentMethod={paymentMethod} />
+          </Dropdown.Item>
+        })}
+        <Dropdown.Item onClick={() => onDisplayForm()}>Agregar Nueva Tarjeta</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
   </div>
+}
+
+interface FormattedPaymentMethodProps {
+  paymentMethod: PaymentMethod
+}
+
+function FormattedPaymentMethod (props: FormattedPaymentMethodProps) {
+  const { paymentMethod } = props
+  const { name, brand, last4, exp_month, exp_year } = paymentMethod.metadata
+
+  return <>
+    {StringUtils.truncate(name, 15)} &nbsp; <i className={`fab fa-cc-${brand.toLowerCase()}`}></i> **** {last4} - {exp_month}/{exp_year}
+  </>
 }

@@ -5,8 +5,8 @@ javascript:
 section.section-specials.padding-y
   .container
     .row
-      .col-md-10.offset-md-1
-        .card
+      .col-md-8
+        .card.shadow
           .card-header
             h4.card-title(style='display: inline-block;')
               | Orden
@@ -19,25 +19,16 @@ section.section-specials.padding-y
             table.table.table-borderless.table-shopping-cart
               thead.text-muted
                 tr
-                  th(scope='col') Producto
+                  th.col-sm-6(scope='col') Producto
                   th(scope='col') Cantidad
-                  th(scope='col') Precio Unitario
+                  th(scope='col') P. Unitario
                   th(scope='col') Total
                   th.text-right.d-none.d-md.block(scope='col' width='200')
 
               tbody
                 = render @order.order_items
+      .col-md-4
+        .card.shadow
           .card-body.border-top
-            dl.row
-              dt.col-sm-10
-                | Total:
-                span.float-right.text-muted
-                  | (Todos los precios incluyen IVA 16%)
-              dd.col-sm-2
-                strong= number_to_currency @order.total_in_currency, precision: 2
-
-          .card-body.border-top
-            h5 Método de pago
-
-            = react_component 'store/Checkout', { default_source: current_user.default_source }, { camelize_props: true }
+            = react_component 'store/Checkout', { default_source: current_user.default_source, amount: @order.total_in_currency }, { camelize_props: true }
 
