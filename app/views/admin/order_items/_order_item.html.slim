@@ -1,6 +1,6 @@
 - product = order_item.product
 tr
   td= order_item.qty
-  td= link_to product.name, admin_product_path(product.id)
+  td= link_to "#{product.category_name} - #{product.name}", admin_product_path(product.id)
   td= number_to_currency(product.price_in_currency, precision: 2)
   td= number_to_currency(order_item.total / 100, precision: 2)
