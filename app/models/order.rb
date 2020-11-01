@@ -9,14 +9,16 @@ class Order < ApplicationRecord
     pending: 'pending',
     processing: 'processing',
     shipped: 'shipped',
-    complete: 'complete'
+    complete: 'complete',
+    canceled: 'canceled'
   }
 
   STATUS_INTENTS = {
     'pending' => 'secondary',
     'processing' => 'info',
     'shipped' => 'primary',
-    'complete' => 'success'
+    'complete' => 'success',
+    'canceled' => 'danger'
   }
 
   def total

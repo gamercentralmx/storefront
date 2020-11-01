@@ -8,6 +8,7 @@ tr
         = link_to 'Processing', admin_order_path(order.id, order: { status: 'processing' }), class: 'dropdown-item', method: 'PUT'
         = link_to 'Shipped', admin_order_path(order.id, order: { status: 'shipped' }), class: 'dropdown-item', method: 'PUT'
         = link_to 'Complete', admin_order_path(order.id, order: { status: 'complete' }), class: 'dropdown-item', method: 'PUT'
+        = link_to 'Cancel', admin_order_path(order.id, order: { status: 'canceled' }), class: 'dropdown-item', method: 'PUT', data: { confirm: '¿Estas seguro de cancelar esta orden? Esta accion no puede ser revertida.' }
 
   td= user_display_string(order.user)
 
