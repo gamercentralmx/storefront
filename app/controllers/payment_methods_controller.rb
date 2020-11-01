@@ -30,6 +30,19 @@ class PaymentMethodsController < ApplicationController
     render json: @payment_method
   end
 
+  def installments
+    @payment_method = current_user.payment_methods.find(params[:id])
+
+    intent = PaymentMethod::PaymentIntent.new(current_user, @payment_method, params[:amount])
+
+    intent.create
+
+    render json: {
+      intent_id: intent.id,
+      available_plans: intent.available_plans
+    }
+  end
+
   private
 
   def token_params

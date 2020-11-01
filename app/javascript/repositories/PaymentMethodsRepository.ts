@@ -1,3 +1,4 @@
+import { PaymentIntent } from 'definitions/PaymentIntent'
 import { PaymentMethod } from 'definitions/PaymentMethod'
 
 export default class PaymentMethodsRepository {
@@ -11,5 +12,9 @@ export default class PaymentMethodsRepository {
 
   static async makeDefault (id: number): Promise<PaymentMethod> {
     return $.ajax({ url: `/payment_methods/${id}/make_default`, method: 'PUT' })
+  }
+
+  static async installments (id: number, amount: number): Promise<PaymentIntent> {
+    return $.ajax({ url: `/payment_methods/${id}/installments?amount=${amount}`  })
   }
 }
