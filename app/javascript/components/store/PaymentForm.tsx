@@ -1,10 +1,11 @@
+import { PaymentMethod } from 'definitions/PaymentMethod'
 import React, { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { CardElement, injectStripe, ReactStripeElements } from 'react-stripe-elements'
-import PaymentMethods from 'repositories/PaymentMethods'
+import PaymentMethodsRepository from 'repositories/PaymentMethodsRepository'
 
 interface Props {
-  onPaymentMethodAdded: (card: any) => void
+  onPaymentMethodAdded: (paymentMethod: PaymentMethod) => void
   stripe?: ReactStripeElements.StripeProps
 }
 
@@ -35,7 +36,7 @@ function PaymentForm (props: Props) {
       return
     }
 
-    const paymentMethod = await PaymentMethods.save(token)
+    const paymentMethod = await PaymentMethodsRepository.save(token)
 
     onPaymentMethodAdded(paymentMethod)
   }

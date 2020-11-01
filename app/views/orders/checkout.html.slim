@@ -39,5 +39,5 @@ section.section-specials.padding-y
           .card-body.border-top
             h5 Método de pago
 
-            = react_component 'store/Checkout'
+            = react_component 'store/Checkout', { default_source: current_user.default_source }, { camelize_props: true }
 
