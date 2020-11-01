@@ -4,10 +4,10 @@ tr
     .btn-group
       = link_to order.status, 'javascript:void(0)', class: "btn btn-sm btn-#{Order::STATUS_INTENTS[order.status]} dropdown-toggle", data: { toggle: "dropdown" }, aria: { haspopup: "true", expanded: "false" }
       .dropdown-menu
-        = link_to 'Pending', admin_order_path(order.id), class: 'dropdown-item'
-        = link_to 'Processing', admin_order_path(order.id), class: 'dropdown-item'
-        = link_to 'Shipped', admin_order_path(order.id), class: 'dropdown-item'
-        = link_to 'Complete', admin_order_path(order.id), class: 'dropdown-item'
+        = link_to 'Pending', admin_order_path(order.id, order: { status: 'pending' }), class: 'dropdown-item', method: 'PUT'
+        = link_to 'Processing', admin_order_path(order.id, order: { status: 'processing' }), class: 'dropdown-item', method: 'PUT'
+        = link_to 'Shipped', admin_order_path(order.id, order: { status: 'shipped' }), class: 'dropdown-item', method: 'PUT'
+        = link_to 'Complete', admin_order_path(order.id, order: { status: 'complete' }), class: 'dropdown-item', method: 'PUT'
 
   td= user_display_string(order.user)
 

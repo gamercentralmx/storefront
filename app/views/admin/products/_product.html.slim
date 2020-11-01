@@ -11,9 +11,9 @@ tr
       span.badge.badge-primary= spec
       | &nbsp;
 
-  td= number_with_delimiter(product.stock)
-
   td= number_to_currency(product.cost_in_currency, precision: 2)
+
+  td= number_with_delimiter(product.stock)
 
   td= number_to_currency(product.price_in_currency, precision: 2)
 
