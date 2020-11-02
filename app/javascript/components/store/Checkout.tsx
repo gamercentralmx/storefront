@@ -91,8 +91,16 @@ export default function Checkout (props: Props) {
   return <Card className='shadow'>
     <Card.Body>
       <h5>Método de pago</h5>
-      {showForm && <StripeForm onPaymentMethodAdded={handlePaymentMethod} onClose={() => setShowForm(false)} />}
-      {!showForm && <PaymentMethodsTable defaultSource={defaultSource} paymentMethods={paymentMethods} onDisplayForm={() => setShowForm(true)} onPaymentMethodSelected={handlePaymentMethodSelected} />}
+      {showForm && <StripeForm
+        onPaymentMethodAdded={handlePaymentMethod}
+        onClose={() => setShowForm(false)}
+        hasPaymentMethods={paymentMethods.length > 0} />}
+
+      {!showForm && <PaymentMethodsTable
+        defaultSource={defaultSource}
+        paymentMethods={paymentMethods}
+        onDisplayForm={() => setShowForm(true)}
+        onPaymentMethodSelected={handlePaymentMethodSelected} />}
     </Card.Body>
 
     {!showForm && paymentIntent && paymentIntent.available_plans.length > 0 && <Card.Body className='border-top'>
@@ -138,15 +146,15 @@ export default function Checkout (props: Props) {
 interface StripeFormProps {
   onPaymentMethodAdded: (paymentMethod: PaymentMethod) => void
   onClose: () => void
+  hasPaymentMethods: boolean
 }
 
 function StripeForm (props: StripeFormProps) {
-  const { onPaymentMethodAdded, onClose } = props
 
   return <StripeProvider apiKey={window.stripeApiKey}>
     <div className='example'>
       <Elements>
-        <PaymentForm onPaymentMethodAdded={onPaymentMethodAdded} onClose={onClose} />
+        <PaymentForm {...props} />
       </Elements>
     </div>
   </StripeProvider>

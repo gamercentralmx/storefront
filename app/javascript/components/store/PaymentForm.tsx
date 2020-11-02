@@ -8,10 +8,11 @@ interface Props {
   onClose: () => void
   onPaymentMethodAdded: (paymentMethod: PaymentMethod) => void
   stripe?: ReactStripeElements.StripeProps
+  hasPaymentMethods: boolean
 }
 
 function PaymentForm (props: Props) {
-  const { stripe, onPaymentMethodAdded, onClose } = props
+  const { stripe, onPaymentMethodAdded, onClose, hasPaymentMethods } = props
   const [name, setName] = useState('')
   const [working, setWorking] = useState(false)
   const [errored, setErrored] = useState(false)
@@ -55,7 +56,7 @@ function PaymentForm (props: Props) {
     </Form.Group>
 
     <Button variant='primary' className='btn-block' type='submit' disabled={working}>Agregar Tarjeta</Button>
-    <Button variant='secondary' className='btn-block' onClick={() => onClose()}>Cancelar</Button>
+    {hasPaymentMethods && <Button variant='secondary' className='btn-block' onClick={() => onClose()}>Cancelar</Button>}
   </Form>
 }
 
