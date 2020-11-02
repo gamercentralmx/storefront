@@ -7,22 +7,22 @@ header.section-header
             = image_tag "logo.png", class: 'logo'
 
         .col-lg-6.col-sm-12
-          form.search action="#"
-            .input-group.w-100
-              input.form-control placeholder="Search" type="text"
-              .input-group-append
-                button.btn.btn-primary type="submit"
-                  i.fa.fa-search
-                  | Buscar
+          / form.search action="#"
+          /   .input-group.w-100
+          /     input.form-control placeholder="Search" type="text"
+          /     .input-group-append
+          /       button.btn.btn-primary type="submit"
+          /         i.fa.fa-search
+          /         | Buscar
 
         .col-lg-4.col-sm-6.col-12
           .widgets-wrap.float-md-right
             .widget-header.mr-3
-              a.icon.icon-sm.rounded-circle.border href="#"
-                i.fa.fa-shopping-cart
-              span.badge.badge-pill.badge-danger.notify 0
+              / a.icon.icon-sm.rounded-circle.border href="#"
+              /   i.fa.fa-shopping-cart
+              / span.badge.badge-pill.badge-danger.notify 0
             .widget-header.icontext
-              a.icon.icon-sm.rounded-circle.border href="#"
+              = link_to profile_index_path, class: 'icon icon-sm rounded-circle border' do
                 i.fa.fa-user
               .text
                 - if user_signed_in?
@@ -38,36 +38,36 @@ header.section-header
 
 = render 'layouts/application/alerts'
 
-- unless params[:controller].match? 'devise'
-  nav.navbar.navbar-main.navbar-expand-lg.navbar-light
-    .container
-      button.navbar-toggler aria-controls="main_nav" aria-expanded="false" aria-label=("Toggle navigation") data-target="#main_nav" data-toggle="collapse" type="button"
-        span.navbar-toggler-icon
-      #main_nav.collapse.navbar-collapse
-        ul.navbar-nav
-          li.nav-item.dropdown-show
-            a.nav-link.pl-0 data-toggle="dropdown" href="#"
-              strong
-                i.fa.fa-bars
-                | &nbsp  All category
-            .dropdown-menu
-              a.dropdown-item href="#"  Foods and Drink
-              a.dropdown-item href="#"  Home interior
-              .dropdown-divider
-              a.dropdown-item href="#"  Category 1
-              a.dropdown-item href="#"  Category 2
-              a.dropdown-item href="#"  Category 3
-          li.nav-item
-            a.nav-link href="#"  Fashion
-          li.nav-item
-            a.nav-link href="#"  Supermarket
-          li.nav-item
-            a.nav-link href="#"  Electronics
-          li.nav-item
-            a.nav-link href="#"  Baby &amp Toys
-          li.nav-item
-            a.nav-link href="#"  Fitness sport
-          li.nav-item
-            a.nav-link href="#"  Clothing
-          li.nav-item
-            a.nav-link href="#"  Furnitures
+/ - unless params[:controller].match? 'devise'
+/   nav.navbar.navbar-main.navbar-expand-lg.navbar-light
+/     .container
+/       button.navbar-toggler aria-controls="main_nav" aria-expanded="false" aria-label=("Toggle navigation") data-target="#main_nav" data-toggle="collapse" type="button"
+/         span.navbar-toggler-icon
+/       #main_nav.collapse.navbar-collapse
+/         ul.navbar-nav
+/           li.nav-item.dropdown-show
+/             a.nav-link.pl-0 data-toggle="dropdown" href="#"
+/               strong
+/                 i.fa.fa-bars
+/                 | &nbsp  All category
+/             .dropdown-menu
+/               a.dropdown-item href="#"  Foods and Drink
+/               a.dropdown-item href="#"  Home interior
+/               .dropdown-divider
+/               a.dropdown-item href="#"  Category 1
+/               a.dropdown-item href="#"  Category 2
+/               a.dropdown-item href="#"  Category 3
+/           li.nav-item
+/             a.nav-link href="#"  Fashion
+/           li.nav-item
+/             a.nav-link href="#"  Supermarket
+/           li.nav-item
+/             a.nav-link href="#"  Electronics
+/           li.nav-item
+/             a.nav-link href="#"  Baby &amp Toys
+/           li.nav-item
+/             a.nav-link href="#"  Fitness sport
+/           li.nav-item
+/             a.nav-link href="#"  Clothing
+/           li.nav-item
+/             a.nav-link href="#"  Furnitures

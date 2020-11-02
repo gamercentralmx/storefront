@@ -35,6 +35,9 @@ es-MX:
       category:
         one: Categoria
         other: Categorias
+      order:
+        one: Orden
+        other: Ordenes
     errors:
       messages:
         record_invalid: 'La validación falló: %{errors}'

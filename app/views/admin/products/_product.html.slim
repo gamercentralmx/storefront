@@ -1,10 +1,22 @@
 tr
+  td
+    strong= product.category_name
+
   td= product.name
+
   td= product.description.truncate(100)
+
   td
     - product.specs.each do |spec|
       span.badge.badge-primary= spec
       | &nbsp;
+
+  td= number_to_currency(product.cost_in_currency, precision: 2)
+
+  td= number_with_delimiter(product.stock)
+
+  td= number_to_currency(product.price_in_currency, precision: 2)
+
   td
     = link_to admin_product_path(product.id), class: 'btn btn-danger btn-sm', method: 'DELETE', data: { confirm: 'Seguro que quieres borrar este producto? Esta acción no puede deshacerse', toggle: 'tooltip', placement: 'top' }, title: 'Eliminar' do
       .fa.fa-trash-alt

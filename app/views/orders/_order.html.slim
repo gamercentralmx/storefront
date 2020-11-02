@@ -1,0 +1,19 @@
+.card.shadow
+  .card-header
+    strong.d-inline-block.mr-3 Orden ##{order.uid}
+    span Fecha: #{order.created_at.strftime("%d/%M/%Y")}
+    .float-right
+      span(class="badge badge-#{Order::STATUS_INTENTS[order.status]}")
+        = Order::STATUS_TRANSLATIONS[order.status]
+  .card-body
+    table.table.table-borderless.table-shopping-cart
+      thead.text-muted
+        tr
+          th.col-sm-6(scope='col') Producto
+          th(scope='col') Cantidad
+          th(scope='col') P. Unit
+          th(scope='col') Total
+          th.text-right.d-none.d-md.block(scope='col' width='200')
+
+      tbody
+        = render order.order_items

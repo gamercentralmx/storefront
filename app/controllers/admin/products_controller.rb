@@ -1,7 +1,12 @@
 module Admin
   class ProductsController < BaseController
     def index
-      @products = Product.all
+      @products = Product.includes(:category).all
+
+      respond_to do |format|
+        format.html
+        format.json
+      end
     end
 
     def new
@@ -13,6 +18,7 @@ module Admin
       @product = Product.new(product_params)
 
       if @product.save
+        flash[:notice] = 'Se ha creado el producto de manera exitosa'
         render json: @product, status: :created
       else
         render json: @product.errors.full_messages, status: :unprocessable_entity
@@ -30,7 +36,15 @@ module Admin
     private
 
     def product_params
-      params.require(:product).permit(:name, :description, :category_id, metadata: @category.property_names)
+      params.require(:product).permit(
+        :name,
+        :description,
+        :price,
+        :cost,
+        :stock,
+        :category_id,
+        metadata: @category.property_names
+      )
     end
   end
 end

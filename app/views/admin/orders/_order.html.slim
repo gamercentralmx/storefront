@@ -1,0 +1,26 @@
+tr
+  td= order.id
+  td
+    .btn-group
+      = link_to order.status, 'javascript:void(0)', class: "btn btn-sm btn-#{Order::STATUS_INTENTS[order.status]} dropdown-toggle", data: { toggle: "dropdown" }, aria: { haspopup: "true", expanded: "false" }
+      .dropdown-menu
+        = link_to 'Pending', admin_order_path(order.id, order: { status: 'pending' }), class: 'dropdown-item', method: 'PUT'
+        = link_to 'Processing', admin_order_path(order.id, order: { status: 'processing' }), class: 'dropdown-item', method: 'PUT'
+        = link_to 'Shipped', admin_order_path(order.id, order: { status: 'shipped' }), class: 'dropdown-item', method: 'PUT'
+        = link_to 'Complete', admin_order_path(order.id, order: { status: 'complete' }), class: 'dropdown-item', method: 'PUT'
+        = link_to 'Cancel', admin_order_path(order.id, order: { status: 'canceled' }), class: 'dropdown-item', method: 'PUT', data: { confirm: '¿Estas seguro de cancelar esta orden? Esta accion no puede ser revertida.' }
+
+  td= user_display_string(order.user)
+
+  td= order.order_items.count
+
+  td= number_to_currency(order.total.to_f / 100, precision: 2)
+
+  td
+    = link_to admin_order_path(order.id), class: 'btn btn-primary btn-sm', data: { toggle: 'tooltip', placement: 'top' }, title: 'Ver' do
+      .fa.fa-eye
+    | &nbsp;
+
+    = link_to checkout_order_path(order.uid), class: 'btn btn-success btn-sm', data: { toggle: 'tooltip', placement: 'top' }, title: 'Ver Pagina de Pago' do
+      .fa.fa-file-invoice-dollar
+    | &nbsp;

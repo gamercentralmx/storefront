@@ -24,6 +24,11 @@ var componentRequireContext = require.context("components", true);
 var ReactRailsUJS = require("react_ujs");
 ReactRailsUJS.useContext(componentRequireContext);
 
+$.ajaxSetup({
+  dataType: 'json'
+});
+
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
+  $('.dropdown-toggle').dropdown()
 })

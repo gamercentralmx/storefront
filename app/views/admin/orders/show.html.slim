@@ -1,0 +1,19 @@
+.card
+  .card-header
+    h4.card-title Order ##{@order.id} - #{user_display_string(@order.user)}
+  .card-body
+    table.table.table-striped
+      thead
+        tr
+          th Cantidad
+          th Producto
+          th P. Unitario
+          th P. Total
+      thead
+        = render @order.order_items
+      tfoot
+        tr
+          td (colspan='3' style='text-align: right;')
+            strong Total:
+          td= number_to_currency @order.total / 100, precision: 2
+

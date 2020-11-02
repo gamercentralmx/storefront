@@ -1,7 +1,7 @@
 import { Category } from 'definitions/Category'
 import { find } from 'lodash'
 import React, { useState } from 'react'
-import { Button, Form } from 'react-bootstrap'
+import { Button, Col, Form } from 'react-bootstrap'
 import ProductsRepository from 'repositories/ProductsRepository'
 
 interface Props {
@@ -13,6 +13,9 @@ export default function ProductForm (props: Props) {
   const [selectedCategory, setSelectedCategory] = useState<Category | undefined>()
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
+  const [price, setPrice] = useState(0)
+  const [cost, setCost] = useState(0)
+  const [stock, setStock] = useState(0)
   const [metadata, setMetadata] = useState({})
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,6 +30,27 @@ export default function ProductForm (props: Props) {
     const { value } = currentTarget
 
     setDescription(value)
+  }
+
+  const handlePriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { currentTarget } = event
+    const { value } = currentTarget
+
+    setPrice(parseInt(value, 10))
+  }
+
+  const handleCostChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { currentTarget } = event
+    const { value } = currentTarget
+
+    setCost(parseInt(value, 10))
+  }
+
+  const handleStockChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { currentTarget } = event
+    const { value } = currentTarget
+
+    setStock(parseInt(value, 10))
   }
 
   const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -46,7 +70,15 @@ export default function ProductForm (props: Props) {
     event.preventDefault()
 
     try {
-      await ProductsRepository.save({ name: name, description: description, category_id: selectedCategory.id!, metadata: metadata })
+      await ProductsRepository.save({
+        name,
+        description,
+        metadata,
+        cost,
+        price,
+        stock,
+        category_id: selectedCategory.id!,
+      })
 
       location.href = '/admin/products'
     } catch (error) {
@@ -65,13 +97,40 @@ export default function ProductForm (props: Props) {
       <Form.Control as='textarea' rows={4} required name='description' onChange={handleDescriptionChange}></Form.Control>
     </Form.Group>
 
-    <Form.Group>
-      <Form.Label>Categoria</Form.Label>
-      <Form.Control as='select' onChange={handleSelect}>
-        <option value=''>Categoria no seleccionada</option>
-        {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option> )}
-      </Form.Control>
-    </Form.Group>
+    <Form.Row>
+      <Col>
+        <Form.Group>
+          <Form.Label>Costo <small>(en centavos)</small></Form.Label>
+          <Form.Control type='number' required name='cost' onChange={handleCostChange}></Form.Control>
+        </Form.Group>
+      </Col>
+
+      <Col>
+        <Form.Group>
+          <Form.Label>Precio <small>(en centavos)</small></Form.Label>
+          <Form.Control type='number' required name='price' onChange={handlePriceChange}></Form.Control>
+        </Form.Group>
+      </Col>
+
+      <Col>
+        <Form.Group>
+          <Form.Label>Inventario <small>(en unidades)</small></Form.Label>
+          <Form.Control type='number' required name='stock' onChange={handleStockChange}></Form.Control>
+        </Form.Group>
+      </Col>
+
+      <Col>
+        <Form.Group>
+          <Form.Label>Categoria</Form.Label>
+          <Form.Control as='select' onChange={handleSelect}>
+            <option value=''>Categoria no seleccionada</option>
+            {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option> )}
+          </Form.Control>
+        </Form.Group>
+      </Col>
+    </Form.Row>
+
+
 
     {selectedCategory && <CategoryForm category={selectedCategory} onChange={handleMetadataChange} />}
 

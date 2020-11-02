@@ -20,5 +20,6 @@ html lang="en"
       .main-panel style=("min-height: 100vh;")
         = render "layouts/admin/header"
         .content
+          = render 'layouts/admin/alerts'
           = yield
         = render "layouts/admin/footer"
