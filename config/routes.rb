@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :profile, only: [:index]
+
   resources :payment_methods, only: [:index, :create] do
     member do
       get :installments

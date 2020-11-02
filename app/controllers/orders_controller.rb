@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!, only: [:show, :update]
   before_action :find_order!, only: [:show, :update]
-  before_action :validate_owner, only: [:show, :update]
+  before_action :validate_owner!, only: [:show, :update]
 
   def checkout
     @order = Order.find_by(uid: params[:id])
@@ -27,7 +27,7 @@ class OrdersController < ApplicationController
   end
 
   def validate_owner!
-    return if user.is_admin? or owner?
+    return if current_user.is_admin? or owner?
 
     redirect_to root_path, alert: 'La pagina que intentas accessar no existe.'
   end

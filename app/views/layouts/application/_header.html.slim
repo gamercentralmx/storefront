@@ -22,7 +22,7 @@ header.section-header
               /   i.fa.fa-shopping-cart
               / span.badge.badge-pill.badge-danger.notify 0
             .widget-header.icontext
-              a.icon.icon-sm.rounded-circle.border href="#"
+              = link_to profile_index_path, class: 'icon icon-sm rounded-circle border' do
                 i.fa.fa-user
               .text
                 - if user_signed_in?
