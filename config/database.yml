@@ -82,5 +82,3 @@ test:
 production:
   <<: *default
   database: storefront_production
-  username: storefront
-  password: <%= ENV['STOREFRONT_DATABASE_PASSWORD'] %>
