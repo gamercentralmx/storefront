@@ -3,15 +3,15 @@ class OrdersController < ApplicationController
   before_action :find_order!, only: [:show, :update, :confirm]
   before_action :validate_owner!, only: [:show, :update, :confirm]
 
+  def index
+    @orders = current_user.orders.order(created_at: :desc)
+  end
+
   def checkout
     @order = Order.find_by(uid: params[:id])
 
     redirect_to order_path(@order.uid) unless @order.pending?
     store_location_for(:user, checkout_order_path(@order.uid)) unless user_signed_in?
-  end
-
-  def confirm
-
   end
 
   def update

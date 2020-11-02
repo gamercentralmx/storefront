@@ -6,30 +6,7 @@ section.section-specials.padding-y
   .container
     .row
       .col-md-8
-        .card.shadow
-          .card-header
-            h4.card-title(style='display: inline-block;')
-              | Orden
-              | &nbsp;
-              small ##{@order.uid}
-            .float-right(style='display: inline-block;')
-              span.text-muted Fecha: #{@order.created_at.strftime("%d/%M/%Y")}
-              | &nbsp;
-              span(class="badge badge-#{Order::STATUS_INTENTS[@order.status]}")
-                = Order::STATUS_TRANSLATIONS[@order.status]
-          .card-body
-
-            table.table.table-borderless.table-shopping-cart
-              thead.text-muted
-                tr
-                  th.col-sm-6(scope='col') Producto
-                  th(scope='col') Cantidad
-                  th(scope='col') P. Unit
-                  th(scope='col') Total
-                  th.text-right.d-none.d-md.block(scope='col' width='200')
-
-              tbody
-                = render @order.order_items
+        = render @order
       - if user_signed_in?
         .col-md-4
           = react_component 'store/Checkout', { order_id: @order.uid, default_source: current_user.default_source, amount: @order.total }, { camelize_props: true }
