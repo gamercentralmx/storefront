@@ -7,7 +7,7 @@ tr
   td= product.description.truncate(100)
 
   td
-    - product.specs.each do |spec|
+    - (product.specs || []).each do |spec|
       span.badge.badge-primary= spec
       | &nbsp;
 
