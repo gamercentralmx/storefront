@@ -6,6 +6,7 @@ import { find } from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { Button, Dropdown, Card, ButtonGroup, Popover, OverlayTrigger } from 'react-bootstrap'
 import { StripeProvider, Elements } from 'react-stripe-elements'
+import OrdersRepository from 'repositories/OrdersRepository'
 import PaymentMethodsRepository from 'repositories/PaymentMethodsRepository'
 import PaymentForm from './PaymentForm'
 
@@ -25,10 +26,11 @@ const submitIntent = {
 interface Props {
   defaultSource: string
   amount: number
+  orderId: string
 }
 
 export default function Checkout (props: Props) {
-  const { amount } = props
+  const { amount, orderId } = props
   const amountInCurrency = amount / 100
 
   const [paymentIntent, setPaymentIntent] = useState<PaymentIntent | undefined>()
@@ -62,7 +64,12 @@ export default function Checkout (props: Props) {
 
     try {
       await PaymentMethodsRepository.charge(selectedPaymentMethod.id, paymentIntent.intent_id, selectedPlan)
+      await OrdersRepository.update(orderId, 'processing')
       setStatus('success')
+
+      setTimeout(() => {
+        location.href = `/orders/${orderId}/confirm`
+      }, 1000)
     } catch (error) {
       setStatus('failed')
       setErrors(error.responseJSON.errors)

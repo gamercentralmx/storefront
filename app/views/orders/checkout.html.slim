@@ -28,6 +28,6 @@ section.section-specials.padding-y
               tbody
                 = render @order.order_items
       .col-md-4
-        = react_component 'store/Checkout', { default_source: current_user.default_source, amount: @order.total }, { camelize_props: true }
+        = react_component 'store/Checkout', { order_id: @order.uid, default_source: current_user.default_source, amount: @order.total }, { camelize_props: true }
         = image_tag "stripe-logo.png", class: 'float-right', style: 'width: 120px; margin-top: 30px'
 
