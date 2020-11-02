@@ -14,6 +14,9 @@ section.section-specials.padding-y
               small ##{@order.uid}
             .float-right(style='display: inline-block;')
               span.text-muted Fecha: #{@order.created_at.strftime("%d/%M/%Y")}
+              | &nbsp;
+              span(class="badge badge-#{Order::STATUS_INTENTS[@order.status]}")
+                = Order::STATUS_TRANSLATIONS[@order.status]
           .card-body
 
             table.table.table-borderless.table-shopping-cart

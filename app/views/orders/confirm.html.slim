@@ -1,0 +1,12 @@
+section.section-specials.padding-y(style='min-height: 80vh')
+  .container
+    .row
+      .col-md-12
+          h1
+            | ¡Gracias por tu compra!
+            | &nbsp;
+            .fa.fa-check-circle(style="color: green;")
+
+          p Estaremos en contacto para darte actualizaciones sobre tu pedido, puedes dirigir tus preguntas y comentarios a #{link_to "contacto@gamercentral.com", "mailto:contacto@gamercentral.com"}.
+
+          = link_to "Ir al home", root_path, class: 'btn btn-primary btn-large'

@@ -21,6 +21,14 @@ class Order < ApplicationRecord
     'canceled' => 'danger'
   }
 
+  STATUS_TRANSLATIONS = {
+    'pending' => 'Pendiente',
+    'processing' => 'En proceso',
+    'shipped' => 'Enviado',
+    'complete' => 'Completo',
+    'canceled' => 'Cancelado'
+  }
+
   before_create :set_uid
 
   def total
