@@ -7,24 +7,30 @@ section.section-content.padding-y
         = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
           = render "devise/shared/error_messages", resource: resource
           .form-group
+            = f.label :email
             = f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', placeholder: 'Correo electrónico'
           - if devise_mapping.confirmable? && resource.pending_reconfirmation?
             div
               | Pendiente de confirmar:
               = resource.unconfirmed_email
           .form-group
+            = f.label :password
+            br
             i
               | (deja este campo en blanco si no quieres cambiar tu contraseña)
-            = f.password_field :password, autocomplete: "new-password", class: 'form-control'
+            = f.password_field :password, autocomplete: "new-password", class: 'form-control', placeholder: 'Nueva Contraseña'
             - if @minimum_password_length
               em
                 | (Minimo #{@minimum_password_length} caracteres)
           .form-group
-            = f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control'
+            = f.label :password_confirmation
+            = f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control', placeholder: 'Confirmar Contraseña'
           .form-group
+            = f.label :current_password
+            br
             i
               | (ingresa tu contraseña para confirmar los cambios)
-            = f.password_field :current_password, autocomplete: "current-password", class: 'form-control'
+            = f.password_field :current_password, autocomplete: "current-password", class: 'form-control', placeholder: 'Contraseña Actual'
           .form-group
             = f.submit "Update", class: 'btn btn-primary btn-block'
 
