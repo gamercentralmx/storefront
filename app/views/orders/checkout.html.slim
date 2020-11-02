@@ -1,6 +1,6 @@
 script src="https://js.stripe.com/v3/"
 javascript:
-  window.stripeApiKey = "#{Rails.application.credentials.stripe[:publishable_key]}"
+  window.stripeApiKey = "#{ENV['STRIPE_PUBLISHABLE_KEY']}"
 
 section.section-specials.padding-y
   .container

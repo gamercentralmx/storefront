@@ -36,3 +36,4 @@ yarn-debug.log*
 .yarn-integrity
 
 credentials.yml.enc
+application.yml
