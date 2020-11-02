@@ -1,6 +1,8 @@
 class OrdersController < ApplicationController
   def checkout
     @order = Order.find_by(uid: params[:id])
+
+    redirect_to order_path(@order.uid) unless @order.pending?
   end
 
   def update
