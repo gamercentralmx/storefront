@@ -4,7 +4,7 @@ import { NumberUtils } from 'helpers/NumberUtils'
 import StringUtils from 'helpers/StringUtils'
 import { find } from 'lodash'
 import React, { useEffect, useState } from 'react'
-import { Form, Col, Table, Button, Dropdown, Card, ButtonGroup, Tooltip, Popover, OverlayTrigger } from 'react-bootstrap'
+import { Button, Dropdown, Card, ButtonGroup, Popover, OverlayTrigger } from 'react-bootstrap'
 import { StripeProvider, Elements } from 'react-stripe-elements'
 import PaymentMethodsRepository from 'repositories/PaymentMethodsRepository'
 import PaymentForm from './PaymentForm'
@@ -25,6 +25,7 @@ export default function Checkout (props: Props) {
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([])
   const [showForm, setShowForm] = useState(false)
   const [selectedPlan, setSelectedPlan] = useState(0)
+  const [working, setWorking] = useState(false)
 
   const handlePaymentMethod = (paymentMethod: PaymentMethod) => {
     setPaymentMethods([...paymentMethods, paymentMethod])

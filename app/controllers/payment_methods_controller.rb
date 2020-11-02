@@ -43,6 +43,18 @@ class PaymentMethodsController < ApplicationController
     }
   end
 
+  def charge
+    charge = PaymentMethod::Charge.new(current_user, @payment_method, payment_intent_params)
+
+    charge.process!
+
+    if charge.success?
+      render json: { status: charge.payment_intent.status }
+    else
+      render json: { errors: charge.errors }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def token_params
@@ -79,5 +91,9 @@ class PaymentMethodsController < ApplicationController
         ]
       ]
     )
+  end
+
+  def payment_intent_params
+    params.require(:payment_intent).permit(:id, :selected_plan)
   end
 end
