@@ -22,8 +22,8 @@ header.section-header
               /   i.fa.fa-shopping-cart
               / span.badge.badge-pill.badge-danger.notify 0
             .widget-header.icontext
-              = link_to profile_index_path, class: 'icon icon-sm rounded-circle border' do
-                i.fa.fa-user
+              = link_to orders_path, class: 'icon icon-sm rounded-circle border', title: 'Ordenes' do
+                i.fa.fa-box
               .text
                 - if user_signed_in?
                   span.text-muted Bienvenido #{current_user.name}!
