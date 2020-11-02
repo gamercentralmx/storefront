@@ -5,7 +5,7 @@ class Product < ApplicationRecord
   delegate :name, to: :category, prefix: 'category'
 
   def specs
-    metadata.map { |_, description| description }
+    (metadata || []).map { |_, description| description }
   end
 
   def price_in_currency
