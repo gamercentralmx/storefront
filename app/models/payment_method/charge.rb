@@ -11,7 +11,7 @@ class PaymentMethod::Charge
   def process!
     data = {}
 
-    add_installments! data if selected_plan.present? && selected_plan.positive?
+    add_installments! data if selected_plan.present? and selected_plan[:count].to_i.positive?
 
     confirm_payment_intent! data
   rescue Stripe::CardError => e
@@ -24,7 +24,7 @@ class PaymentMethod::Charge
     data[:payment_method_options] = {
       card: {
         installments: {
-          plan: params[:selected_plan]
+          plan: params[:selected_plan].to_unsafe_h
         }
       }
     }
@@ -35,7 +35,7 @@ class PaymentMethod::Charge
   end
 
   def selected_plan
-    @selected_plan ||= Integer(params[:selected_plan])
+    @selected_plan ||= params[:selected_plan]
   end
 
   def success?

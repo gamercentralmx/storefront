@@ -94,6 +94,6 @@ class PaymentMethodsController < ApplicationController
   end
 
   def payment_intent_params
-    params.require(:payment_intent).permit(:id, :selected_plan)
+    params.require(:payment_intent).permit(:id, selected_plan: %i[count interval type])
   end
 end

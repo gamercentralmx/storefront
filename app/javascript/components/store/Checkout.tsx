@@ -13,6 +13,8 @@ declare global {
   interface Window { stripeApiKey: string }
 }
 
+type PaymentStatus = 'pending' | 'working' | 'success' | 'failed'
+
 const submitIntent = {
   pending: 'primary',
   working: 'primary',
@@ -33,8 +35,8 @@ export default function Checkout (props: Props) {
   const [defaultSource, setDefaultSource] = useState(props.defaultSource)
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([])
   const [showForm, setShowForm] = useState(false)
-  const [selectedPlan, setSelectedPlan] = useState(0)
-  const [status, setStatus] = useState<any>('pending')
+  const [selectedPlan, setSelectedPlan] = useState<any>()
+  const [status, setStatus] = useState<PaymentStatus>('pending')
   const [errors, setErrors] = useState<string[]>([])
 
   const handlePaymentMethod = (paymentMethod: PaymentMethod) => {
@@ -52,6 +54,8 @@ export default function Checkout (props: Props) {
   }
 
   const handleSubmitCheckout = async () => {
+    if (status === 'success') return
+
     setStatus('working')
 
     const selectedPaymentMethod = find(paymentMethods, { stripe_id: defaultSource })
@@ -85,7 +89,7 @@ export default function Checkout (props: Props) {
   }, [defaultSource, paymentMethods.length])
 
   useEffect(() => {
-    setSelectedPlan(0)
+    setSelectedPlan(undefined)
   }, [defaultSource])
 
   const popover = (
@@ -127,6 +131,7 @@ export default function Checkout (props: Props) {
         defaultSource={defaultSource}
         paymentMethods={paymentMethods}
         onDisplayForm={() => setShowForm(true)}
+        status={status}
         onPaymentMethodSelected={handlePaymentMethodSelected} />}
     </Card.Body>
 
@@ -134,14 +139,15 @@ export default function Checkout (props: Props) {
       <h5>Pago a meses sin intereses</h5>
 
       <ButtonGroup>
-        <Button variant='outline-secondary' onClick={() => setSelectedPlan(0)} active={selectedPlan === 0}>1 MSI</Button>
+        <Button variant='outline-secondary' disabled={status === 'success'} onClick={() => setSelectedPlan(undefined)} active={selectedPlan === undefined}>1 MSI</Button>
         {paymentIntent.available_plans.map((plan) => {
           if (plan.count > 12) return
 
           return <Button
             key={`plan-type-${plan.count}`}
             variant='outline-secondary'
-            onClick={() => setSelectedPlan(plan.count)} active={selectedPlan === plan.count}>
+            disabled={status === 'success'}
+            onClick={() => setSelectedPlan(plan)} active={selectedPlan?.count === plan.count}>
               {plan.count} MSI
           </Button>
         })}
@@ -164,9 +170,10 @@ export default function Checkout (props: Props) {
         <dt>Total:</dt>
         <dd className="h5">{NumberUtils.toMoney(amountInCurrency, 2)}</dd>
       </dl>
-      {selectedPlan !== 0 && <dl className="dlist-align">
-        <dt>{selectedPlan} pagos de:</dt>
-        <dd className="h5">{NumberUtils.toMoney(amountInCurrency / selectedPlan, 2)}</dd>
+
+      {selectedPlan && <dl className="dlist-align">
+        <dt>{selectedPlan.count} pagos de:</dt>
+        <dd className="h5">{NumberUtils.toMoney(amountInCurrency / selectedPlan.count, 2)}</dd>
       </dl>}
 
       <hr />
@@ -208,10 +215,11 @@ interface PaymentMethodsTableProps {
   paymentMethods: PaymentMethod[]
   onDisplayForm: () => void
   onPaymentMethodSelected: (paymentMethod: PaymentMethod) => void
+  status: PaymentStatus
 }
 
 function PaymentMethodsTable (props: PaymentMethodsTableProps) {
-  const { defaultSource, paymentMethods, onDisplayForm, onPaymentMethodSelected } = props
+  const { defaultSource, paymentMethods, onDisplayForm, onPaymentMethodSelected, status } = props
 
   const selectedPaymentMethod = find(paymentMethods, { stripe_id: defaultSource })
 
@@ -219,7 +227,7 @@ function PaymentMethodsTable (props: PaymentMethodsTableProps) {
 
   return <div>
     <Dropdown>
-      <Dropdown.Toggle variant='outline-dark' className='btn-block'>
+      <Dropdown.Toggle variant='outline-dark' className='btn-block' disabled={status === 'success'}>
         <FormattedPaymentMethod paymentMethod={selectedPaymentMethod} />
       </Dropdown.Toggle>
 

@@ -18,7 +18,7 @@ export default class PaymentMethodsRepository {
     return $.ajax({ url: `/payment_methods/${id}/installments?amount=${amount}`  })
   }
 
-  static async charge (id: number, intentId: string, selectedPlan: number) {
+  static async charge (id: number, intentId: string, selectedPlan: any) {
     return $.ajax({
       url: `/payment_methods/${id}/charge`,
       method: 'POST',
