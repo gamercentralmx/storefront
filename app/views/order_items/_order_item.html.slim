@@ -7,7 +7,7 @@ tr
       figcaption.info
         span.title-text-dark #{product.category_name} - #{product.name}
         p.text-muted.small
-          - product.metadata.each do |property, value|
+          - (product.metadata || []).each do |property, value|
             | #{property}: #{value}
             br
 
