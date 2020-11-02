@@ -13,6 +13,13 @@ declare global {
   interface Window { stripeApiKey: string }
 }
 
+const submitIntent = {
+  pending: 'primary',
+  working: 'primary',
+  success: 'success',
+  failed: 'danger'
+}
+
 interface Props {
   defaultSource: string
   amount: number
@@ -20,12 +27,15 @@ interface Props {
 
 export default function Checkout (props: Props) {
   const { amount } = props
+  const amountInCurrency = amount / 100
+
   const [paymentIntent, setPaymentIntent] = useState<PaymentIntent | undefined>()
   const [defaultSource, setDefaultSource] = useState(props.defaultSource)
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([])
   const [showForm, setShowForm] = useState(false)
   const [selectedPlan, setSelectedPlan] = useState(0)
-  const [working, setWorking] = useState(false)
+  const [status, setStatus] = useState<any>('pending')
+  const [errors, setErrors] = useState<string[]>([])
 
   const handlePaymentMethod = (paymentMethod: PaymentMethod) => {
     setPaymentMethods([...paymentMethods, paymentMethod])
@@ -34,9 +44,25 @@ export default function Checkout (props: Props) {
   }
 
   const handlePaymentMethodSelected = (paymentMethod: PaymentMethod) => {
+    setErrors([])
+    setStatus('pending')
     PaymentMethodsRepository.makeDefault(paymentMethod.id)
       .then(() => setDefaultSource(paymentMethod.stripe_id))
       .catch()
+  }
+
+  const handleSubmitCheckout = async () => {
+    setStatus('working')
+
+    const selectedPaymentMethod = find(paymentMethods, { stripe_id: defaultSource })
+
+    try {
+      await PaymentMethodsRepository.charge(selectedPaymentMethod.id, paymentIntent.intent_id, selectedPlan)
+      setStatus('success')
+    } catch (error) {
+      setStatus('failed')
+      setErrors(error.responseJSON.errors)
+    }
   }
 
   useEffect(() => {
@@ -108,13 +134,15 @@ export default function Checkout (props: Props) {
       <h5>Pago a meses sin intereses</h5>
 
       <ButtonGroup>
+        <Button variant='outline-secondary' onClick={() => setSelectedPlan(0)} active={selectedPlan === 0}>1 MSI</Button>
         {paymentIntent.available_plans.map((plan) => {
           if (plan.count > 12) return
 
           return <Button
+            key={`plan-type-${plan.count}`}
             variant='outline-secondary'
             onClick={() => setSelectedPlan(plan.count)} active={selectedPlan === plan.count}>
-              {plan.count} meses
+              {plan.count} MSI
           </Button>
         })}
       </ButtonGroup>
@@ -123,8 +151,8 @@ export default function Checkout (props: Props) {
     {!showForm && paymentIntent && paymentIntent.available_plans.length === 0 && <Card.Body className='border-top'>
       <p>
         Pago a meses sin intereses no disponible.&nbsp;
-        <OverlayTrigger trigger='hover' placement='bottom' overlay={popover}>
-          <a href='javascript:void(0)'>Consulta las tarjetas participantes.</a>
+        <OverlayTrigger trigger={['hover', 'focus']} placement='bottom' overlay={popover}>
+          <a href='#'>Consulta las tarjetas participantes.</a>
         </OverlayTrigger>
       </p>
     </Card.Body>}
@@ -134,12 +162,26 @@ export default function Checkout (props: Props) {
 
       <dl className="dlist-align">
         <dt>Total:</dt>
-        <dd className="h5">{NumberUtils.toMoney(amount / 100, 2)}</dd>
+        <dd className="h5">{NumberUtils.toMoney(amountInCurrency, 2)}</dd>
       </dl>
+      {selectedPlan !== 0 && <dl className="dlist-align">
+        <dt>{selectedPlan} pagos de:</dt>
+        <dd className="h5">{NumberUtils.toMoney(amountInCurrency / selectedPlan, 2)}</dd>
+      </dl>}
 
       <hr />
 
-      <Button variant='primary' className='btn-block'>Confirmar Compra</Button>
+      <Button variant={submitIntent[status]} className='btn-block btn-lg' disabled={status === 'working'} onClick={handleSubmitCheckout}>
+        {status === 'pending' && "Pagar"}
+        {status === 'working' && <span><i className='fa fa-crosshairs fa-spin fa-lg' /> Procesando...</span>}
+        {status === 'success' && <span><i className='fa fa-check-circle' /> {"¡Pago exitoso!"}</span>}
+        {status === 'failed' && <span><i className='fa fa-times-circle' /> {"Pago Rechazado"}</span>}
+      </Button>
+
+      {status === 'working' && <div style={{ fontSize: '12px', marginTop: '10px', fontStyle: 'italic'}}>Estamos procesando tu método de pago, por favor no refresques ni abandones la pagina.</div>}
+      {status === 'failed' && <div style={{ fontSize: '12px', marginTop: '10px', fontStyle: 'italic', color: 'red'}}>
+        {errors.map((error: string) => <p>{error}</p>)}
+      </div>}
     </Card.Body>
   </Card>
 }

@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     member do
       get :installments
       put :make_default
+      post :charge
     end
   end
 
