@@ -32,7 +32,7 @@ section.section-content.padding-y
               | (ingresa tu contraseña para confirmar los cambios)
             = f.password_field :current_password, autocomplete: "current-password", class: 'form-control', placeholder: 'Contraseña Actual'
           .form-group
-            = f.submit "Update", class: 'btn btn-primary btn-block'
+            = f.submit "Actualizar", class: 'btn btn-primary btn-block'
 
         = button_to "Cancelar mi cuenta", registration_path(resource_name), data: { confirm: "¿Estas seguro de cancelar tu cuenta? Apreciamos que hayas confiado en nosotros y estamos disponibles para recibir sugerencias sobre como podemos mejorar nuestro servicio, tus datos seran permanentemente borrados de nuestras bases de datos pero siempre puedes registrarte de nuevo." }, method: :delete, class: 'btn btn-outline-light float-right'
         = link_to "Back", :back, class: 'btn btn-outline-secondary'
