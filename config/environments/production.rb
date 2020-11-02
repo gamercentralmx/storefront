@@ -119,4 +119,14 @@ Rails.application.configure do
     logger.formatter = config.log_formatter
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
+
+  ActionMailer::Base.smtp_settings = {
+    address: 'smtp.sendgrid.net',
+    port: 587,
+    domain: 'gamercentral.mx',
+    user_name: ENV['SENDGRID_USERNAME'],
+    password: ENV['SENDGRID_PASSWORD'],
+    authentication: 'plain',
+    enable_starttls_auto: true
+  }
 end
