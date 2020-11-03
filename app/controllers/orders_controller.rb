@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_user!, only: [:show, :update, :confirm]
+  before_action :authenticate_user!, only: [:index, :show, :update, :confirm]
   before_action :find_order!, only: [:show, :update, :confirm]
   before_action :validate_owner!, only: [:show, :update, :confirm]
 
@@ -31,13 +31,14 @@ class OrdersController < ApplicationController
   end
 
   def validate_owner!
+    return if @order.owner_id.nil?
     return if current_user.is_admin? or owner?
 
     redirect_to root_path, alert: 'La pagina que intentas accessar no existe.'
   end
 
   def owner?
-    @order.user_id.present? and @order.user_id == current_user.id
+    @order.user_id == current_user.id
   end
 
   def order_params
