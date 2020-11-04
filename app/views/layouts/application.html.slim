@@ -17,8 +17,9 @@ html lang="en"
     = csp_meta_tag
 
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
-    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     = render 'layouts/application/pixels'
+    = render 'layouts/application/stripe'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
   body
     = render 'layouts/application/header'
     .bg

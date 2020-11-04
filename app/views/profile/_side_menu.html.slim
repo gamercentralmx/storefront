@@ -8,6 +8,6 @@ ul.list-group
   = link_to addresses_path, class: "list-group-item #{controller_name == 'addresses' ? 'active' : ''}" do
     i.fas.fa-address-book.mr-2
     | Mis direcciones
-  = link_to addresses_path, class: "list-group-item #{controller_name == 'payment_methods' ? 'active' : ''}" do
+  = link_to payment_methods_path, class: "list-group-item #{controller_name == 'payment_methods' ? 'active' : ''}" do
     i.fas.fa-credit-card.mr-2
     | Metodos de Pago

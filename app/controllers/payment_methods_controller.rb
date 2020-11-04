@@ -1,5 +1,6 @@
 class PaymentMethodsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_payment_method!, only: [:destroy, :make_default, :installments]
 
   def index
     @payment_methods = current_user.payment_methods
@@ -22,17 +23,24 @@ class PaymentMethodsController < ApplicationController
     end
   end
 
-  def make_default
-    @payment_method = current_user.payment_methods.find(params[:id])
+  def destroy
+    @payment_method.destroy
 
+    current_user.payment_methods.first.make_default! if current_user.default_source == @payment_method.stripe_id && current_user.payment_methods.any?
+
+    redirect_to payment_methods_path, notice: "La tarjeta terminación #{@payment_method.metadata['last4']} ha sido eliminada."
+  end
+
+  def make_default
     @payment_method.make_default!
 
-    render json: @payment_method
+    respond_to do |format|
+      format.html { redirect_to payment_methods_path, notice: "La tarjeta terminación #{@payment_method.metadata['last4']} ha sido marcada como principal." }
+      format.json { render json: @payment_method }
+    end
   end
 
   def installments
-    @payment_method = current_user.payment_methods.find(params[:id])
-
     intent = PaymentMethod::PaymentIntent.new(current_user, @payment_method, params[:amount])
 
     intent.create
@@ -44,7 +52,7 @@ class PaymentMethodsController < ApplicationController
   end
 
   def charge
-    charge = PaymentMethod::Charge.new(current_user, @payment_method, payment_intent_params)
+    charge = PaymentMethod::Charge.new(current_user, payment_intent_params)
 
     charge.process!
 
@@ -56,6 +64,10 @@ class PaymentMethodsController < ApplicationController
   end
 
   private
+
+  def set_payment_method!
+    @payment_method = current_user.payment_methods.find(params[:id])
+  end
 
   def token_params
     params.require(:payment_method).permit(

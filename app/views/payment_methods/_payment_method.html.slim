@@ -1,0 +1,19 @@
+tr
+  td
+    = payment_method.metadata['name']
+    - if current_user.default_source == payment_method.stripe_id
+      | &nbsp;
+      .badge.badge-success.badge-sm
+        | Predeterminado
+  td.text-success
+    i(class="fab fa-cc-#{payment_method.metadata['brand'].downcase}")
+    | &nbsp; **** #{payment_method.metadata['last4']}
+  td
+    | #{payment_method.metadata['exp_month']}/#{payment_method.metadata['exp_year']}
+  td
+    = link_to payment_method_path(payment_method.id), class: 'btn btn-outline-danger btn-sm', title: 'Borrar este método de pago', method: 'DELETE', data: { toggle: 'tooltip', placement: 'top', confirm: '¿Estas seguro que quieres eliminar este método de pago?' } do
+      i.fas.fa-trash
+    | &nbsp;
+    - if current_user.default_source != payment_method.stripe_id
+      = link_to make_default_payment_method_path(payment_method.id), class: 'btn btn-outline-primary btn-sm', title: 'Establecer como predeterminado', method: 'PUT', data: { toggle: 'tooltip', placement: 'top' } do
+        i.fas.fa-credit-card
