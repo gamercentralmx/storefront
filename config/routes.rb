@@ -11,6 +11,8 @@ Rails.application.routes.draw do
 
   resources :profile, only: [:index]
 
+  resources :addresses
+
   resources :payment_methods, only: [:index, :create] do
     member do
       get :installments
