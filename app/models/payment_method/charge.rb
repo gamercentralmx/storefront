@@ -1,10 +1,9 @@
 class PaymentMethod::Charge
-  attr_reader :user, :payment_method, :params, :errors, :payment_intent
+  attr_reader :user, :params, :errors, :payment_intent
 
-  def initialize(user, payment_method, params)
+  def initialize(user, params)
     @user = user
     @params = params
-    @payment_method = payment_method
     @errors = []
   end
 

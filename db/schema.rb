@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_01_192541) do
+ActiveRecord::Schema.define(version: 2020_11_04_183907) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,9 +23,13 @@ ActiveRecord::Schema.define(version: 2020_11_01_192541) do
     t.string "state"
     t.string "zip_code"
     t.string "country"
-    t.string "type", default: "both"
+    t.string "kind", default: "both"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
+    t.string "tax_id"
+    t.string "business_name"
+    t.string "business_type"
     t.index ["user_id"], name: "index_addresses_on_user_id"
   end
 
@@ -76,7 +80,9 @@ ActiveRecord::Schema.define(version: 2020_11_01_192541) do
     t.bigint "address_id"
     t.string "status", default: "pending"
     t.string "uid"
+    t.bigint "payment_method_id"
     t.index ["address_id"], name: "index_orders_on_address_id"
+    t.index ["payment_method_id"], name: "index_orders_on_payment_method_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -155,6 +161,7 @@ ActiveRecord::Schema.define(version: 2020_11_01_192541) do
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "addresses"
+  add_foreign_key "orders", "payment_methods"
   add_foreign_key "orders", "users"
   add_foreign_key "payment_methods", "users"
   add_foreign_key "products", "categories"

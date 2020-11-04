@@ -1,7 +1,3 @@
-script src="https://js.stripe.com/v3/"
-javascript:
-  window.stripeApiKey = "#{ENV['STRIPE_PUBLISHABLE_KEY']}"
-
 section.section-specials.padding-y
   .container
     .row
@@ -13,7 +9,7 @@ section.section-specials.padding-y
           = image_tag "stripe-logo.png", class: 'float-right', style: 'width: 120px; margin-top: 30px'
       - else
         .col-md-4
-          .card.shadow
+          .card
             .card-body
               h4.card-title.mb-4 Inicia sesión para continuar
               = form_for(User.new, url: session_path('user')) do |f|

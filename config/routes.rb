@@ -11,7 +11,9 @@ Rails.application.routes.draw do
 
   resources :profile, only: [:index]
 
-  resources :payment_methods, only: [:index, :create] do
+  resources :addresses, except: [:show]
+
+  resources :payment_methods, except: [:show, :edit, :update] do
     member do
       get :installments
       put :make_default

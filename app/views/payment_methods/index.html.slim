@@ -1,0 +1,23 @@
+section.section-specials.padding-y
+  .container
+    .row
+      .col-md-4
+        = render 'profile/side_menu'
+      .col-md-8
+        .card
+          .card-header
+            h4 Métodos de pago
+            = link_to "Nuevo método de pago", new_payment_method_path, class: 'btn btn-primary btn-sm', style: "position: absolute; top: 15px; right: 15px;"
+          .card-body
+            - if @payment_methods.any?
+              table.table.table-striped.table-sm
+                thead
+                  tr
+                    th Nombre
+                    th Número de Tarjeta
+                    th Expira
+                    th Acciones
+                tbody
+                  = render @payment_methods
+            - else
+              h5 Todavía no tienes ningun método de pago registrado.

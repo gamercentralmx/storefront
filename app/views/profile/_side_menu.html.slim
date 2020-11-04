@@ -1,0 +1,13 @@
+ul.list-group
+  = link_to profile_index_path, class: "list-group-item #{controller_name == 'profile' ? 'active' : ''}" do
+    i.fas.fa-user-circle.mr-2
+    | Mi perfil
+  = link_to orders_path, class: "list-group-item #{controller_name == 'orders' ? 'active' : ''}" do
+    i.fas.fa-shipping-fast.mr-2
+    | Historial de ordenes
+  = link_to addresses_path, class: "list-group-item #{controller_name == 'addresses' ? 'active' : ''}" do
+    i.fas.fa-address-book.mr-2
+    | Mis direcciones
+  = link_to payment_methods_path, class: "list-group-item #{controller_name == 'payment_methods' ? 'active' : ''}" do
+    i.fas.fa-credit-card.mr-2
+    | Metodos de Pago

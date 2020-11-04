@@ -2,72 +2,40 @@ header.section-header
   section.header-main.border-bottom
     .container
       .row.align-items-center
-        .col-lg-2.col-4
+        .col-lg-3.col-4.col-sm-4
           = link_to root_path, class: 'brand-wrap' do
             = image_tag "logo.png", class: 'logo'
 
-        .col-lg-6.col-sm-12
-          / form.search action="#"
-          /   .input-group.w-100
-          /     input.form-control placeholder="Search" type="text"
-          /     .input-group-append
-          /       button.btn.btn-primary type="submit"
-          /         i.fa.fa-search
-          /         | Buscar
-
-        .col-lg-4.col-sm-6.col-12
-          .widgets-wrap.float-md-right
-            .widget-header.mr-3
-              / a.icon.icon-sm.rounded-circle.border href="#"
-              /   i.fa.fa-shopping-cart
-              / span.badge.badge-pill.badge-danger.notify 0
-            .widget-header.icontext
-              = link_to orders_path, class: 'icon icon-sm rounded-circle border', title: 'Ordenes' do
-                i.fa.fa-box
-              .text
+        .col-lg-3.col-12.col-sm-12.offset-lg-6
+          .widgets-wrap.d-flex.justify-content-end
+            / .widget-header
+            /   a.icontext href="#"
+            /     .icon
+            /       i.fa.fa-lg.fa-shopping-cart
+            /     .text
+            /       small.text-muted Basket
+            /       br
+            /       span 3 items
+            .widget-header.dropdown
+              a.ml-3.icontext aria-expanded="false" data-offset="20,10" data-toggle="dropdown" href="#"
+                .icon
+                  i.fa.fa-lg.fa-user-circle
                 - if user_signed_in?
-                  span.text-muted Bienvenido #{current_user.name}!
-                  div
-                    = link_to "Cerrar sesión", destroy_user_session_path, method: :delete
+                  .text
+                    small.text-muted ¡Hola #{current_user.name}!
+                    br
+                    span
+                      | Mi cuenta
+                      i.fa.fa-caret-down
                 - else
-                  span.text-muted ¡Bienvenido!
-                  div
-                    = link_to "Inicia sesión", new_user_session_path
-                    | &nbsp;|&nbsp;
-                    = link_to "Registrate", new_user_registration_path
+                  .text
+                    small.text-muted Inicia Sesión / Registrate
+                    br
+                    span
+                      | Mi Cuenta
+                      i.fa.fa-caret-down
+              .dropdown-menu.dropdown-menu-right style=("position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(140px), 46px, 0px);") x-placement="bottom-end"
+                = render 'layouts/application/sign_in_form' unless user_signed_in?
+                = render 'layouts/application/signed_in_menu' if user_signed_in?
 
 = render 'layouts/application/alerts'
-
-/ - unless params[:controller].match? 'devise'
-/   nav.navbar.navbar-main.navbar-expand-lg.navbar-light
-/     .container
-/       button.navbar-toggler aria-controls="main_nav" aria-expanded="false" aria-label=("Toggle navigation") data-target="#main_nav" data-toggle="collapse" type="button"
-/         span.navbar-toggler-icon
-/       #main_nav.collapse.navbar-collapse
-/         ul.navbar-nav
-/           li.nav-item.dropdown-show
-/             a.nav-link.pl-0 data-toggle="dropdown" href="#"
-/               strong
-/                 i.fa.fa-bars
-/                 | &nbsp  All category
-/             .dropdown-menu
-/               a.dropdown-item href="#"  Foods and Drink
-/               a.dropdown-item href="#"  Home interior
-/               .dropdown-divider
-/               a.dropdown-item href="#"  Category 1
-/               a.dropdown-item href="#"  Category 2
-/               a.dropdown-item href="#"  Category 3
-/           li.nav-item
-/             a.nav-link href="#"  Fashion
-/           li.nav-item
-/             a.nav-link href="#"  Supermarket
-/           li.nav-item
-/             a.nav-link href="#"  Electronics
-/           li.nav-item
-/             a.nav-link href="#"  Baby &amp Toys
-/           li.nav-item
-/             a.nav-link href="#"  Fitness sport
-/           li.nav-item
-/             a.nav-link href="#"  Clothing
-/           li.nav-item
-/             a.nav-link href="#"  Furnitures

@@ -27,3 +27,7 @@ ReactRailsUJS.useContext(componentRequireContext);
 $.ajaxSetup({
   dataType: 'json'
 });
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})

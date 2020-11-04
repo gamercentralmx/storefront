@@ -126,7 +126,7 @@ export default function Checkout (props: Props) {
     </Popover>
   )
 
-  return <Card className='shadow'>
+  return <Card>
     <Card.Body>
       <h5>Método de pago</h5>
       {showForm && <StripeForm

@@ -8,15 +8,20 @@ html lang="en"
     link href="/assets/favicon.ico" rel=("shortcut icon") type="image/x-icon"
     title Gamer Central
 
+    javascript:
+      window.FontAwesomeConfig = { autoReplaceSvg: false }
+
     = render 'layouts/favicons'
 
     = csrf_meta_tags
     = csp_meta_tag
 
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
-    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     = render 'layouts/application/pixels'
+    = render 'layouts/application/stripe'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
   body
     = render 'layouts/application/header'
-    = yield
+    .bg
+      = yield
     = render 'layouts/application/footer'
