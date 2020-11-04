@@ -2,7 +2,11 @@ div
   h6= address.name
 
   p
-    | #{address.street}, #{address.neighborhood}, #{address.city}, #{address.state}, #{address.country}, Código Postal: #{address.zip_code}
+    | #{address.street}, #{address.neighborhood}
+    br
+    | #{address.city}, #{address.state}, #{address.country},
+    br
+    | Código Postal: #{address.zip_code}
   - if address.tax_id.present?
     h6.text-muted Datos de facturación
 
@@ -12,5 +16,6 @@ div
       | Tipo de Persona: #{address.tax_id}
       br
       | RFC: #{address.business_type}
+- if controller_name == 'addresses'
   = link_to "Editar", edit_address_path(address.id), class: 'btn btn-secondary btn-sm'
   hr

@@ -1,0 +1,6 @@
+.text-success
+  i(class="fab fa-cc-#{payment_method.metadata['brand'].downcase}")
+  | &nbsp; **** #{payment_method.metadata['last4']}
+p
+  span.b
+    | Total: #{number_to_currency order.total_in_currency, precision: 2}

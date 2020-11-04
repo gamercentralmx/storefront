@@ -1,5 +1,6 @@
 class PaymentMethod < ApplicationRecord
   belongs_to :user
+  has_many :orders, dependent: :nullify
 
   enum kind: {
     card: 'card'
