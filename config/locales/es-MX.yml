@@ -25,6 +25,8 @@ es-MX:
         unconfirmed_email: Correo electrónico no confirmado
         unlock_token: Autentificador de desbloqueo
         updated_at: Fecha de actualización
+        first_name: Nombre(s)
+        last_name: Apellidos
     models:
       user:
         one: Usuario
