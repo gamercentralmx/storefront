@@ -1,0 +1,23 @@
+= form_for(User.new, as: 'user', url: session_path('user'), html: { class: 'px-4 py-3' }) do |f|
+  = link_to user_facebook_omniauth_authorize_path, class: 'btn btn-facebook btn-block mb-2' do
+    i.fab.fa-facebook-f
+    | &nbsp; Ingresa con Facebook
+
+  = link_to user_google_oauth2_omniauth_authorize_path, class: 'btn btn-google btn-block mb-2' do
+    i.fab.fa-google
+    | &nbsp; Ingresa con Google
+  .form-group
+    = f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', placeholder: "Correo electrónico"
+  .form-group
+    = f.password_field :password, autocomplete: "current-password", class: 'form-control', placeholder: "Contraseña"
+
+  .form-group
+    label.custom-control.custom-checkbox
+      = f.check_box :remember_me, class: 'custom-control-input'
+      .custom-control-label Recordar
+
+  .form-group
+    = f.submit "Iniciar sesión", class: 'btn btn-primary btn-block'
+.dropdown-divider
+= link_to "¿No tienes cuenta? Registrate", new_user_registration_path, class: 'dropdown-item'
+= link_to "¿Olvidaste tu contraseña?", new_password_path('user'), class: 'dropdown-item'
