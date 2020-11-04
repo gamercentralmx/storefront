@@ -1,0 +1,16 @@
+div
+  h6= address.name
+
+  p
+    | #{address.street}, #{address.neighborhood}, #{address.city}, #{address.state}, #{address.country}, Código Postal: #{address.zip_code}
+  - if address.tax_id.present?
+    h6.text-muted Datos de facturación
+
+    p
+      | Razón social: #{address.business_name}
+      br
+      | Tipo de Persona: #{address.tax_id}
+      br
+      | RFC: #{address.business_type}
+  = link_to "Editar", edit_address_path(address.id), class: 'btn btn-secondary btn-sm'
+  hr

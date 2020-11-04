@@ -27,6 +27,18 @@ es-MX:
         updated_at: Fecha de actualización
         first_name: Nombre(s)
         last_name: Apellidos
+      address:
+        name: 'Nombre'
+        street: 'Calle y número'
+        neighborhood: 'Colonia/Localidad'
+        city: 'Municipio'
+        state: 'Estado'
+        zip_code: 'Código postal'
+        country: 'País'
+        kind: 'Tipo'
+        tax_id: 'RFC'
+        business_name: 'Razón Social'
+        business_type: 'Tipo de persona'
     models:
       user:
         one: Usuario

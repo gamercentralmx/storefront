@@ -26,8 +26,10 @@ ActiveRecord::Schema.define(version: 2020_11_04_164356) do
     t.string "kind", default: "both"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
     t.string "tax_id"
     t.string "business_name"
+    t.string "business_type"
     t.index ["user_id"], name: "index_addresses_on_user_id"
   end
 

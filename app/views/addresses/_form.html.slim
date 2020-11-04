@@ -1,0 +1,52 @@
+= form_for @address do |f|
+  .form-group
+    = f.label :name
+    = f.text_field :name, autofocus: true, required: true, class: 'form-control', placeholder: 'Casa/Oficina/Taller'
+  .row
+    .col-lg-6
+      .form-group
+        = f.label :street
+        = f.text_field :street, required: true, class: 'form-control', placeholder: 'Hidalgo #109'
+    .col-lg-4
+      .form-group
+        = f.label :neighborhood
+        = f.text_field :neighborhood, required: true, class: 'form-control', placeholder: 'Centro'
+    .col-lg-2
+      .form-group
+        = f.label :zip_code
+        = f.text_field :zip_code, required: true, class: 'form-control', placeholder: 28000
+  .row
+    .col-lg-4
+      .form-group
+        = f.label :city
+        = f.text_field :city, autofocus: true, required: true, class: 'form-control', placeholder: 'Villa de Alvarez'
+    .col-lg-4
+      .form-group
+        = f.label :state
+        = f.select :state, Address::STATES, {}, { class: 'custom-select' }
+
+    .col-lg-4
+      .form-group
+        = f.label :country
+        = f.text_field :country, required: true, class: 'form-control', value: 'México', disabled: true
+
+  hr
+    h5 Datos de facturación (opcional)
+    p Estos datos seran necesarios en caso de requerir factura
+    .row
+      .col-lg-4
+        = f.label :business_type
+        = f.select :business_type, Address::BUSINESS_TYPES, { include_blank: true }, { class: 'form-control' }
+      .col-lg-4
+        = f.label :business_name
+        = f.text_field :business_name, class: 'form-control', placeholder: 'Mi empresa'
+      .col-lg-4
+        = f.label :tax_id
+        = f.text_field :tax_id, class: 'form-control', placeholder: 'XAXX010101000'
+
+  hr
+
+  .form-group
+    = f.submit 'Guardar', class: 'btn btn-primary'
+    = link_to "Cancelar", addresses_path, class: 'btn btn-outline-secondary float-right'
+
