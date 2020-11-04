@@ -3,9 +3,9 @@ class Address < ApplicationRecord
   has_many :orders, dependent: :nullify
   has_many :invoice_infos, dependent: :nullify
 
-  enum type: {
+  enum kind: {
     billing: 'billing',
     shipping: 'shipping',
-    both: 'both'
+    invoicing: 'invoicing'
   }
 end
