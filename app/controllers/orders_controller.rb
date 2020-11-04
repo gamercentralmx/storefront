@@ -31,7 +31,7 @@ class OrdersController < ApplicationController
   end
 
   def validate_owner!
-    return if @order.owner_id.nil?
+    return if @order.user_id.nil?
     return if current_user.is_admin? or owner?
 
     redirect_to root_path, alert: 'La pagina que intentas accessar no existe.'
