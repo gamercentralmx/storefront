@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_many :orders, dependent: :nullify
   has_many :invoice_infos, dependent: :nullify
   has_many :payment_methods, dependent: :destroy
+  has_many :payment_intents, dependent: :nullify
 
   def name
     first_name.present? ? first_name : email.split('@')[0]

@@ -21,6 +21,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :payment_intents, only: [:index, :create, :update]
+
   namespace :admin do
     root to: 'dashboard#index'
 
