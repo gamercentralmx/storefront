@@ -5,6 +5,7 @@ class PaymentIntent::Confirm
     @user = payment_intent.user
     @params = params
     @errors = []
+    @payment_intent = payment_intent
   end
 
   def process!
@@ -30,7 +31,7 @@ class PaymentIntent::Confirm
   end
 
   def confirm_payment_intent! data
-    stripe_intent = Stripe::PaymentIntent.confirm(payment_intent.id, data)
+    stripe_intent = Stripe::PaymentIntent.confirm(payment_intent.stripe_id, data)
 
     payment_intent.payment_method_options = stripe_intent.payment_method_options
     payment_intent.status = stripe_intent.status

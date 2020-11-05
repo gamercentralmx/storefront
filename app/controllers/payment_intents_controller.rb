@@ -32,7 +32,7 @@ class PaymentIntentsController < ApplicationController
     charge.process!
 
     if charge.success?
-      render json: { status: payment_intent.status }
+      render json: { status: @payment_intent.status }
     else
       render json: { errors: charge.errors }, status: :unprocessable_entity
     end
@@ -41,7 +41,7 @@ class PaymentIntentsController < ApplicationController
   private
 
   def payment_intent_params
-    params.require(:payment_method).permit(
+    params.require(:payment_intent).permit(
       :payment_method_id,
       :amount,
       :idempotency_key,

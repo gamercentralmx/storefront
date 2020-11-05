@@ -44,6 +44,7 @@ class PaymentIntent < ApplicationRecord
     )
 
     self.stripe_id = intent.id
+    self.payment_method_options = intent.payment_method_options
   end
 
   def available_plans
