@@ -3,7 +3,7 @@ class PaymentIntent < ApplicationRecord
   belongs_to :user
   has_one :order
 
-  before_create :create_stripe_payment_intent
+  before_create :create_stripe_payment_intent!
 
   DEFAULT_PAYMENT_METHOD_OPTIONS = {
     card: {
@@ -28,7 +28,7 @@ class PaymentIntent < ApplicationRecord
 
   private
 
-  def create_stripe_payment_intent
+  def create_stripe_payment_intent!
     return if stripe_id.present?
 
     intent = Stripe::PaymentIntent.create(
