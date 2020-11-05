@@ -15,7 +15,7 @@
         - if order.payment_method.present?
           .col-md-4
             h6.text-muted Método de Pago
-            = render partial: 'payment_method', locals: { payment_method: order.payment_method, order: order }
+            = render partial: 'payment_method', locals: { payment_method: order.payment_method, order: order, payment_intent: order.payment_intent }
   .card-body.border-top
     table.table.table-borderless.table-shopping-cart
       thead.text-muted

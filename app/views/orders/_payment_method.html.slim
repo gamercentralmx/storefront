@@ -4,3 +4,7 @@
 p
   span.b
     | Total: #{number_to_currency order.total_in_currency, precision: 2}
+  - if payment_intent&.payment_plan.present?
+    br
+    span
+      | #{payment_intent.payment_plan['count']} pagos de #{number_to_currency((order.total.to_f / 100) / payment_intent.payment_plan['count'], precision: 2)}

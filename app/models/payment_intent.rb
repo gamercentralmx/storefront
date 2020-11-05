@@ -26,6 +26,10 @@ class PaymentIntent < ApplicationRecord
     @stripe_payment_intent ||= Stripe::PaymentIntent.retrieve(stripe_id)
   end
 
+  def payment_plan
+    payment_method_options.dig('card', 'installments', 'plan')
+  end
+
   private
 
   def create_stripe_payment_intent!
