@@ -21,6 +21,10 @@ class PaymentIntent < ApplicationRecord
     ).first_or_create
   end
 
+  def stripe_payment_intent
+    @stripe_payment_intent ||= Stripe::PaymentIntent.retrieve(stripe_id)
+  end
+
   private
 
   def create_stripe_payment_intent

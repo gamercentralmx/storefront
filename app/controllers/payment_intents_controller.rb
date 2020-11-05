@@ -25,9 +25,27 @@ class PaymentIntentsController < ApplicationController
     end
   end
 
+  def confirm
+    @payment_intent = current_user.payment_intents.find(params[:id])
+    charge = PaymentIntent::Confirm.new(@payment_intent, payment_intent_params)
+
+    charge.process!
+
+    if charge.success?
+      render json: { status: payment_intent.status }
+    else
+      render json: { errors: charge.errors }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def payment_intent_params
-    params.require(:payment_method).permit(:payment_method_id, :amount, :idempotency_key)
+    params.require(:payment_method).permit(
+      :payment_method_id,
+      :amount,
+      :idempotency_key,
+      selected_plan: %i[count interval type]
+    )
   end
 end

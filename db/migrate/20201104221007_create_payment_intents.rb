@@ -6,6 +6,7 @@ class CreatePaymentIntents < ActiveRecord::Migration[6.0]
       t.integer :amount
       t.integer :amount_received
       t.integer :idempotency_key
+      t.string :status
       t.jsonb :payment_method_options
       t.string :stripe_id
 

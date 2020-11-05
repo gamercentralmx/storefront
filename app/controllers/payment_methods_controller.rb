@@ -40,18 +40,6 @@ class PaymentMethodsController < ApplicationController
     end
   end
 
-  def charge
-    charge = PaymentMethod::Charge.new(current_user, payment_intent_params)
-
-    charge.process!
-
-    if charge.success?
-      render json: { status: charge.payment_intent.status }
-    else
-      render json: { errors: charge.errors }, status: :unprocessable_entity
-    end
-  end
-
   private
 
   def set_payment_method!
