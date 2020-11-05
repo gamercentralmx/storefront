@@ -1,6 +1,7 @@
 class PaymentIntent < ApplicationRecord
   belongs_to :payment_method
   belongs_to :user
+  has_one :order
 
   before_create :create_stripe_payment_intent
 
