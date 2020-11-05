@@ -13,9 +13,9 @@ div
     p
       | Razón social: #{address.business_name}
       br
-      | Tipo de Persona: #{address.tax_id}
+      | Tipo de Persona: #{address.business_type}
       br
-      | RFC: #{address.business_type}
+      | RFC: #{address.tax_id}
 - if controller_name == 'addresses'
   = link_to "Editar", edit_address_path(address.id), class: 'btn btn-secondary btn-sm'
   hr

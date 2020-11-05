@@ -1,20 +1,21 @@
-.card
+.card.mb-3
   .card-header
     strong.d-inline-block.mr-3 Orden ##{order.uid}
-    span Fecha: #{order.created_at.strftime("%d/%M/%Y")}
+    span Fecha: #{order.formatted_order_date}
     .float-right
       span(class="badge badge-#{Order::STATUS_INTENTS[order.status]}")
         = Order::STATUS_TRANSLATIONS[order.status]
-  .card-body
-    .row
-      - if order.address.present?
-        .col-md-8
-          h6.text-muted Dirección de Envio
-          = render order.address
-      - if order.payment_method.present?
-        .col-md-4
-          h6.text-muted Método de Pago
-          = render partial: 'payment_method', locals: { payment_method: order.payment_method, order: order }
+  - if order.processing? or order.shipped? or order.complete?
+    .card-body
+      .row
+        - if order.address.present?
+          .col-md-8
+            h6.text-muted Dirección de Envio
+            = render order.address
+        - if order.payment_method.present?
+          .col-md-4
+            h6.text-muted Método de Pago
+            = render partial: 'payment_method', locals: { payment_method: order.payment_method, order: order, payment_intent: order.payment_intent }
   .card-body.border-top
     table.table.table-borderless.table-shopping-cart
       thead.text-muted

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_04_183907) do
+ActiveRecord::Schema.define(version: 2020_11_05_051313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,9 +81,29 @@ ActiveRecord::Schema.define(version: 2020_11_04_183907) do
     t.string "status", default: "pending"
     t.string "uid"
     t.bigint "payment_method_id"
+    t.bigint "payment_intent_id"
+    t.bigint "invoice_info_id"
+    t.datetime "ordered_at"
     t.index ["address_id"], name: "index_orders_on_address_id"
+    t.index ["invoice_info_id"], name: "index_orders_on_invoice_info_id"
+    t.index ["payment_intent_id"], name: "index_orders_on_payment_intent_id"
     t.index ["payment_method_id"], name: "index_orders_on_payment_method_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "payment_intents", force: :cascade do |t|
+    t.bigint "payment_method_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "amount"
+    t.integer "amount_received"
+    t.string "idempotency_key"
+    t.string "status"
+    t.jsonb "payment_method_options"
+    t.string "stripe_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["payment_method_id"], name: "index_payment_intents_on_payment_method_id"
+    t.index ["user_id"], name: "index_payment_intents_on_user_id"
   end
 
   create_table "payment_methods", force: :cascade do |t|
@@ -161,8 +181,12 @@ ActiveRecord::Schema.define(version: 2020_11_04_183907) do
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "addresses"
+  add_foreign_key "orders", "addresses", column: "invoice_info_id"
+  add_foreign_key "orders", "payment_intents"
   add_foreign_key "orders", "payment_methods"
   add_foreign_key "orders", "users"
+  add_foreign_key "payment_intents", "payment_methods"
+  add_foreign_key "payment_intents", "users"
   add_foreign_key "payment_methods", "users"
   add_foreign_key "products", "categories"
 end

@@ -5,7 +5,10 @@ export interface OrderItemData {
 
 export interface OrderData {
   user_id?: number
-  order_items_attributes: OrderItemData[]
+  order_items_attributes?: OrderItemData[]
+  payment_method_id?: number
+  payment_intent_id?: number
+  status?: string
 }
 
 export default class OrdersRepository {
@@ -13,7 +16,7 @@ export default class OrdersRepository {
     return $.ajax({ url: '/admin/orders', method: 'POST', data: { order } })
   }
 
-  static async update (id: string, status: string) {
-    return $.ajax({ url: `/orders/${id}`, method: 'PUT', data: { order: { status } } })
+  static async update (id: string, order: OrderData) {
+    return $.ajax({ url: `/orders/${id}`, method: 'PUT', data: { order } })
   }
 }

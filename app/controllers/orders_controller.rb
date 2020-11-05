@@ -17,6 +17,8 @@ class OrdersController < ApplicationController
   def update
     @order.user_id = current_user.id
 
+    @order.ordered_at = Time.current if order_params[:status] == 'processing'
+
     if @order.update(order_params)
       render json: @order
     else
@@ -42,6 +44,6 @@ class OrdersController < ApplicationController
   end
 
   def order_params
-    params.require(:order).permit(:status)
+    params.require(:order).permit(:status, :payment_method_id, :payment_intent_id)
   end
 end

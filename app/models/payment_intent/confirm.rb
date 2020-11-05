@@ -1,10 +1,11 @@
-class PaymentMethod::Charge
+class PaymentIntent::Confirm
   attr_reader :user, :params, :errors, :payment_intent
 
-  def initialize(user, params)
-    @user = user
+  def initialize(payment_intent, params)
+    @user = payment_intent.user
     @params = params
     @errors = []
+    @payment_intent = payment_intent
   end
 
   def process!
@@ -30,7 +31,12 @@ class PaymentMethod::Charge
   end
 
   def confirm_payment_intent! data
-    @payment_intent = Stripe::PaymentIntent.confirm(params[:id], data)
+    stripe_intent = Stripe::PaymentIntent.confirm(payment_intent.stripe_id, data)
+
+    payment_intent.payment_method_options = stripe_intent.payment_method_options
+    payment_intent.status = stripe_intent.status
+
+    payment_intent.save
   end
 
   def selected_plan

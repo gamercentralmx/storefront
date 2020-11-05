@@ -1,4 +1,4 @@
-import { PaymentIntent } from 'definitions/PaymentIntent'
+import { PaymentIntent, PaymentPlan } from 'definitions/PaymentIntent'
 import { PaymentMethod } from 'definitions/PaymentMethod'
 import { NumberUtils } from 'helpers/NumberUtils'
 import StringUtils from 'helpers/StringUtils'
@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react'
 import { Button, Dropdown, Card, ButtonGroup, Popover, OverlayTrigger } from 'react-bootstrap'
 import { StripeProvider, Elements } from 'react-stripe-elements'
 import OrdersRepository from 'repositories/OrdersRepository'
+import PaymentIntentsRepository from 'repositories/PaymentIntentsRepository'
 import PaymentMethodsRepository from 'repositories/PaymentMethodsRepository'
 import PaymentForm from './PaymentForm'
 
@@ -37,7 +38,7 @@ export default function Checkout (props: Props) {
   const [defaultSource, setDefaultSource] = useState(props.defaultSource)
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([])
   const [showForm, setShowForm] = useState(false)
-  const [selectedPlan, setSelectedPlan] = useState<any>()
+  const [selectedPlan, setSelectedPlan] = useState<PaymentPlan>()
   const [status, setStatus] = useState<PaymentStatus>('pending')
   const [errors, setErrors] = useState<string[]>([])
 
@@ -63,8 +64,8 @@ export default function Checkout (props: Props) {
     const selectedPaymentMethod = find(paymentMethods, { stripe_id: defaultSource })
 
     try {
-      await PaymentMethodsRepository.charge(selectedPaymentMethod.id, paymentIntent.intent_id, selectedPlan)
-      await OrdersRepository.update(orderId, 'processing')
+      await PaymentIntentsRepository.confirm(paymentIntent.id, { selected_plan: selectedPlan })
+      await OrdersRepository.update(orderId, { payment_method_id: selectedPaymentMethod.id, payment_intent_id: paymentIntent.id, status: 'processing' })
       setStatus('success')
 
       setTimeout(() => {
@@ -90,7 +91,7 @@ export default function Checkout (props: Props) {
 
     const selectedPaymentMethod = find(paymentMethods, { stripe_id: defaultSource })
 
-    PaymentMethodsRepository.installments(selectedPaymentMethod.id, amount)
+    PaymentIntentsRepository.create({ payment_method_id: selectedPaymentMethod.id, amount: amount, idempotency_key: `${selectedPaymentMethod.id}-${orderId}` })
       .then((paymentIntent) => setPaymentIntent(paymentIntent))
       .catch()
   }, [defaultSource, paymentMethods.length])
@@ -142,12 +143,12 @@ export default function Checkout (props: Props) {
         onPaymentMethodSelected={handlePaymentMethodSelected} />}
     </Card.Body>
 
-    {!showForm && paymentIntent && paymentIntent.available_plans.length > 0 && <Card.Body className='border-top'>
+    {!showForm && paymentIntent && paymentIntent.payment_method_options.card.installments.available_plans.length > 0 && <Card.Body className='border-top'>
       <h5>Pago a meses sin intereses</h5>
 
       <ButtonGroup>
         <Button variant='outline-secondary' disabled={status === 'success'} onClick={() => setSelectedPlan(undefined)} active={selectedPlan === undefined}>1 MSI</Button>
-        {paymentIntent.available_plans.map((plan) => {
+        {paymentIntent.payment_method_options.card.installments.available_plans.map((plan) => {
           if (plan.count > 12) return
 
           return <Button
@@ -161,7 +162,7 @@ export default function Checkout (props: Props) {
       </ButtonGroup>
     </Card.Body>}
 
-    {!showForm && paymentIntent && paymentIntent.available_plans.length === 0 && <Card.Body className='border-top'>
+    {!showForm && paymentIntent && paymentIntent.payment_method_options.card.installments.available_plans.length === 0 && <Card.Body className='border-top'>
       <p>
         Pago a meses sin intereses no disponible.&nbsp;
         <OverlayTrigger trigger={['hover', 'focus']} placement='bottom' overlay={popover}>
