@@ -42,6 +42,10 @@ class Order < ApplicationRecord
     total.to_f / 100
   end
 
+  def formatted_order_date
+    (ordered_at || created_at).strftime('%d/%m/%Y')
+  end
+
   private
 
   def set_uid
