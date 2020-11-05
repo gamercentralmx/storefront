@@ -12,10 +12,10 @@ class PaymentIntent < ApplicationRecord
     }
   }
 
-  def find_or_create_by(user:, payment_method:, amount:, idempotency_key:)
+  def self.find_or_create_by(user_id:, payment_method_id:, amount:, idempotency_key:)
     where(
-      user_id: user.id,
-      payment_method: payment_method.id,
+      user_id: user_id,
+      payment_method: payment_method_id,
       amount: amount,
       idempotency_key: idempotency_key
     ).first_or_create
@@ -26,13 +26,17 @@ class PaymentIntent < ApplicationRecord
   def create_stripe_payment_intent
     return if stripe_id.present?
 
-    intent = Stripe::PaymentIntent.create({
-      amount: amount,
-      currency: 'mxn',
-      customer: user.stripe_id,
-      payment_method: payment_method.stripe_id,
-      payment_method_options: DEFAULT_PAYMENT_METHOD_OPTIONS
-    }, { idempotency_key: idempotency_key })
+    intent = Stripe::PaymentIntent.create(
+      {
+        amount: amount,
+        currency: 'mxn',
+        customer: user.stripe_id,
+        payment_method: payment_method.stripe_id,
+        payment_method_options: DEFAULT_PAYMENT_METHOD_OPTIONS
+      }, {
+        idempotency_key: idempotency_key
+      }
+    )
 
     self.stripe_id = intent.id
   end

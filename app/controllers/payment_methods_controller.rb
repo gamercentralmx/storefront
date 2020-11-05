@@ -40,17 +40,6 @@ class PaymentMethodsController < ApplicationController
     end
   end
 
-  def installments
-    intent = PaymentMethod::PaymentIntent.new(current_user, @payment_method, params[:amount])
-
-    intent.create
-
-    render json: {
-      intent_id: intent.id,
-      available_plans: intent.available_plans
-    }
-  end
-
   def charge
     charge = PaymentMethod::Charge.new(current_user, payment_intent_params)
 

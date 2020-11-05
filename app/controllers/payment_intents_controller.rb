@@ -11,19 +11,14 @@ class PaymentIntentsController < ApplicationController
   end
 
   def create
-    @payment_intent = PaymentIntent.new(payment_intent_params)
+    @payment_intent = PaymentIntent.find_or_create_by(
+      user_id: current_user.id,
+      payment_method_id: payment_intent_params[:payment_method_id],
+      amount: payment_intent_params[:amount],
+      idempotency_key: payment_intent_params[:idempotency_key],
+    )
 
-    if @payment_intent.save
-      render json: @payment_intent
-    else
-      render json: { errors: @payment_intent.errors.full_messages }, status: :unprocessable_entity
-    end
-  end
-
-  def update
-    @payment_intent = PaymentIntent.find(params[:id])
-
-    if @payment_intent.save(payment_intent_params)
+    if @payment_intent.errors.blank?
       render json: @payment_intent
     else
       render json: { errors: @payment_intent.errors.full_messages }, status: :unprocessable_entity
@@ -33,6 +28,6 @@ class PaymentIntentsController < ApplicationController
   private
 
   def payment_intent_params
-    params.require(:payment_method).permit(:user_id, :payment_method_id, :amount, :idempotency_key, :status)
+    params.require(:payment_method).permit(:payment_method_id, :amount, :idempotency_key)
   end
 end
