@@ -8,6 +8,8 @@ export interface OrderData {
   order_items_attributes?: OrderItemData[]
   payment_method_id?: number
   payment_intent_id?: number
+  address_id?: number
+  invoice_info_id?: number
   status?: string
 }
 

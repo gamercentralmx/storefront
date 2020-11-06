@@ -14,7 +14,6 @@ interface Props {
 export default function AddressForm (props: Props) {
   const { defaultAddress, onAddressChange, status = 'pending' } = props
   const [address, setAddress] = useState(defaultAddress)
-  const formRef = React.createRef<HTMLFormElement>()
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.currentTarget
@@ -30,17 +29,7 @@ export default function AddressForm (props: Props) {
     setAddress(defaultAddress)
   }, [defaultAddress])
 
-  useEffect(() => {
-    if (status === 'failed') {
-      const inputs = formRef.current.getElementsByTagName('input')
-
-      formRef.current.reportValidity()
-
-      forEach(inputs, input => input.reportValidity())
-    }
-  }, [status])
-
-  return <Form onSubmit={(event) => event.preventDefault()} ref={formRef}>
+  return <>
     <Form.Group>
       <Form.Label>Nombre</Form.Label>
 
@@ -100,5 +89,5 @@ export default function AddressForm (props: Props) {
         </Form.Group>
       </Col>
     </Row>
-  </Form>
+  </>
 }

@@ -35,30 +35,37 @@ export default function Checkout (props: Props) {
   const [paymentIntent, setPaymentIntent] = useState<PaymentIntent | undefined>()
   const [defaultSource, setDefaultSource] = useState(props.defaultSource)
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([])
-  const [showForm, setShowForm] = useState(false)
+  const [showCardForm, setShowCardForm] = useState(false)
   const [selectedPlan, setSelectedPlan] = useState<PaymentPlan>()
   const [status, setStatus] = useState<PaymentStatus>('pending')
   const [errors, setErrors] = useState<string[]>([])
   const [shippingAddress, setShippingAddress] = useState<Address | undefined>()
   const [invoiceAddress, setInvoiceAddress] = useState<Address | undefined>()
-  const [useShippingAddress, setUseShippingAddress] = useState(false)
-  const [invoiceRequired, setInvoiceRequired] = useState(false)
 
-  const handleAddressChange = (address: Address) => {
+  const handleShippingAddressChange = (address: Address) => {
     setShippingAddress(address)
-    setStatus('pending')
+
+    if (status === 'failed') {
+      setStatus('pending')
+      setErrors([])
+    }
   }
 
-  const handleInvoiceAddressChange = (address: Address, useShippingAddress: boolean, invoiceRequired: boolean) => {
-    setUseShippingAddress(useShippingAddress)
-    setInvoiceRequired(invoiceRequired)
+  const handleAddressEdit = () => {
+    if (status === 'failed') {
+      setStatus('pending')
+      setErrors([])
+    }
+  }
+
+  const handleInvoiceAddressChange = (address: Address) => {
     setInvoiceAddress(address)
   }
 
   const handlePaymentMethod = (paymentMethod: PaymentMethod) => {
     setPaymentMethods([...paymentMethods, paymentMethod])
     setDefaultSource(paymentMethod.stripe_id)
-    setShowForm(false)
+    setShowCardForm(false)
   }
 
   const handlePaymentMethodSelected = (paymentMethod: PaymentMethod) => {
@@ -72,7 +79,7 @@ export default function Checkout (props: Props) {
   const handleSubmitCheckout = async () => {
     if (status === 'success') return
 
-    if (addressEmpty(shippingAddress)) {
+    if (!shippingAddress) {
       setErrors([...errors, 'Necesitas agregar una dirección de envio para poder realizar el pago.'])
       setStatus('failed')
 
@@ -85,7 +92,15 @@ export default function Checkout (props: Props) {
 
     try {
       await PaymentIntentsRepository.confirm(paymentIntent.id, { selected_plan: selectedPlan })
-      await OrdersRepository.update(order.id, { payment_method_id: selectedPaymentMethod.id, payment_intent_id: paymentIntent.id, status: 'processing' })
+
+      await OrdersRepository.update(order.id, {
+        payment_method_id: selectedPaymentMethod.id,
+        payment_intent_id: paymentIntent.id,
+        status: 'processing',
+        address_id: shippingAddress?.id,
+        invoice_info_id: invoiceAddress?.id
+      })
+
       setStatus('success')
 
       setTimeout(() => {
@@ -100,7 +115,7 @@ export default function Checkout (props: Props) {
   useEffect(() => {
     PaymentMethodsRepository.all()
       .then((paymentMethods) => {
-        if (paymentMethods.length === 0) setShowForm(true)
+        if (paymentMethods.length === 0) setShowCardForm(true)
         setPaymentMethods(paymentMethods)
       })
       .catch()
@@ -126,7 +141,7 @@ export default function Checkout (props: Props) {
         <OrderSummary order={order} />
 
         <Card.Body className='border-top'>
-          <ShippingForm status={status} onAddressChange={handleAddressChange} />
+          <ShippingAddressesSelector onChange={handleShippingAddressChange} />
         </Card.Body>
 
         <Card.Body className='border-top'>
@@ -141,9 +156,9 @@ export default function Checkout (props: Props) {
           <PaymentMethodContainer
             onPaymentMethodAdded={handlePaymentMethod}
             onPaymentMethodSelected={handlePaymentMethodSelected}
-            onOpen={() => setShowForm(true)}
-            onClose={() => setShowForm(false)}
-            showForm={showForm}
+            onOpen={() => setShowCardForm(true)}
+            onClose={() => setShowCardForm(false)}
+            showForm={showCardForm}
             status={status}
             paymentMethods={paymentMethods}
             defaultSource={defaultSource} />
@@ -151,13 +166,13 @@ export default function Checkout (props: Props) {
 
         <Card.Body className='border-top'>
           <PaymentPlanSelector
-            showForm={showForm}
+            showForm={showCardForm}
             onSelectPlan={(selectedPlan?: PaymentPlan) => setSelectedPlan(selectedPlan)}
             selectedPlan={selectedPlan}
             paymentIntent={paymentIntent} />
 
           <NullPaymentPlanSelector
-            showForm={showForm}
+            showForm={showCardForm}
             paymentIntent={paymentIntent} />
         </Card.Body>
 
@@ -171,11 +186,4 @@ export default function Checkout (props: Props) {
       </Card>
     </Col>
   </Row>
-}
-
-
-function addressEmpty (address: Address) {
-  const { street, neighborhood, zip_code, city, state } = address
-
-  return street.length === 0 && neighborhood.length === 0 && zip_code.length === 0 && city.length === 0 && state.length === 0
 }
