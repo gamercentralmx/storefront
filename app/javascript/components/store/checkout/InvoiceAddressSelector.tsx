@@ -8,11 +8,13 @@ import AddressesRepository from 'repositories/AddressesRepository'
 import AddressForm from './AddressForm'
 
 interface Props {
+  shippingAddress: Address
   onChange: (address: Address) => void
 }
 
-export default function ShippingAddressesSelector (props: Props) {
-  const { onChange } = props
+export default function InvoiceAddressSelector (props: Props) {
+  const { shippingAddress, onChange } = props
+  const [invoiceRequired, setInvoiceRequired] = useState(false)
   const [addresses, setAddresses] = useState<Address[]>([])
   const [selectedAddress, setSelectedAddress] = useState<Address | undefined>()
   const [showForm, setShowForm] = useState(false)
@@ -33,7 +35,7 @@ export default function ShippingAddressesSelector (props: Props) {
   }
 
   useEffect(() => {
-    AddressesRepository.all()
+    AddressesRepository.all({ type: 'invoice' })
       .then((addresses) => {
         setAddresses(addresses)
         setShowForm(addresses.length === 0)
@@ -43,24 +45,32 @@ export default function ShippingAddressesSelector (props: Props) {
       .catch()
   }, [0])
 
-  useEffect(() => {
-    if (selectedAddress) onChange(selectedAddress)
-  }, [selectedAddress])
-
-  if (showForm) return <AddressForm onAddressSave={handleAddressSave} onClose={() => setShowForm(false)} />
-
   return <>
-    <Form.Group>
-      <Form.Label>Seleccione una dirección de envío</Form.Label>
-      <Form.Control as='select' custom onChange={handleSelectedAddressChange} value={selectedAddress?.id}>
-        {addresses.map((address) => <option key={`address-${address.id}`} value={address.id}>{formattedAddressName(address)}</option>)}
-      </Form.Control>
-    </Form.Group>
+    <Form.Check type='switch' id='invoiceRequired' label='Facturar mi pedido' checked={invoiceRequired} onChange={() => setInvoiceRequired(!invoiceRequired)} />
 
-    <Button variant='secondary' className='btn-block' onClick={() => setShowForm(true)}><FontAwesomeIcon icon={faPlusCircle} /> Agregar nueva dirección</Button>
+    {invoiceRequired && <>
+      <hr />
+
+      {showForm && <AddressForm
+        defaultAddress={shippingAddress}
+        onAddressSave={handleAddressSave}
+        isTaxForm={true}
+        onClose={() => setShowForm(false)} />}
+
+      {!showForm && <>
+        <Form.Group>
+          <Form.Label>Seleccione los datos de facturación</Form.Label>
+          <Form.Control as='select' custom onChange={handleSelectedAddressChange} value={selectedAddress?.id}>
+            {addresses.map((address) => <option key={`address-${address.id}`} value={address.id}>{formattedAddressName(address)}</option>)}
+          </Form.Control>
+        </Form.Group>
+
+        <Button variant='secondary' className='btn-block' onClick={() => setShowForm(true)}><FontAwesomeIcon icon={faPlusCircle} /> Agregar nueva dirección de facturación</Button>
+      </>}
+    </>}
   </>
 }
 
 function formattedAddressName (address: Address) {
-  return `${address.name} - ${address.street}, ${address.neighborhood}, ${address.city}, ${address.state}, CP ${address.zip_code}`
+  return `${address.business_name} - ${address.tax_id}`
 }

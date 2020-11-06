@@ -14,9 +14,9 @@ import Summary from './Summary'
 import Submit from './Submit'
 import { Order } from 'definitions/Order'
 import OrderSummary from '../OrderSummary'
-import ShippingForm from './ShippingForm'
 import { Address } from 'definitions/Address'
-import InvoiceForm from './InvoiceForm'
+import ShippingAddressesSelector from './ShippingAddressesSelector'
+import InvoiceAddressSelector from './InvoiceAddressSelector'
 
 declare global {
   interface Window { stripeApiKey: string }
@@ -145,7 +145,7 @@ export default function Checkout (props: Props) {
         </Card.Body>
 
         <Card.Body className='border-top'>
-          <InvoiceForm shippingAddress={shippingAddress} onInvoiceAddressChange={handleInvoiceAddressChange} />
+          <InvoiceAddressSelector shippingAddress={shippingAddress} onChange={handleInvoiceAddressChange} />
         </Card.Body>
       </Card>
     </Col>

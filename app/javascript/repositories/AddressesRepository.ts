@@ -1,8 +1,8 @@
 import { Address } from 'definitions/Address'
 
 export default class AddressesRepository {
-  static async all (): Promise<Address[]> {
-    return $.ajax({ url: '/addresses' })
+  static async all (query: any = {}): Promise<Address[]> {
+    return $.ajax({ url: `/addresses?${$.param(query)}` })
   }
 
   static async create (address: Address): Promise<Address> {

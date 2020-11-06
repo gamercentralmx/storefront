@@ -4,6 +4,13 @@ class AddressesController < ApplicationController
 
   def index
     @addresses = current_user.addresses
+
+    @addresses = @addresses.where('(tax_id = \'\') IS FALSE') if params[:type] == 'invoice'
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @addresses }
+    end
   end
 
   def new
