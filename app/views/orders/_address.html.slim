@@ -3,11 +3,17 @@ div
     h6.text-muted Datos de facturación
 
     p
-      | Razón social: #{address.business_name}
+      strong Razón social:
       br
-      | Tipo de Persona: #{address.business_type}
+      | #{address.business_name}
       br
-      | RFC: #{address.tax_id}
+      strong Tipo de Persona:
+      br
+      | #{address.business_type}
+      br
+      strong RFC:
+      br
+      | #{address.tax_id}
 
   - if type == 'shipping'
     h6= address.name

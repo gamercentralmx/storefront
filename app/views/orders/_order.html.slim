@@ -16,7 +16,7 @@
 
         - if order.invoice_info.present?
           .col-md-4
-            = render partial: 'address', locals: { address: order.address, type: 'invoicing' }
+            = render partial: 'address', locals: { address: order.invoice_info, type: 'invoicing' }
 
         - if order.payment_method.present?
           .col-md-4

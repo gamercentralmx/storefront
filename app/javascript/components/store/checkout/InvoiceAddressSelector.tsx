@@ -50,6 +50,10 @@ export default function InvoiceAddressSelector (props: Props) {
       onChange(selectedAddress)
   }, [invoiceRequired])
 
+  useEffect(() => {
+    if (selectedAddress) onChange(selectedAddress)
+  }, [selectedAddress])
+
   return <>
     <Form.Check type='switch' id='invoiceRequired' label='Facturar mi pedido' checked={invoiceRequired} onChange={() => setInvoiceRequired(!invoiceRequired)} />
 
