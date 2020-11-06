@@ -1,10 +1,9 @@
 import { PaymentIntent, PaymentPlan } from 'definitions/PaymentIntent'
 import { PaymentMethod } from 'definitions/PaymentMethod'
 import { PaymentStatus } from 'definitions/PaymentStatus'
-import { NumberUtils } from 'helpers/NumberUtils'
 import { find } from 'lodash'
 import React, { useEffect, useState } from 'react'
-import { Button, Card, Row, Col } from 'react-bootstrap'
+import { Card, Row, Col } from 'react-bootstrap'
 import OrdersRepository from 'repositories/OrdersRepository'
 import PaymentIntentsRepository from 'repositories/PaymentIntentsRepository'
 import PaymentMethodsRepository from 'repositories/PaymentMethodsRepository'
@@ -17,7 +16,6 @@ import Submit from './Submit'
 declare global {
   interface Window { stripeApiKey: string }
 }
-
 
 interface Props {
   defaultSource: string
