@@ -14,6 +14,9 @@ import Summary from './Summary'
 import Submit from './Submit'
 import { Order } from 'definitions/Order'
 import OrderSummary from '../OrderSummary'
+import ShippingForm from './ShippingForm'
+import { Address } from 'definitions/Address'
+import InvoiceForm from './InvoiceForm'
 
 declare global {
   interface Window { stripeApiKey: string }
@@ -36,6 +39,21 @@ export default function Checkout (props: Props) {
   const [selectedPlan, setSelectedPlan] = useState<PaymentPlan>()
   const [status, setStatus] = useState<PaymentStatus>('pending')
   const [errors, setErrors] = useState<string[]>([])
+  const [shippingAddress, setShippingAddress] = useState<Address | undefined>()
+  const [invoiceAddress, setInvoiceAddress] = useState<Address | undefined>()
+  const [useShippingAddress, setUseShippingAddress] = useState(false)
+  const [invoiceRequired, setInvoiceRequired] = useState(false)
+
+  const handleAddressChange = (address: Address) => {
+    setShippingAddress(address)
+    setStatus('pending')
+  }
+
+  const handleInvoiceAddressChange = (address: Address, useShippingAddress: boolean, invoiceRequired: boolean) => {
+    setUseShippingAddress(useShippingAddress)
+    setInvoiceRequired(invoiceRequired)
+    setInvoiceAddress(address)
+  }
 
   const handlePaymentMethod = (paymentMethod: PaymentMethod) => {
     setPaymentMethods([...paymentMethods, paymentMethod])
@@ -53,6 +71,13 @@ export default function Checkout (props: Props) {
 
   const handleSubmitCheckout = async () => {
     if (status === 'success') return
+
+    if (addressEmpty(shippingAddress)) {
+      setErrors([...errors, 'Necesitas agregar una dirección de envio para poder realizar el pago.'])
+      setStatus('failed')
+
+      return
+    }
 
     setStatus('working')
 
@@ -99,6 +124,14 @@ export default function Checkout (props: Props) {
     <Col lg={8}>
       <Card>
         <OrderSummary order={order} />
+
+        <Card.Body className='border-top'>
+          <ShippingForm status={status} onAddressChange={handleAddressChange} />
+        </Card.Body>
+
+        <Card.Body className='border-top'>
+          <InvoiceForm shippingAddress={shippingAddress} onInvoiceAddressChange={handleInvoiceAddressChange} />
+        </Card.Body>
       </Card>
     </Col>
 
@@ -138,4 +171,11 @@ export default function Checkout (props: Props) {
       </Card>
     </Col>
   </Row>
+}
+
+
+function addressEmpty (address: Address) {
+  const { street, neighborhood, zip_code, city, state } = address
+
+  return street.length === 0 && neighborhood.length === 0 && zip_code.length === 0 && city.length === 0 && state.length === 0
 }

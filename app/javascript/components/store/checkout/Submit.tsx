@@ -33,7 +33,7 @@ export default function Submit (props: Props) {
     </div>}
 
     {status === 'failed' && <div style={{ ...subtextStyle, color: 'red' }}>
-      {errors.map((error: string) => <p>{error}</p>)}
+      {errors.map((error: string, index: number) => <p key={`error-${index}-${error}`}>{error}</p>)}
     </div>}
   </>
 }
