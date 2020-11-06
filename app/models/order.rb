@@ -46,6 +46,16 @@ class Order < ApplicationRecord
     (ordered_at || created_at).strftime('%d/%m/%Y')
   end
 
+  def serialize
+    {
+      id: uid,
+      status: status,
+      created_at: created_at,
+      updated_at: updated_at,
+      order_items: order_items.map(&:serialize)
+    }
+  end
+
   private
 
   def set_uid

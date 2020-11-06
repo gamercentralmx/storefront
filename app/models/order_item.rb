@@ -9,4 +9,11 @@ class OrderItem < ApplicationRecord
   def total_in_currency
     total.to_f / 100
   end
+
+  def serialize
+    {
+      qty: qty,
+      product: product.serialize
+    }
+  end
 end

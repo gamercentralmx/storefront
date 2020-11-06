@@ -12,6 +12,8 @@ import PaymentPlanSelector from './PaymentPlanSelector'
 import NullPaymentPlanSelector from './NullPaymentPlanSelector'
 import Summary from './Summary'
 import Submit from './Submit'
+import { Order } from 'definitions/Order'
+import OrderSummary from '../OrderSummary'
 
 declare global {
   interface Window { stripeApiKey: string }
@@ -20,11 +22,11 @@ declare global {
 interface Props {
   defaultSource: string
   amount: number
-  orderId: string
+  order: Order
 }
 
 export default function Checkout (props: Props) {
-  const { amount, orderId } = props
+  const { amount, order } = props
   const amountInCurrency = amount / 100
 
   const [paymentIntent, setPaymentIntent] = useState<PaymentIntent | undefined>()
@@ -58,11 +60,11 @@ export default function Checkout (props: Props) {
 
     try {
       await PaymentIntentsRepository.confirm(paymentIntent.id, { selected_plan: selectedPlan })
-      await OrdersRepository.update(orderId, { payment_method_id: selectedPaymentMethod.id, payment_intent_id: paymentIntent.id, status: 'processing' })
+      await OrdersRepository.update(order.id, { payment_method_id: selectedPaymentMethod.id, payment_intent_id: paymentIntent.id, status: 'processing' })
       setStatus('success')
 
       setTimeout(() => {
-        location.href = `/orders/${orderId}/confirm`
+        location.href = `/orders/${order.id}/confirm`
       }, 1000)
     } catch (error) {
       setStatus('failed')
@@ -84,7 +86,7 @@ export default function Checkout (props: Props) {
 
     const selectedPaymentMethod = find(paymentMethods, { stripe_id: defaultSource })
 
-    PaymentIntentsRepository.create({ payment_method_id: selectedPaymentMethod.id, amount: amount, idempotency_key: `${selectedPaymentMethod.id}-${orderId}` })
+    PaymentIntentsRepository.create({ payment_method_id: selectedPaymentMethod.id, amount: amount, idempotency_key: `${selectedPaymentMethod.id}-${order.id}` })
       .then((paymentIntent) => setPaymentIntent(paymentIntent))
       .catch()
   }, [defaultSource, paymentMethods.length])
@@ -94,6 +96,12 @@ export default function Checkout (props: Props) {
   }, [defaultSource])
 
   return <Row>
+    <Col lg={8}>
+      <Card>
+        <OrderSummary order={order} />
+      </Card>
+    </Col>
+
     <Col lg={4}>
       <Card>
         <Card.Body>

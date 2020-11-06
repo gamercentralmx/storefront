@@ -15,4 +15,14 @@ class Product < ApplicationRecord
   def cost_in_currency
     cost.to_f / 100
   end
+
+  def serialize
+    {
+      name: name,
+      price: price,
+      metadata: metadata,
+      description: description,
+      category_name: category_name
+    }
+  end
 end

@@ -1,7 +1,7 @@
 section.section-specials.padding-y
   .container
     - if user_signed_in?
-      = react_component 'store/checkout/Checkout', { order_id: @order.uid, default_source: current_user.default_source, amount: @order.total }, { camelize_props: true }
+      = react_component 'store/checkout/Checkout', { order: @order.serialize, defaultSource: current_user.default_source, amount: @order.total }
       = image_tag "stripe-logo.png", class: 'float-right', style: 'width: 120px; margin-top: 30px'
     - else
       .row
