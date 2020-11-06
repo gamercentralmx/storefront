@@ -40,7 +40,7 @@ export default function InvoiceForm (props: Props) {
 
   useEffect(() => {
     if (useShippingAddress) {
-      const { name, street, neighborhood, zip_code, city, state, country } = shippingAddress
+      const { name, street, neighborhood, zip_code, city, state } = shippingAddress
 
       setAddress({
         ...address,
@@ -49,8 +49,7 @@ export default function InvoiceForm (props: Props) {
         neighborhood,
         zip_code,
         city,
-        state,
-        country
+        state
       })
     } else {
       setAddress({
@@ -60,8 +59,7 @@ export default function InvoiceForm (props: Props) {
         neighborhood: '',
         zip_code: '',
         city: '',
-        state: '',
-        country: ''
+        state: ''
       })
     }
   }, [useShippingAddress])
