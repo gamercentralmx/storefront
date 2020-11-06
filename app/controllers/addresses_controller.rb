@@ -13,20 +13,32 @@ class AddressesController < ApplicationController
   def create
     @address = current_user.addresses.new(address_params)
 
-    if @address.save
-      redirect_to addresses_path, notice: 'Dirección registrada con éxito.'
-    else
-      flash[:alert] = 'Se produjo un error al guardar esta dirección.'
-      render :new
+    respond_to do |format|
+      if @address.save
+        format.html { redirect_to addresses_path, notice: 'Dirección registrada con éxito.' }
+        format.json { render json: @address, status: :created }
+      else
+        format.html do
+          flash[:alert] = 'Se produjo un error al guardar esta dirección.'
+          render :new, status: :unprocessable_entity
+        end
+        format.json { render json: { errors: @address.errors.full_messages }, status: :unprocessable_entity }
+      end
     end
   end
 
   def update
-    if @address.update(address_params)
-      redirect_to addresses_path, notice: 'Dirección actualizada con éxito.'
-    else
-      flash[:alert] = 'Se produjo un error al guardar esta dirección.'
-      render :new
+    respond_to do |format|
+      if @address.update(address_params)
+        format.html { redirect_to addresses_path, notice: 'Dirección actualizada con éxito.' }
+        format.json { render json: @address }
+      else
+        format.html do
+          flash[:alert] = 'Se produjo un error al guardar esta dirección.'
+          render :edit
+        end
+        format.json { render json: { errors: @address.errors.full_messages }, status: :unprocessable_entity }
+      end
     end
   end
 
