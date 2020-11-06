@@ -51,13 +51,6 @@ export default function Checkout (props: Props) {
     }
   }
 
-  const handleAddressEdit = () => {
-    if (status === 'failed') {
-      setStatus('pending')
-      setErrors([])
-    }
-  }
-
   const handleInvoiceAddressChange = (address: Address) => {
     setInvoiceAddress(address)
   }
