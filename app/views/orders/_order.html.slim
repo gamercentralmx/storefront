@@ -8,10 +8,16 @@
   - if order.processing? or order.shipped? or order.complete?
     .card-body
       .row
+
         - if order.address.present?
-          .col-md-8
+          .col-md-4
             h6.text-muted Dirección de Envio
-            = render order.address
+            = render partial: 'address', locals: { address: order.address, type: 'shipping' }
+
+        - if order.invoice_info.present?
+          .col-md-4
+            = render partial: 'address', locals: { address: order.address, type: 'invoicing' }
+
         - if order.payment_method.present?
           .col-md-4
             h6.text-muted Método de Pago

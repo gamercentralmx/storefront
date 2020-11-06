@@ -39,7 +39,10 @@ export default function AddressForm (props: Props) {
     const form = event.currentTarget;
 
     if (form.checkValidity()) {
-      const saddress = await AddressesRepository.create(address)
+      let saddress: Address
+
+      if (useProvidedAddress) saddress = await AddressesRepository.update(address.id, address)
+      if (!useProvidedAddress) saddress = await AddressesRepository.create(address)
 
       onAddressSave(saddress)
     } else {

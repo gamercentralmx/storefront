@@ -41,7 +41,7 @@ class PaymentIntentsController < ApplicationController
   private
 
   def payment_intent_params
-    params.require(:payment_intent).permit(
+    params.fetch(:payment_intent, {}).permit(
       :payment_method_id,
       :amount,
       :idempotency_key,

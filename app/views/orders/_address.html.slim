@@ -1,0 +1,20 @@
+div
+  - if type == 'invoicing'
+    h6.text-muted Datos de facturación
+
+    p
+      | Razón social: #{address.business_name}
+      br
+      | Tipo de Persona: #{address.business_type}
+      br
+      | RFC: #{address.tax_id}
+
+  - if type == 'shipping'
+    h6= address.name
+
+    p
+      | #{address.street}, #{address.neighborhood}
+      br
+      | #{address.city}, #{address.state}, #{address.country},
+      br
+      | Código Postal: #{address.zip_code}

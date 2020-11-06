@@ -13,6 +13,7 @@ export default class PaymentIntentsRepository {
   }
 
   static async confirm (payment_intent_id: number, payment_intent: PaymentIntentData) {
+    debugger
     return $.ajax({ url: `/payment_intents/${payment_intent_id}/confirm`, method: 'PUT', data: { payment_intent } })
   }
 }

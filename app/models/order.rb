@@ -3,7 +3,7 @@ class Order < ApplicationRecord
   belongs_to :address, optional: true
   belongs_to :payment_method, optional: true
   belongs_to :payment_intent, optional: true
-  belongs_to :invoice_info, optional: true
+  belongs_to :invoice_info, class_name: 'Address', optional: true
   has_many :order_items, dependent: :destroy
 
   accepts_nested_attributes_for :order_items

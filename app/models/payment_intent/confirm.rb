@@ -24,7 +24,7 @@ class PaymentIntent::Confirm
     data[:payment_method_options] = {
       card: {
         installments: {
-          plan: params[:selected_plan].to_unsafe_h
+          plan: selected_plan.to_unsafe_h
         }
       }
     }
@@ -40,7 +40,7 @@ class PaymentIntent::Confirm
   end
 
   def selected_plan
-    @selected_plan ||= params[:selected_plan]
+    @selected_plan ||= params.fetch(:selected_plan, {})
   end
 
   def success?

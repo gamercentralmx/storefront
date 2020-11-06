@@ -34,7 +34,7 @@ class OrdersController < ApplicationController
 
   def validate_owner!
     return if @order.user_id.nil?
-    return if current_user.is_admin? or owner?
+    return if current_user.is_admin? || owner?
 
     redirect_to root_path, alert: 'La pagina que intentas accessar no existe.'
   end
@@ -44,6 +44,6 @@ class OrdersController < ApplicationController
   end
 
   def order_params
-    params.require(:order).permit(:status, :payment_method_id, :payment_intent_id)
+    params.require(:order).permit(:status, :payment_method_id, :payment_intent_id, :address_id, :invoice_info_id)
   end
 end
