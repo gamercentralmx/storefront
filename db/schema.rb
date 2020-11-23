@@ -52,17 +52,6 @@ ActiveRecord::Schema.define(version: 2020_11_05_051313) do
     t.index ["parent_id"], name: "index_categories_on_parent_id"
   end
 
-  create_table "invoice_infos", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.string "name"
-    t.string "tax_id"
-    t.bigint "address_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["address_id"], name: "index_invoice_infos_on_address_id"
-    t.index ["user_id"], name: "index_invoice_infos_on_user_id"
-  end
-
   create_table "order_items", force: :cascade do |t|
     t.bigint "product_id", null: false
     t.bigint "order_id", null: false
@@ -176,8 +165,6 @@ ActiveRecord::Schema.define(version: 2020_11_05_051313) do
   add_foreign_key "addresses", "users"
   add_foreign_key "auth_providers", "users"
   add_foreign_key "categories", "categories", column: "parent_id"
-  add_foreign_key "invoice_infos", "addresses"
-  add_foreign_key "invoice_infos", "users"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "addresses"

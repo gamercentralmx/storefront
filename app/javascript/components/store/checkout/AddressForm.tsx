@@ -53,7 +53,11 @@ export default function AddressForm (props: Props) {
   }
 
   useEffect(() => {
-    if (useProvidedAddress) setAddress(defaultAddress)
+    const { tax_id, business_name, business_type } = address
+
+    if (useProvidedAddress) setAddress({ ...defaultAddress, tax_id, business_name, business_type })
+    if (!useProvidedAddress) setAddress({ tax_id, business_name, business_type })
+
   }, [useProvidedAddress])
 
   return <div>

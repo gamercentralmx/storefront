@@ -38,7 +38,9 @@ export default function ShippingAddressesSelector (props: Props) {
         setAddresses(addresses)
         setShowForm(addresses.length === 0)
 
-        if (addresses.length > 1) setSelectedAddress(addresses[0])
+        if (addresses.length > 0) {
+          setSelectedAddress(addresses[0])
+        }
       })
       .catch()
   }, [0])
