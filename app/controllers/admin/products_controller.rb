@@ -17,6 +17,8 @@ module Admin
       @category = Category.find(params[:product][:category_id])
       @product = Product.new(product_params)
 
+      @product.features = params[:product][:features]
+
       if @product.save
         @product.attach_pictures(params[:product][:pictures_data])
         flash[:notice] = 'Se ha creado el producto de manera exitosa'
@@ -42,7 +44,8 @@ module Admin
         :cost,
         :stock,
         :category_id,
-        metadata: @category.property_names
+        :features,
+        metadata: @category.property_names,
       )
     end
   end

@@ -21,9 +21,8 @@ section.section-specials.bg.pb-3
               small.text-muted.ml-2 45 reseñas
             p= @product.description
             ul.list-check.mb-4
-              li Best performance of battery
-              li 5 years warranty for this product
-              li Best performance of battery
+              - @product.features.each do |feature|
+                li= feature
             .row.mt-3.align-items-center
               .col
                 span.price.h4= number_to_currency @product.price_in_currency
@@ -36,27 +35,11 @@ section.section-specials.bg.pb-3
     article.card.mt-3
       .card-body
         .row
-          aside.col-md-6
+          .col-sm-12
             h5 Características
-            dl.row
-              - @product.metadata.each do |property, value|
+        .row
+          - @product.metadata.each_slice(3) do |slice|
+            - slice.each do |property, value|
+              dl.col-sm-6.row.mb-0
                 dt.col-sm-3= property
                 dd.col-sm-9= value
-
-          aside.col-md-6
-            h5 Features
-
-            ul.list-check
-              li Best performance of battery
-              li 5 years warranty for this product
-              li Amazing features and high quality
-              li Best performance of battery
-              li 5 years warranty for this product
-        hr
-        p
-          | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          | tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          | quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          | consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-          | cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-          | proident, sunt in culpa qui officia deserunt mollit anim id est laborum.

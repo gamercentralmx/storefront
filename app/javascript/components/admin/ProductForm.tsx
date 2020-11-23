@@ -1,7 +1,7 @@
 import { Category } from 'definitions/Category'
 import { find } from 'lodash'
 import React, { useState } from 'react'
-import { Button, Col, Form } from 'react-bootstrap'
+import { Button, Col, Form, FormGroup } from 'react-bootstrap'
 import ProductsRepository from 'repositories/ProductsRepository'
 import ImageUploader from 'react-images-upload'
 import { PictureData } from 'definitions/PictureData'
@@ -20,6 +20,7 @@ export default function ProductForm (props: Props) {
   const [stock, setStock] = useState(0)
   const [metadata, setMetadata] = useState({})
   const [pictures, setPictures] = useState<PictureData[]>([])
+  const [features, setFeatures] = useState<string[]>([])
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { currentTarget } = event
@@ -81,6 +82,12 @@ export default function ProductForm (props: Props) {
     setMetadata(metadata)
   }
 
+  const handleFeaturesChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { value } = event.currentTarget
+
+    setFeatures(value.split('\n'))
+  }
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
@@ -93,7 +100,8 @@ export default function ProductForm (props: Props) {
         price,
         stock,
         category_id: selectedCategory.id!,
-        pictures_data: pictures
+        pictures_data: pictures,
+        features
       })
 
       location.href = '/admin/products'
@@ -167,6 +175,16 @@ export default function ProductForm (props: Props) {
 
 
     {selectedCategory && <CategoryForm category={selectedCategory} onChange={handleMetadataChange} />}
+
+    <Form.Row>
+      <Col>
+        <Form.Group>
+          <Form.Label>Caracteristicas <small>(una caracteristica por linea)</small></Form.Label>
+
+          <Form.Control as='textarea'rows={4} required onChange={handleFeaturesChange} />
+        </Form.Group>
+      </Col>
+    </Form.Row>
 
     <Button variant='secondary' href='/admin/products'>Cancelar</Button>
     <Button variant='primary' type='submit' className='float-right'>Guardar</Button>

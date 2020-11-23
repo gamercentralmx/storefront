@@ -8,6 +8,8 @@ class Product < ApplicationRecord
 
   has_many_attached :pictures
 
+  before_save :parse_features
+
   include Rails.application.routes.url_helpers
 
   def specs
@@ -39,5 +41,11 @@ class Product < ApplicationRecord
       category_name: category_name,
       pictures: pictures.map { |p| rails_blob_path(p, only_path: true) }
     }
+  end
+
+  private
+
+  def parse_features
+    self.features = features.values if features.is_a? Hash
   end
 end

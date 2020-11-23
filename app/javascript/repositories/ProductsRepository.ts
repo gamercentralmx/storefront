@@ -10,6 +10,7 @@ interface ProductData {
   metadata: any
   category_id: number
   pictures_data: PictureData[]
+  features: string[]
 }
 
 export default class ProductsRepository {
@@ -33,6 +34,8 @@ export default class ProductsRepository {
       formData.append(`product[pictures_data][${index}][filename]`, picture.filename)
       formData.append(`product[pictures_data][${index}][content_type]`, picture.content_type)
     })
+
+    data.features.forEach((feature, index) => formData.append(`product[features][${index}]`, feature))
 
     toPairs(data.metadata).map(([property, value]) => {
       formData.append(`product[metadata][${property}]`, value.toString())
