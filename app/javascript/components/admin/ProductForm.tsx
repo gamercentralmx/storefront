@@ -3,6 +3,7 @@ import { find } from 'lodash'
 import React, { useState } from 'react'
 import { Button, Col, Form } from 'react-bootstrap'
 import ProductsRepository from 'repositories/ProductsRepository'
+import ImageUploader from 'react-images-upload'
 
 interface Props {
   categories: Category[]
@@ -62,6 +63,10 @@ export default function ProductForm (props: Props) {
     setSelectedCategory(category)
   }
 
+  const handleImageDrop = (pictureFiles: File[], pictures: string[]) => {
+    console.log(pictureFiles, pictures)
+  }
+
   const handleMetadataChange = (metadata: any) => {
     setMetadata(metadata)
   }
@@ -96,6 +101,20 @@ export default function ProductForm (props: Props) {
       <Form.Label>Descripción</Form.Label>
       <Form.Control as='textarea' rows={4} required name='description' onChange={handleDescriptionChange}></Form.Control>
     </Form.Group>
+
+    <Form.Row>
+      <Col>
+        <ImageUploader
+          className='form-control'
+          withIcon={true}
+          buttonText="Agregar Fotos del producto"
+          onChange={handleImageDrop}
+          imgExtension={['.jpg', '.png']}
+          withPreview={true}
+          maxFileSize={5242880}
+        />
+      </Col>
+    </Form.Row>
 
     <Form.Row>
       <Col>

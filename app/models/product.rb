@@ -4,6 +4,8 @@ class Product < ApplicationRecord
 
   delegate :name, to: :category, prefix: 'category'
 
+  has_many_attached :pictures
+
   def specs
     (metadata || []).map { |_, description| description }
   end
