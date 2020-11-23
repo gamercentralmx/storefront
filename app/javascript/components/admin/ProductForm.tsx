@@ -115,15 +115,19 @@ export default function ProductForm (props: Props) {
 
     <Form.Row>
       <Col>
-        <ImageUploader
-          className='form-control'
-          withIcon={true}
-          buttonText="Agregar Fotos del producto"
-          onChange={handleImageDrop}
-          imgExtension={['.jpg', '.png']}
-          withPreview={true}
-          maxFileSize={5242880}
-        />
+        <Form.Group>
+          <Form.Label>Imagenes del producto</Form.Label>
+
+          <ImageUploader
+            className='form-control'
+            withIcon={true}
+            buttonText="Agregar Fotos del producto"
+            onChange={handleImageDrop}
+            imgExtension={['.jpg', '.png']}
+            withPreview={true}
+            maxFileSize={5242880}
+          />
+        </Form.Group>
       </Col>
     </Form.Row>
 
