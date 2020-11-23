@@ -2,6 +2,8 @@ import React from 'react'
 import { Order, OrderItem } from 'definitions/Order'
 import { Card, Table } from 'react-bootstrap'
 import moment from 'moment'
+import { toPairs } from 'lodash'
+import { NumberUtils } from 'helpers/NumberUtils'
 
 interface Props {
   order: Order
@@ -59,7 +61,7 @@ function OrderItemRow (props: OrderItemRowProps) {
         <figcaption className='info'>
           <span className='title-text-dark'>{product.category_name} - {product.name}</span>
           <p className='text-muted small'>
-            {Object.entries(product.metadata).map(([property, value], index) => {
+            {toPairs(product.metadata).map(([property, value]) => {
               return <span key={`${property}-${value}`}>
                 {property}: {value}
                 <br />
@@ -69,5 +71,10 @@ function OrderItemRow (props: OrderItemRowProps) {
         </figcaption>
       </figure>
     </td>
+    <td>
+      <input className='form-control form-control-sm col-md-6' disabled={true} value={order_item.qty} />
+    </td>
+    <td>{NumberUtils.toMoney((product.price / 100))}</td>
+    <td>{NumberUtils.toMoney((order_item.qty * product.price) / 100)}</td>
   </tr>
 }
