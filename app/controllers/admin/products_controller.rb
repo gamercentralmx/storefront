@@ -18,6 +18,7 @@ module Admin
       @product = Product.new(product_params)
 
       if @product.save
+        @product.attach_pictures(params[:product][:pictures_data])
         flash[:notice] = 'Se ha creado el producto de manera exitosa'
         render json: @product, status: :created
       else
@@ -32,8 +33,6 @@ module Admin
 
       redirect_to admin_products_path, notice: "La categoria \"#{@product.name}\" ha sido eliminada"
     end
-
-    private
 
     def product_params
       params.require(:product).permit(

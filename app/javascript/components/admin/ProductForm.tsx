@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { Button, Col, Form } from 'react-bootstrap'
 import ProductsRepository from 'repositories/ProductsRepository'
 import ImageUploader from 'react-images-upload'
+import { PictureData } from 'definitions/PictureData'
 
 interface Props {
   categories: Category[]
@@ -18,6 +19,7 @@ export default function ProductForm (props: Props) {
   const [cost, setCost] = useState(0)
   const [stock, setStock] = useState(0)
   const [metadata, setMetadata] = useState({})
+  const [pictures, setPictures] = useState<PictureData[]>([])
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { currentTarget } = event
@@ -63,8 +65,16 @@ export default function ProductForm (props: Props) {
     setSelectedCategory(category)
   }
 
-  const handleImageDrop = (pictureFiles: File[], pictures: string[]) => {
-    console.log(pictureFiles, pictures)
+  const handleImageDrop = (files: File[]) => {
+    const picturesData = files.map((file) => {
+      return {
+        io: file,
+        filename: file.name,
+        content_type: file.type
+      }
+    })
+
+    setPictures(picturesData)
   }
 
   const handleMetadataChange = (metadata: any) => {
@@ -83,6 +93,7 @@ export default function ProductForm (props: Props) {
         price,
         stock,
         category_id: selectedCategory.id!,
+        pictures_data: pictures
       })
 
       location.href = '/admin/products'

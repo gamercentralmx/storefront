@@ -18,6 +18,14 @@ class Product < ApplicationRecord
     cost.to_f / 100
   end
 
+  def attach_pictures(pictures_data)
+    pics = pictures_data.values.map do |upload|
+      ActiveStorage::Blob.create_after_upload!(filename: upload[:filename], io: upload[:io])
+    end
+
+    update(pictures: pics)
+  end
+
   def serialize
     {
       name: name,
