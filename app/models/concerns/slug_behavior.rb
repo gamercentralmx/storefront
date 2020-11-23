@@ -6,6 +6,6 @@ module SlugBehavior
   end
 
   def set_slug
-    self.slug = name.sub(' ', '-')
+    self.slug = name.parameterize
   end
 end
