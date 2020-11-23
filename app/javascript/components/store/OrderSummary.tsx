@@ -55,7 +55,7 @@ function OrderItemRow (props: OrderItemRowProps) {
     <td>
       <figure className='itemside align-items-center'>
         <div className='aside'>
-          <img src='/assets/gunslinger.jpg' className='img-sm' />
+          <img src={product.pictures[0] || '/assets/gunslinger.jpg'} className='img-sm' />
         </div>
 
         <figcaption className='info'>

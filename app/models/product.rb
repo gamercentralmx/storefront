@@ -6,6 +6,8 @@ class Product < ApplicationRecord
 
   has_many_attached :pictures
 
+  include Rails.application.routes.url_helpers
+
   def specs
     (metadata || []).map { |_, description| description }
   end
@@ -32,7 +34,8 @@ class Product < ApplicationRecord
       price: price,
       metadata: metadata,
       description: description,
-      category_name: category_name
+      category_name: category_name,
+      pictures: pictures.map { |p| rails_blob_path(p, only_path: true) }
     }
   end
 end
