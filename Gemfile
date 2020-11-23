@@ -20,6 +20,8 @@ gem 'react-rails'
 gem 'stripe'
 gem 'figaro'
 
+gem 'route_translator'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails'

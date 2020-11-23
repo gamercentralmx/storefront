@@ -1,4 +1,17 @@
 es-MX:
+  routes:
+    new: nuevo
+    orders: ordenes
+    confirm: confirmacion
+    checkout: checkout
+    profile: perfil
+    addresses: direcciones
+    payment_methods: metodos_de_pago
+    installments: cuotas
+    make_default: establecer_como_predeterminado
+    charge: cobro
+    payment_intents: intento_de_pago
+    edit: editar
   activerecord:
     attributes:
       user:

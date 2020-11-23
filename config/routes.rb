@@ -1,29 +1,31 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   root to: 'welcome#index'
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
-  resources :orders, only: [:index, :show, :update] do
-    member do
-      get :confirm
-      get :checkout
+  localized do
+    resources :orders, only: [:index, :show, :update] do
+      member do
+        get :confirm
+        get :checkout
+      end
     end
-  end
 
-  resources :profile, only: [:index]
+    resources :profile, only: [:index]
 
-  resources :addresses, except: [:show]
+    resources :addresses, except: [:show]
 
-  resources :payment_methods, except: [:show, :edit, :update] do
-    member do
-      get :installments
-      put :make_default
-      post :charge
+    resources :payment_methods, except: [:show, :edit, :update] do
+      member do
+        get :installments
+        put :make_default
+        post :charge
+      end
     end
-  end
 
-  resources :payment_intents, only: [:index, :create] do
-    member do
-      put :confirm
+    resources :payment_intents, only: [:index, :create] do
+      member do
+        put :confirm
+      end
     end
   end
 
