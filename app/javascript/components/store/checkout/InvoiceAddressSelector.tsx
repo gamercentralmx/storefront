@@ -40,7 +40,7 @@ export default function InvoiceAddressSelector (props: Props) {
         setAddresses(addresses)
         setShowForm(addresses.length === 0)
 
-        if (addresses.length > 1) setSelectedAddress(addresses[0])
+        if (addresses.length > 0) setSelectedAddress(addresses[0])
       })
       .catch()
   }, [0])
@@ -49,10 +49,6 @@ export default function InvoiceAddressSelector (props: Props) {
     if (invoiceRequired && selectedAddress)
       onChange(selectedAddress)
   }, [invoiceRequired])
-
-  useEffect(() => {
-    if (selectedAddress) onChange(selectedAddress)
-  }, [selectedAddress])
 
   return <>
     <Form.Check type='switch' id='invoiceRequired' label='Facturar mi pedido' checked={invoiceRequired} onChange={() => setInvoiceRequired(!invoiceRequired)} />
