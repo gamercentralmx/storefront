@@ -11,7 +11,7 @@ export class NumberUtils {
         maximumFractionDigits: precision
       })
     } catch (error) {
-      console.log('Formatter#toMoney error: ', error)
+      console.error(error)
       return '$0.00'
     }
   }
