@@ -12,6 +12,8 @@ es-MX:
     charge: cobro
     payment_intents: intento_de_pago
     edit: editar
+    products: productos
+    categories: categorias
   activerecord:
     attributes:
       user:

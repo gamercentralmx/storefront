@@ -27,6 +27,10 @@ Rails.application.routes.draw do
         put :confirm
       end
     end
+
+    resources :categories, only: [:show] do
+      resources :products, only: [:show]
+    end
   end
 
   namespace :admin do

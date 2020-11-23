@@ -2,7 +2,9 @@ class Product < ApplicationRecord
   belongs_to :category
   has_many :order_items, dependent: :destroy
 
-  delegate :name, to: :category, prefix: 'category'
+  include SlugBehavior
+
+  delegate :name, :slug, to: :category, prefix: 'category'
 
   has_many_attached :pictures
 
