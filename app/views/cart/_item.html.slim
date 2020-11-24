@@ -1,0 +1,30 @@
+- product = item.product
+tr
+  td
+    figure.itemside.align-items-center
+      .aside
+        = link_to category_product_path(product.category_name, product.slug) do
+          = image_tag rails_blob_path(product.pictures.first || 'gunslinger.jpg'), class: 'img-sm'
+      figcaption.info
+        = link_to product.name, category_product_path(product.category_name, product.slug), class: 'title text-dark'
+
+  td
+    .input-group.input-spinner
+      .input-group-prepend
+        = link_to subtract_cart_index_path(product_id: product.id), class: 'btn btn-light', method: 'PUT' do
+          i.fa.fa-minus
+      input.form-control(type="text" readonly=true value="#{item.qty}")
+      .input-group-append
+        = link_to add_cart_index_path(product_id: product.id), class: 'btn btn-light', method: 'PUT' do
+          i.fa.fa-plus
+
+  td
+    .price-wrap
+      var.price= number_to_currency(item.total_in_currency)
+      small.text-muted
+        = number_to_currency(product.price_in_currency)
+        | &nbsp;
+        | c/u
+
+  td.text-right
+    = link_to "Eliminar", cart_index_path(product_id: product.id), class: 'btn btn-light', method: 'DELETE'

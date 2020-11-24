@@ -16,6 +16,7 @@ es-MX:
     categories: categorias
     cart: carrito
     add: agregar
+    subtract: disminuir
   activerecord:
     attributes:
       user:

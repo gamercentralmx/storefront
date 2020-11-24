@@ -1,6 +1,6 @@
 module ApplicationHelper
   def alert_helper(text:, intent: 'primary')
-    tag.div(class: "alert alert-#{intent}", role: 'alert') do
+    tag.div(class: "alert alert-#{intent}", role: 'alert', style: 'margin-bottom: 0; border-radius: 0') do
       tag.div(class: 'container') do
         content = tag.span text.html_safe
 
