@@ -10,6 +10,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :shopping_cart, only: :index
+
     resources :profile, only: [:index]
 
     resources :addresses, except: [:show]

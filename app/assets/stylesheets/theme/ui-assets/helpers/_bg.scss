@@ -41,7 +41,7 @@
 .overlay-gradient {position:relative;
     &:before{position:absolute; content:""; display:block; top:0; left:0; right:0; bottom:0;
         opacity:.6; transition:.5s;
-        @include diagonalGradient($blue, aqua);  
+        @include diagonalGradient($blue, aqua);
     }
     &:hover:before{opacity:.9;}
 }

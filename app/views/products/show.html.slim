@@ -14,11 +14,6 @@ section.section-specials.bg.pb-3
         main.col-md-6.border-left
           article.content-body
             h3.title= @product.name
-            .rating-wrap.mb-3
-              span.badge.badge-warning
-                i.fa.fa-star
-                | 3.8
-              small.text-muted.ml-2 45 reseñas
             p= @product.description
             ul.list-check.mb-4
               - @product.features.each do |feature|
@@ -28,7 +23,7 @@ section.section-specials.bg.pb-3
                 span.price.h4= number_to_currency @product.price_in_currency
 
               .col.text-right
-                a.btn.btn-primary.ml-1 href="#"
+                a.btn.btn-success.ml-1 href="#"
                   span.text Agregar al carrito
                   i.icon.fas.fa-shopping-cart
 
