@@ -8,6 +8,7 @@ export interface Product {
   price: number
   stock: number
   category_name: string
+  pictures: string[]
   created_at: Date
   updated_at: Date
 }

@@ -1,4 +1,4 @@
-section.section-specials.padding-y
+section.section-specials.padding-y.bg
   .container
     - if user_signed_in?
       = react_component 'store/checkout/Checkout', { order: @order.serialize, defaultSource: current_user.default_source, amount: @order.total }

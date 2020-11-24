@@ -1,8 +1,10 @@
 import { Category } from 'definitions/Category'
 import { find } from 'lodash'
 import React, { useState } from 'react'
-import { Button, Col, Form } from 'react-bootstrap'
+import { Button, Col, Form, FormGroup } from 'react-bootstrap'
 import ProductsRepository from 'repositories/ProductsRepository'
+import ImageUploader from 'react-images-upload'
+import { PictureData } from 'definitions/PictureData'
 
 interface Props {
   categories: Category[]
@@ -17,6 +19,8 @@ export default function ProductForm (props: Props) {
   const [cost, setCost] = useState(0)
   const [stock, setStock] = useState(0)
   const [metadata, setMetadata] = useState({})
+  const [pictures, setPictures] = useState<PictureData[]>([])
+  const [features, setFeatures] = useState<string[]>([])
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { currentTarget } = event
@@ -62,8 +66,26 @@ export default function ProductForm (props: Props) {
     setSelectedCategory(category)
   }
 
+  const handleImageDrop = (files: File[]) => {
+    const picturesData = files.map((file) => {
+      return {
+        io: file,
+        filename: file.name,
+        content_type: file.type
+      }
+    })
+
+    setPictures(picturesData)
+  }
+
   const handleMetadataChange = (metadata: any) => {
     setMetadata(metadata)
+  }
+
+  const handleFeaturesChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { value } = event.currentTarget
+
+    setFeatures(value.split('\n'))
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -78,6 +100,8 @@ export default function ProductForm (props: Props) {
         price,
         stock,
         category_id: selectedCategory.id!,
+        pictures_data: pictures,
+        features
       })
 
       location.href = '/admin/products'
@@ -96,6 +120,24 @@ export default function ProductForm (props: Props) {
       <Form.Label>Descripción</Form.Label>
       <Form.Control as='textarea' rows={4} required name='description' onChange={handleDescriptionChange}></Form.Control>
     </Form.Group>
+
+    <Form.Row>
+      <Col>
+        <Form.Group>
+          <Form.Label>Imagenes del producto</Form.Label>
+
+          <ImageUploader
+            className='form-control'
+            withIcon={true}
+            buttonText="Agregar Fotos del producto"
+            onChange={handleImageDrop}
+            imgExtension={['.jpg', '.png']}
+            withPreview={true}
+            maxFileSize={5242880}
+          />
+        </Form.Group>
+      </Col>
+    </Form.Row>
 
     <Form.Row>
       <Col>
@@ -133,6 +175,16 @@ export default function ProductForm (props: Props) {
 
 
     {selectedCategory && <CategoryForm category={selectedCategory} onChange={handleMetadataChange} />}
+
+    <Form.Row>
+      <Col>
+        <Form.Group>
+          <Form.Label>Caracteristicas <small>(una caracteristica por linea)</small></Form.Label>
+
+          <Form.Control as='textarea'rows={4} required onChange={handleFeaturesChange} />
+        </Form.Group>
+      </Col>
+    </Form.Row>
 
     <Button variant='secondary' href='/admin/products'>Cancelar</Button>
     <Button variant='primary' type='submit' className='float-right'>Guardar</Button>
