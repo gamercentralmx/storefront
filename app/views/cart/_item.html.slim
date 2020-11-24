@@ -4,7 +4,7 @@ tr
     figure.itemside.align-items-center
       .aside
         = link_to category_product_path(product.category_name, product.slug) do
-          = image_tag rails_blob_path(product.pictures.first || 'gunslinger.jpg'), class: 'img-sm'
+          = product_image_tag product, class: 'img-sm'
       figcaption.info
         = link_to product.name, category_product_path(product.category_name, product.slug), class: 'title text-dark'
 

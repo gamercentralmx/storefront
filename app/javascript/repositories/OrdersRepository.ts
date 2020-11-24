@@ -19,6 +19,6 @@ export default class OrdersRepository {
   }
 
   static async update (id: string, order: OrderData) {
-    return $.ajax({ url: `/orders/${id}`, method: 'PUT', data: { order } })
+    return $.ajax({ url: `/ordenes/${id}`, method: 'PUT', data: { order } })
   }
 }

@@ -30,4 +30,10 @@ module ApplicationHelper
 
     "#{user.id}. #{user.full_name} - #{user.email}"
   end
+
+  def product_image_tag(product, options = {})
+    picture = product.pictures.any? ? rails_blob_path(product.pictures.first) : 'gunslinger.jpg'
+
+    image_tag(picture, options)
+  end
 end
