@@ -30,6 +30,10 @@ class CartController < ApplicationController
     redirect_to cart_index_path, notice: 'Producto eliminado del carrito con exito.'
   end
 
+  def checkout
+
+  end
+
   private
 
   def store_location!

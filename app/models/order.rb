@@ -68,6 +68,6 @@ class Order < ApplicationRecord
   private
 
   def set_uid
-    self.uid = SecureRandom.alphanumeric(10)
+    self.uid = SecureRandom.alphanumeric(6).upcase
   end
 end

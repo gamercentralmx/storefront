@@ -9,10 +9,10 @@ interface PaymentIntentData {
 
 export default class PaymentIntentsRepository {
   static async create (payment_intent: PaymentIntentData) {
-    return $.ajax({ url: '/payment_intents', method: 'POST', data: { payment_intent } })
+    return $.ajax({ url: '/intentos_de_pago', method: 'POST', data: { payment_intent } })
   }
 
   static async confirm (payment_intent_id: number, payment_intent: PaymentIntentData) {
-    return $.ajax({ url: `/payment_intents/${payment_intent_id}/confirm`, method: 'PUT', data: { payment_intent } })
+    return $.ajax({ url: `/intentos_de_pago/${payment_intent_id}/confirmacion`, method: 'PUT', data: { payment_intent } })
   }
 }

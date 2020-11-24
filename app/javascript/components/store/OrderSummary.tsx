@@ -60,14 +60,6 @@ function OrderItemRow (props: OrderItemRowProps) {
 
         <figcaption className='info'>
           <span className='title-text-dark'>{product.category_name} - {product.name}</span>
-          <p className='text-muted small'>
-            {toPairs(product.metadata).map(([property, value]) => {
-              return <span key={`${property}-${value}`}>
-                {property}: {value}
-                <br />
-              </span>
-            })}
-          </p>
         </figcaption>
       </figure>
     </td>

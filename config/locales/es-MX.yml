@@ -10,7 +10,7 @@ es-MX:
     installments: cuotas
     make_default: establecer_como_predeterminado
     charge: cobro
-    payment_intents: intento_de_pago
+    payment_intents: intentos_de_pago
     edit: editar
     products: productos
     categories: categorias
