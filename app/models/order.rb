@@ -10,6 +10,7 @@ class Order < ApplicationRecord
 
   enum status: {
     pending: 'pending',
+    paid: 'paid',
     processing: 'processing',
     shipped: 'shipped',
     complete: 'complete',
@@ -34,6 +35,10 @@ class Order < ApplicationRecord
 
   before_create :set_uid
 
+  def self.current
+    where(status: 'pending').first_or_create
+  end
+
   def total
     order_items.map(&:total).sum
   end
@@ -44,6 +49,10 @@ class Order < ApplicationRecord
 
   def formatted_order_date
     (ordered_at || created_at).strftime('%d/%m/%Y')
+  end
+
+  def total_items
+    order_items.sum(:qty)
   end
 
   def serialize

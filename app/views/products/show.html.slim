@@ -23,9 +23,9 @@ section.section-specials.bg.pb-3
                 span.price.h4= number_to_currency @product.price_in_currency
 
               .col.text-right
-                a.btn.btn-success.ml-1 href="#"
-                  span.text Agregar al carrito
-                  i.icon.fas.fa-shopping-cart
+                = link_to add_cart_index_path(product_id: @product.id), class: 'btn btn-success ml-1', method: 'PUT' do
+                    span.text Agregar al carrito
+                    i.icon.fas.fa-shopping-cart
 
     article.card.mt-3
       .card-body

@@ -1,0 +1,56 @@
+section.section-pagetop.bg
+  .container
+    h2.title-page Carrito de compras
+
+section.section-content.padding-y
+  .container
+    .row
+      main.col-md-9
+        - if @order.order_items.any?
+          .card
+            = react_component 'CartIndex'
+
+            .card-body.border-top
+              = link_to checkout_cart_index_path, class: 'btn btn-primary float-md-right' do
+                | Make Purchase
+                | &nbsp;
+                i.fa.fa-chevron-right
+
+              = link_to root_path, class: 'btn btn-light' do
+                i.fa.fa-chevron-left
+                | &nbsp;
+                | Seguir comprando
+          .alert.alert-success.mt-3
+            p.icontext
+              i.icon.text-success.fa.fa-truck
+              | Free Delivery within 1-2 weeks
+        - else
+            h3 Tu carrito de compras esta vacío.
+            = link_to "Seguir comprando", root_path, class: 'btn btn-primary'
+      - if @order.order_items.any?
+        aside.col-md-3
+          .card.mb-3
+            .card-body
+              form
+                .form-group
+                  label Have coupon?
+                  .input-group
+                    input.form-control name="" placeholder=("Coupon code") type="text"
+                    span.input-group-append
+                      button.btn.btn-primary Apply
+
+          .card
+            .card-body
+              dl.dlist-align
+                dt Total price:
+                dd.text-right USD 568
+              dl.dlist-align
+                dt Discount:
+                dd.text-right USD 658
+              dl.dlist-align
+                dt Total:
+                dd.text-right.h5
+                  strong $1,650
+              hr/
+              p.text-center.mb-3
+                img height="26" src="images/misc/payments.png"

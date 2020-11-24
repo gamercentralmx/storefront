@@ -3,7 +3,7 @@ es-MX:
     new: nuevo
     orders: ordenes
     confirm: confirmacion
-    checkout: checkout
+    checkout: comprar
     profile: perfil
     addresses: direcciones
     payment_methods: metodos_de_pago
@@ -14,7 +14,8 @@ es-MX:
     edit: editar
     products: productos
     categories: categorias
-    shopping_cart: carrito_de_compras
+    cart: carrito
+    add: agregar
   activerecord:
     attributes:
       user:
