@@ -32,6 +32,14 @@ class Product < ApplicationRecord
     update(pictures: pics)
   end
 
+  def publish!
+    update(published: true)
+  end
+
+  def unpublish!
+    update(published: false)
+  end
+
   def serialize
     {
       name: name,

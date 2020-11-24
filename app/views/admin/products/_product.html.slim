@@ -18,8 +18,15 @@ tr
   td= number_to_currency(product.price_in_currency, precision: 2)
 
   td
-    = link_to admin_product_path(product.id), class: 'btn btn-danger btn-sm', method: 'DELETE', data: { confirm: 'Seguro que quieres borrar este producto? Esta acción no puede deshacerse', toggle: 'tooltip', placement: 'top' }, title: 'Eliminar' do
+    = link_to admin_product_path(product.id), class: 'btn btn-danger btn-sm mt-1 mr-1', method: 'DELETE', data: { confirm: 'Seguro que quieres borrar este producto? Esta acción no puede deshacerse', toggle: 'tooltip', placement: 'top' }, title: 'Eliminar' do
       .fa.fa-trash-alt
 
-    = link_to category_product_path(product.category_slug, product.slug), class: 'btn btn-success btn-sm mt-1', data: { toggle: 'tooltip', placement: 'top' }, target: '_blank', title: 'Ver pagina de producto' do
+    = link_to category_product_path(product.category_slug, product.slug), class: 'btn btn-success btn-sm mt-1 mr-1', data: { toggle: 'tooltip', placement: 'top' }, target: '_blank', title: 'Ver pagina de producto' do
       .fas.fa-shopping-bag
+
+    - if product.published
+      = link_to unpublish_admin_product_path(product.id), class: 'btn btn-secondary btn-sm mt-1 mr-1', method: 'PUT', data: { toggle: 'tooltip', placement: 'top' }, title: 'Ocultar producto' do
+        .fas.fa-eye-slash
+    - else
+      = link_to publish_admin_product_path(product.id), class: 'btn btn-primary btn-sm mt-1 mr-1', method: 'PUT', data: { toggle: 'tooltip', placement: 'top' }, title: 'Publicar producto' do
+        .fas.fa-eye

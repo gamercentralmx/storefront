@@ -37,7 +37,12 @@ Rails.application.routes.draw do
     root to: 'dashboard#index'
 
     resources :categories
-    resources :products
+    resources :products do
+      member do
+        put :publish
+        put :unpublish
+      end
+    end
     resources :orders
     resources :users
   end

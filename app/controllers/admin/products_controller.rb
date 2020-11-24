@@ -33,8 +33,26 @@ module Admin
 
       @product.destroy
 
-      redirect_to admin_products_path, notice: "La categoria \"#{@product.name}\" ha sido eliminada"
+      redirect_to admin_products_path, notice: "El producto \"#{@product.name}\" ha sido eliminada"
     end
+
+    def publish
+      @product = Product.find(params[:id])
+
+      @product.publish!
+
+      redirect_to admin_products_path, notice: "El producto \"#{@product.name}\" ha sido publicado con éxito"
+    end
+
+    def unpublish
+      @product = Product.find(params[:id])
+
+      @product.unpublish!
+
+      redirect_to admin_products_path, notice: "El producto \"#{@product.name}\" ha sido ocultado con éxito"
+    end
+
+    private
 
     def product_params
       params.require(:product).permit(
