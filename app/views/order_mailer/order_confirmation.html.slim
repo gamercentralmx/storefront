@@ -1,0 +1,13 @@
+- content_for :title do
+  | ¡Gracias por tu compra!
+
+- content_for :text do
+  p(style='margin-bottom: 15px')
+    | Recibiras un correo una ves que tus productos sean enviados a ti,
+    |  si tienes alguna pregunta no dudes en mandarnos tus comentarios a
+    |  #{link_to 'contacto@gamercentral.mx', 'mailto:contacto@gamercentral.mx'}.
+
+  div(style='margin-bottom: 20px')
+
+- content_for :action do
+  = link_to "VER ORDEN", order_url(@order.uid), style: 'color: #ffffff; text-decoration: none;'

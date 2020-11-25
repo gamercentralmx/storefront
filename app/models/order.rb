@@ -70,6 +70,10 @@ class Order < ApplicationRecord
     }
   end
 
+  def send_order_confirmation!
+    OrderMailer.with(order: self).order_confirmation.deliver_now
+  end
+
   private
 
   def set_uid
