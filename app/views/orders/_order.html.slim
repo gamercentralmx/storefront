@@ -5,23 +5,21 @@
     .float-right
       span(class="badge badge-#{Order::STATUS_INTENTS[order.status]}")
         = Order::STATUS_TRANSLATIONS[order.status]
-  - if order.processing? or order.shipped? or order.complete?
-    .card-body
-      .row
+  .card-body
+    .row
+      - if order.address.present?
+        .col-md-4
+          h6.text-muted Dirección de Envio
+          = render partial: 'address', locals: { address: order.address, type: 'shipping' }
 
-        - if order.address.present?
-          .col-md-4
-            h6.text-muted Dirección de Envio
-            = render partial: 'address', locals: { address: order.address, type: 'shipping' }
+      - if order.invoice_info.present?
+        .col-md-4
+          = render partial: 'address', locals: { address: order.invoice_info, type: 'invoicing' }
 
-        - if order.invoice_info.present?
-          .col-md-4
-            = render partial: 'address', locals: { address: order.invoice_info, type: 'invoicing' }
-
-        - if order.payment_method.present?
-          .col-md-4
-            h6.text-muted Método de Pago
-            = render partial: 'payment_method', locals: { payment_method: order.payment_method, order: order, payment_intent: order.payment_intent }
+      - if order.payment_method.present?
+        .col-md-4
+          h6.text-muted Método de Pago
+          = render partial: 'payment_method', locals: { payment_method: order.payment_method, order: order, payment_intent: order.payment_intent }
   .card-body.border-top
     table.table.table-borderless.table-shopping-cart
       thead.text-muted
