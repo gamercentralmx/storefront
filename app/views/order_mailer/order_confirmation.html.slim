@@ -1,0 +1,109 @@
+- address = @order.address
+
+- content_for :title do
+  | ¡Gracias por tu compra!
+  br
+  = link_to "Orden ##{@order.uid}", order_url(@order.uid)
+
+- content_for :text do
+  p(style='margin-bottom: 15px')
+    | Recibiras un correo una ves que tus productos sean enviados la dirección que nos proporcionaste,
+    |  si tienes alguna pregunta no dudes en mandarnos tus comentarios a
+    |  #{link_to 'contacto@gamercentral.mx', 'mailto:contacto@gamercentral.mx'}.
+
+  p(style='margin-bottom: 5px; font-weight: 700;')
+    | Dirección de envío:
+  p(style='margin-bottom: 20px')
+    span(style='font-weight: 700')
+      = address.name
+    br
+    | #{address.street}, #{address.neighborhood}
+    br
+    | #{address.city}, #{address.state}, #{address.country},
+    br
+    | Código Postal: #{address.zip_code}
+
+  table class="container590" width="590" cellspacing="0" cellpadding="0" border="0" align="center" style="border-top: 1px solid #eee; margin: 10px 0;"
+
+  div(style='margin-bottom: 20px')
+    table.container590 align="center" border="0" cellpadding="0" cellspacing="0" width="590"
+      tbody
+        tr
+          td
+            table.container590 align="left" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" width="340"
+              tbody
+                tr
+                  td.main-header align="left" style="color: #888888; font-size: 16px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 24px;"
+                    | Producto
+          td
+            table.container590 border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" width="30"
+              tbody
+                tr
+                  td.main-header align="left" style="color: #888888; font-size: 16px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 24px;"
+                    div style="line-height: 35px"
+                      | Cant.
+          td
+            table.container590 align="right" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" width="150px"
+              tbody
+                tr
+                  td.main-header align="left" style="color: #888888; font-size: 16px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 24px;"
+                    div style="line-height: 35px"
+                      | Precio
+
+    = render partial: 'order_mailer/order_item', collection: @order.order_items
+
+    table class="container590" width="590" cellspacing="0" cellpadding="0" border="0" align="center" style="border-top: 1px solid #eee; margin: 10px 0;"
+
+    table.container590 align="center" border="0" cellpadding="0" cellspacing="0" width="590"
+      tbody
+        tr
+          td
+            table.container590 align="left" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" width="340"
+              tbody
+                tr
+                  td.main-header align="left" style="color: #888888; font-size: 16px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 24px;"
+                    | &nbsp;
+          td
+            table.container590 border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" width="30"
+              tbody
+                tr
+                  td.main-header align="right" style="color: #888888; font-size: 16px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 24px;"
+                    div style="line-height: 35px"
+                      | IVA
+          td
+            table.container590 align="right" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" width="150px"
+              tbody
+                tr
+                  td.main-header align="left" style="color: #888888; font-size: 16px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 24px;"
+                    div style="line-height: 35px"
+                      = number_to_currency(@order.total_in_currency.to_f * 0.16)
+
+    table.container590 align="center" border="0" cellpadding="0" cellspacing="0" width="590"
+      tbody
+        tr
+          td
+            table.container590 align="left" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" width="340"
+              tbody
+                tr
+                  td.main-header align="left" style="color: #888888; font-size: 16px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 24px;"
+                    | &nbsp;
+          td
+            table.container590 border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" width="30"
+              tbody
+                tr
+                  td.main-header align="right" style="color: #888888; font-size: 16px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 24px;"
+                    div style="line-height: 35px"
+                      | Total
+          td
+            table.container590 align="right" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" width="150px"
+              tbody
+                tr
+                  td.main-header align="left" style="color: #888888; font-size: 16px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 24px;"
+                    div style="line-height: 35px"
+                      = number_to_currency(@order.total_in_currency)
+
+  p(style='margin: 15px 0;')
+    | Para ver mas detalles sobre tu orden haz click en el siguiente enlace, ¡Gracias por comprar con nosotros!
+
+- content_for :action do
+  = link_to "VER ORDEN", order_url(@order.uid), style: 'color: #ffffff; text-decoration: none;'

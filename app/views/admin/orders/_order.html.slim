@@ -11,7 +11,7 @@ tr
 
   td= order.order_items.count
 
-  td= number_to_currency(order.total.to_f / 100, precision: 2)
+  td= number_to_currency(order.total_in_currency, precision: 2)
 
   td
     = link_to admin_order_path(order.id), class: 'btn btn-primary btn-sm', data: { toggle: 'tooltip', placement: 'top' }, title: 'Ver' do

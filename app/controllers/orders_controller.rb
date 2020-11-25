@@ -17,9 +17,8 @@ class OrdersController < ApplicationController
   def update
     @order.user_id = current_user.id
 
-    @order.ordered_at = Time.current if order_params[:status] == 'processing'
-
     if @order.update(order_params)
+      @order.transition_to_paid! if order_params[:status] == 'paid'
       render json: @order
     else
       render json: @order.errors.full_errors, status: :unprocessable_entity
