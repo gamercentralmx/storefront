@@ -1,0 +1,57 @@
+section.section-pagetop.bg
+  .container
+    h2.title-page Carrito de compras
+
+section.section-content.bg.pb-4(style='min-height: 50vh')
+  .container
+    .row
+      main.col-md-9
+        - if @order.order_items.any?
+          .card
+            table.table.table-borderless.table-shopping-cart
+              thead.text-muted
+                tr.small.text-uppercase
+                  th(scope="col") Producto
+                  th(scope="col" width="120") Cantidad
+                  th(scope="col" width="120") Precio
+                  th(scope="col" class="text-right" width="200")
+              tbody
+                = render partial: 'item', collection: @order.order_items
+
+          .alert.alert-success.mt-3
+            p.icontext
+              i.icon.text-success.fa.fa-truck
+              | Todos los equipos se envían dentro de los siguientes 5 a 10 días hábiles después de la compra
+        - else
+          h3 Tu carrito de compras esta vacío.
+          = link_to "Seguir comprando", root_path, class: 'btn btn-primary'
+      - if @order.order_items.any?
+        aside.col-md-3
+          .card
+            .card-body
+              dl.dlist-align
+                dt Total de articulos:
+                dd.text-right= number_to_currency(@order.total_in_currency)
+              dl.dlist-align
+                dt Costo de envío:
+                dd.text-right= number_to_currency(99)
+              dl.dlist-align
+                dt Total:
+                dd.text-right.h5
+                  strong= number_to_currency(@order.total_in_currency + 99)
+
+              hr
+
+              p.text-center.mb-3
+                = image_tag "misc/payments.png", height: 26
+
+              hr
+
+              = link_to checkout_cart_index_path, class: 'btn btn-success btn-block' do
+                | Método de pago
+                | &nbsp;
+                i.fa.fa-chevron-right
+
+              = link_to root_path, class: 'btn btn-light btn-block' do
+                | Seguir comprando
+

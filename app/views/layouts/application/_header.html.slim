@@ -8,10 +8,9 @@ header.section-header
 
         .col-lg-3.col-12.col-sm-12.offset-lg-6
           .widgets-wrap.d-flex.justify-content-end
-            .widget-header.mr-3
-              = link_to shopping_cart_index_path, class: 'icon icon-sm border rounded-circle' do
-                i.fa.fa-shopping-cart
-              span.badge.badge-pill.badge-danger.notify 0
+
+            = shopping_cart
+
             .widget-header.dropdown
               a.ml-3.icontext aria-expanded="false" data-offset="20,10" data-toggle="dropdown" href="#"
                 .icon
@@ -22,6 +21,7 @@ header.section-header
                     br
                     span
                       | Mi cuenta
+                      | &nbsp;
                       i.fa.fa-caret-down
                 - else
                   .text
@@ -29,6 +29,7 @@ header.section-header
                     br
                     span
                       | Mi Cuenta
+                      | &nbsp;
                       i.fa.fa-caret-down
               .dropdown-menu.dropdown-menu-right style=("position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(140px), 46px, 0px);") x-placement="bottom-end"
                 = render 'layouts/application/sign_in_form' unless user_signed_in?

@@ -97,7 +97,7 @@ export default function Checkout (props: Props) {
       setStatus('success')
 
       setTimeout(() => {
-        location.href = `/orders/${order.id}/confirm`
+        location.href = `/ordenes/${order.id}/confirmacion`
       }, 1000)
     } catch (error) {
       setStatus('failed')

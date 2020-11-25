@@ -1,0 +1,10 @@
+section.section-specials.padding-y.bg
+  .container
+    - if user_signed_in?
+      = react_component 'store/checkout/Checkout', { order: @order.serialize, defaultSource: current_user.default_source, amount: @order.total }
+      = image_tag "stripe-logo.png", class: 'float-right', style: 'width: 120px; margin-top: 30px'
+    - else
+      .row
+        .col-md-8
+          = render @order
+        = render 'sign_in_form'

@@ -10,7 +10,15 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :shopping_cart, only: :index
+    resources :cart, only: :index do
+      collection do
+        get :checkout
+        get :add
+        put :add
+        put :subtract
+        delete :destroy
+      end
+    end
 
     resources :profile, only: [:index]
 

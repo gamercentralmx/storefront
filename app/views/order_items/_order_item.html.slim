@@ -3,13 +3,10 @@ tr
   td
     figure.itemside.align-items-center
       .aside
-        = image_tag 'gunslinger.jpg', class: 'img-sm'
+        = link_to category_product_path(product.category_slug, product.slug) do
+          = product_image_tag product, class: 'img-sm'
       figcaption.info
-        span.title-text-dark #{product.category_name} - #{product.name}
-        p.text-muted.small
-          - (product.metadata || []).each do |property, value|
-            | #{property}: #{value}
-            br
+        = link_to "#{product.category_name} - #{product.name}", category_product_path(product.category_slug, product.slug), class: 'title text-dark'
 
   td
     input.form-control.form-control-sm.col-md-6(disabled='true' value="#{order_item.qty}")

@@ -3,6 +3,14 @@ class ApplicationController < ActionController::Base
 
   before_action :set_locale
 
+  helper_method :current_order
+
+  def current_order
+    return unless user_signed_in?
+
+    current_user.orders.current
+  end
+
   protected
 
   def set_locale

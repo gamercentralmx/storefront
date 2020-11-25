@@ -1,6 +1,6 @@
 module ApplicationHelper
   def alert_helper(text:, intent: 'primary')
-    tag.div(class: "alert alert-#{intent}", role: 'alert') do
+    tag.div(class: "alert alert-#{intent}", role: 'alert', style: 'margin-bottom: 0; border-radius: 0') do
       tag.div(class: 'container') do
         content = tag.span text.html_safe
 
@@ -29,5 +29,11 @@ module ApplicationHelper
     return 'No asignado' if user.nil?
 
     "#{user.id}. #{user.full_name} - #{user.email}"
+  end
+
+  def product_image_tag(product, options = {})
+    picture = product.pictures.any? ? rails_blob_path(product.pictures.first) : 'gunslinger.jpg'
+
+    image_tag(picture, options)
   end
 end
