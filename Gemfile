@@ -45,4 +45,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 group :production do
   gem 'rails_12factor'
   gem 'mailgun-ruby', '~>1.1.6'
+  gem 'sentry-raven'
 end
