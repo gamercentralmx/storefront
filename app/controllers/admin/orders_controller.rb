@@ -3,7 +3,7 @@ module Admin
     before_action :find_order!, only: %i[show update destroy]
 
     def index
-      @orders = Order.all.order(created_at: :desc)
+      @orders = Order.not_pending.created_desc
     end
 
     def create

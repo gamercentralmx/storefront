@@ -37,6 +37,9 @@ class Order < ApplicationRecord
 
   before_create :set_uid
 
+  scope :not_pending, -> { where('status != ?', 'pending') }
+  scope :created_desc, -> { order(created_at: :desc) }
+
   def self.current
     where(status: 'pending').first_or_create
   end

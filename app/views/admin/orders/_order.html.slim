@@ -2,7 +2,7 @@ tr
   td= order.id
   td
     .btn-group
-      = link_to order.status, 'javascript:void(0)', class: "btn btn-sm btn-#{Order::STATUS_INTENTS[order.status]} dropdown-toggle", data: { toggle: "dropdown" }, aria: { haspopup: "true", expanded: "false" }
+      = link_to Order::STATUS_TRANSLATIONS[order.status], 'javascript:void(0)', class: "btn btn-sm btn-#{Order::STATUS_INTENTS[order.status]} dropdown-toggle", data: { toggle: "dropdown" }, aria: { haspopup: "true", expanded: "false" }
       .dropdown-menu
         - Order::STATUS_TRANSLATIONS.each do |status, label|
           = link_to label, admin_order_path(order.id, order: { status: status }), class: 'dropdown-item', method: 'PUT'

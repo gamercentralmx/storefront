@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   before_action :validate_owner!, only: [:show, :update, :confirm]
 
   def index
-    @orders = current_user.orders.where('status != ?', 'pending').order(created_at: :desc)
+    @orders = current_user.orders.not_pending.created_desc
   end
 
   def checkout
