@@ -1,8 +1,12 @@
-p
-  | Welcome 
-  = @email
-  | !
-p
-  | You can confirm your account email through the link below:
-p
-  = link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token)
+- content_for :title do
+  | ¡Gracias por registrarte a Gamer Central #{@email}!
+
+- content_for :text do
+  p(style="margin-bottom: 15px")
+    | Estas a un paso de formar parte de nuestra comunidad gamer, solamente necesitas verificar tu correo electronico para continuar usando tu cuenta.
+
+  p(style="margin-bottom: 20px")
+    | Puedes confirmar tu correo electronico dando click al siguiente enlace:
+
+- content_for :action do
+  = link_to 'CONFIRMAR', confirmation_url(@resource, confirmation_token: @token), style: 'color: #ffffff; text-decoration: none;'
