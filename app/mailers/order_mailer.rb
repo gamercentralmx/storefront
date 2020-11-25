@@ -9,15 +9,11 @@ class OrderMailer < ApplicationMailer
       product = item.product
       picture = product.pictures.first
 
-      attachments.inline[picture.blob.filename.to_s] = {
-        mime_type: picture.blob.content_type,
-        download: picture.blob.download
-      }
+      attachments.inline[picture.blob.filename.to_s] = picture.blob.download
     end
 
     mail(to: @user.email, subject: "¡Gracias por tu compra en Gamer Central! ##{@order.uid}")
   end
-
 
   private
 

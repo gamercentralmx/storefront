@@ -1,0 +1,75 @@
+<% product = order_item.product %>
+<% picture = product.pictures.first %>
+
+<table width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="ffffff">
+  <tbody>
+    <tr>
+      <td align="center">
+        <table class="container590" width="590" cellspacing="0" cellpadding="0" border="0" align="center" style="border-top: 1px solid #eee; margin: 10px 0;">
+
+        <table class="container590" width="590" cellspacing="0" cellpadding="0" border="0" align="center">
+          <tbody>
+            <tr>
+              <td>
+                <table style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="container590" cellspacing="0" cellpadding="0" border="0" align="left">
+                  <tbody>
+                    <tr>
+                      <td align="center">
+                        <%= link_to category_product_url(product.category_slug, product.slug), style: "border-style: none !important; border: 0 !important;" do %>
+                          <%= image_tag attachments[picture.blob.filename.to_s]&.url, style: "display: block; width: 75px;", alt: "", width: "75", border: "0" %>
+                        <% end %>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+              <td>
+                <table style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="container590" width="265" cellspacing="0" cellpadding="0" border="0">
+                  <tbody>
+                    <tr>
+                      <td style="color: #888888; font-size: 16px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 24px;" class="align-center main-header" align="left">
+                        <div style="line-height: 35px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;width: 265px;">
+                          <%= link_to product.name, category_product_url(product.category_slug, product.slug), style: "border-style: none !important; border: 0 !important;text-decoration: none;color: #3d3d3d;"  %>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="font-size: 12px; line-height: 12px;" height="15">&nbsp;</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+              <td>
+                <table style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="container590" width="30" cellspacing="0" cellpadding="0" border="0">
+                  <tbody>
+                    <tr>
+                      <td style="color: #888888; font-size: 16px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 24px;" class="align-center main-header" align="left">
+                        <div style="line-height: 35px">
+                          <%= order_item.qty %>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+              <td>
+                <table style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="container590" width="150px" cellspacing="0" cellpadding="0" border="0" align="right">
+                  <tbody>
+                    <tr>
+                      <td style="color: #888888; font-size: 16px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 24px;" class="align-center main-header" align="left">
+                        <div style="line-height: 35px">
+                          <%= number_to_currency(order_item.total_in_currency) %>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
