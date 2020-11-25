@@ -19,19 +19,21 @@ class Order < ApplicationRecord
 
   STATUS_INTENTS = {
     'pending' => 'secondary',
-    'processing' => 'info',
-    'shipped' => 'primary',
+    'paid' => 'primary',
+    'processing' => 'warning',
+    'shipped' => 'info',
     'complete' => 'success',
     'canceled' => 'danger'
-  }
+  }.freeze
 
   STATUS_TRANSLATIONS = {
     'pending' => 'Pendiente',
+    'paid' => 'Pagado',
     'processing' => 'En proceso',
     'shipped' => 'Enviado',
     'complete' => 'Completo',
     'canceled' => 'Cancelado'
-  }
+  }.freeze
 
   before_create :set_uid
 

@@ -89,7 +89,7 @@ export default function Checkout (props: Props) {
       await OrdersRepository.update(order.id, {
         payment_method_id: selectedPaymentMethod.id,
         payment_intent_id: paymentIntent.id,
-        status: 'processing',
+        status: 'paid',
         address_id: shippingAddress?.id,
         invoice_info_id: invoiceAddress?.id
       })
