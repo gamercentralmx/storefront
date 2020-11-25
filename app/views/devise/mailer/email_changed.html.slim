@@ -1,13 +1,16 @@
 - content_for :title do
-  | ¡Hola #{email}!
-- if @resource.try(:unconfirmed_email?)
-  p(style='margin-bottom: 20px')
-    | Estamos contactandote para notificarte que tu correo esta siendo cambiado a &nbsp;
-    strong= @resource.unconfirmed_email
-    | .
-- else
-  p(style='margin-bottom: 20px')
-    | Estamos contactandote para notificarte que tu correo ha sido cambiado a &nbsp;
-    strong
-      = @resource.email
-    | .
+  | ¡Hola #{@email}!
+
+- content_for :text do
+  - if @resource.try(:unconfirmed_email?)
+    p(style='margin-bottom: 20px')
+      | Estamos contactandote para notificarte que tu correo esta siendo cambiado a &nbsp;
+      strong= @resource.unconfirmed_email
+      | .
+
+  - else
+    p(style='margin-bottom: 20px')
+      | Estamos contactandote para notificarte que tu correo ha sido cambiado a &nbsp;
+      strong
+        = @resource.email
+      | .
