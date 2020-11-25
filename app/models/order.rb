@@ -70,6 +70,11 @@ class Order < ApplicationRecord
     }
   end
 
+  def transition_to_paid!
+    update(ordered_at: Time.current)
+    send_order_confirmation!
+  end
+
   def send_order_confirmation!
     OrderMailer.with(order: self).order_confirmation.deliver_now
   end
