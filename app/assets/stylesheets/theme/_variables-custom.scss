@@ -76,7 +76,7 @@ $colors: map-merge(
   $colors
 );
 
-$primary:       $darker-red !default;
+$primary:       $blue !default;
 $primary-light: lighten( $primary, 10%); // new added
 $secondary:     $gray-600 !default;
 $success:       $green !default;
@@ -101,6 +101,7 @@ $theme-colors: map-merge(
     "dark":       $dark,
     "gray":       $gray-600, // // new added
     "gray-light": $gray-500, // new added
+    "darker-red": $darker-red
   ),
   $theme-colors
 );
@@ -175,7 +176,7 @@ $body-color:                $gray-800 !default;
 //
 // Style anchor elements.
 
-$link-color:                theme-color("primary") !default;
+$link-color:                theme-color("darker-red") !default;
 $link-decoration:           none !default;
 $link-hover-color:          darken($link-color, 15%) !default;
 $link-hover-decoration:     underline !default;
