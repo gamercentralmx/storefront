@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_26_190542) do
+ActiveRecord::Schema.define(version: 2020_11_26_200102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 2020_11_26_190542) do
     t.jsonb "properties", default: []
     t.string "slug"
     t.boolean "visible", default: false
+    t.integer "order", default: 0
     t.index ["parent_id"], name: "index_categories_on_parent_id"
   end
 
