@@ -1,18 +1,26 @@
 header.section-header
-  section.header-main.border-bottom
-    .container
-      .row.align-items-center
-        .col-lg-3.col-4.col-sm-4
-          = link_to root_path, class: 'brand-wrap' do
-            = image_tag "logo.png", class: 'logo'
+  section.border-bottom
+    nav.navbar.navbar-main.navbar-expand-lg.navbar-light
+      .container
+        = link_to root_path, class: 'navbar-brand' do
+          = image_tag "logo.png", class: 'logo'
 
-        .col-lg-3.col-12.col-sm-12.offset-lg-6
-          .widgets-wrap.d-flex.justify-content-end
+        = shopping_cart_collapsed
 
+        button.navbar-toggler(aria-controls="main_nav" aria-expanded="false" aria-label="Toggle navigation" data-target="#main_nav1" data-toggle="collapse" type="button")
+          span.navbar-toggler-icon
+
+        #main_nav1.collapse.navbar-collapse
+          ul.navbar-nav.mr-auto
+            - visible_categories.each do |category|
+              li.nav-item(class="#{params[:category_id] == category.slug ? 'active' : ''}")
+                = link_to category.name.upcase, category_path(category.slug), class: 'nav-link'
+
+          .widgets-wrap.d-none.d-md-block
             = shopping_cart
 
             .widget-header.dropdown
-              a.ml-3.icontext aria-expanded="false" data-offset="20,10" data-toggle="dropdown" href="#"
+              a.ml-3.icontext(data-toggle="dropdown" href="javascript:void(0)")
                 .icon
                   i.fa.fa-lg.fa-user-circle
                 - if user_signed_in?
@@ -31,7 +39,7 @@ header.section-header
                       | Mi Cuenta
                       | &nbsp;
                       i.fa.fa-caret-down
-              .dropdown-menu.dropdown-menu-right style=("position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(140px), 46px, 0px);") x-placement="bottom-end"
+              .dropdown-menu.dropdown-menu-right x-placement="bottom-end"
                 = render 'layouts/application/sign_in_form' unless user_signed_in?
                 = render 'layouts/application/signed_in_menu' if user_signed_in?
 

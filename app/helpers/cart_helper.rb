@@ -12,4 +12,8 @@ module CartHelper
       content.html_safe
     end
   end
+
+  def shopping_cart_collapsed
+    link_to "Mi carrito (#{current_order&.total_items || 0})", cart_index_path, class: 'btn btn-light d-md-none'
+  end
 end

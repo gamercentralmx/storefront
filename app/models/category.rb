@@ -3,6 +3,8 @@ class Category < ApplicationRecord
   belongs_to :parent, class_name: 'Category', optional: true
   has_many :sub_categories, class_name: 'Category', foreign_key: 'parent_id'
 
+  scope :visible, -> { where(visible: true) }
+
   include SlugBehavior
 
   before_save :process_properties
