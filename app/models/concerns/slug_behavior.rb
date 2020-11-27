@@ -2,7 +2,7 @@ module SlugBehavior
   extend ActiveSupport::Concern
 
   included do
-    before_create :set_slug
+    before_save :set_slug, if: :name_changed?
   end
 
   def set_slug
