@@ -15,6 +15,14 @@ class Product < ApplicationRecord
 
   include Rails.application.routes.url_helpers
 
+  SORTINGS = {
+    'Nombre A-Z' => { name: :asc },
+    'Nombre Z-A' => { name: :desc },
+    'Menor Precio' => { price: :asc },
+    'Mayor Precio' => { price: :desc },
+    'Mas nuevos' => { created_at: :desc }
+  }
+
   def specs
     (metadata || []).map { |_, description| description }
   end
