@@ -4,6 +4,7 @@ class Category < ApplicationRecord
   has_many :sub_categories, class_name: 'Category', foreign_key: 'parent_id'
 
   scope :visible, -> { where(visible: true) }
+  scope :by_order, -> { order(order: :asc) }
 
   include SlugBehavior
 
@@ -16,6 +17,6 @@ class Category < ApplicationRecord
   private
 
   def process_properties
-    self.properties = properties.map { |k, v | v } if properties.is_a? Hash
+    self.properties = properties.map { |_k, v| v } if properties.is_a? Hash
   end
 end
