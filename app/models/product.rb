@@ -2,6 +2,9 @@ class Product < ApplicationRecord
   belongs_to :category
   has_many :order_items, dependent: :destroy
 
+  scope :published, -> { where(published: true) }
+  scope :featured, -> { where(featured: true) }
+
   include SlugBehavior
 
   delegate :name, :slug, to: :category, prefix: 'category'
@@ -11,6 +14,14 @@ class Product < ApplicationRecord
   before_save :parse_features
 
   include Rails.application.routes.url_helpers
+
+  SORTINGS = {
+    'Nombre A-Z' => { name: :asc },
+    'Nombre Z-A' => { name: :desc },
+    'Menor Precio' => { price: :asc },
+    'Mayor Precio' => { price: :desc },
+    'Mas nuevos' => { created_at: :desc }
+  }
 
   def specs
     (metadata || []).map { |_, description| description }

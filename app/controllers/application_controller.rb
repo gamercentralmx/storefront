@@ -4,11 +4,16 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
 
   helper_method :current_order
+  helper_method :visible_categories
 
   def current_order
     return unless user_signed_in?
 
     current_user.orders.current
+  end
+
+  def visible_categories
+    Category.visible.by_order
   end
 
   protected

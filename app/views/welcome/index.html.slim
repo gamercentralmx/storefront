@@ -1,8 +1,47 @@
-section.section-specials.padding-y.bg(style='min-height: 80vh')
+section.section-intro
+  .intro-banner-wrap
+    = image_tag "banners/1.jpg", class: 'w-100 img-fluid'
+
+section.section-specials.padding-y.border-bottom
   .container
     .row
-      .col-md-12
-          h1
-            | ¡Bienvenido a Gamer Central!
+      .col-md-4
+        figure.itemside
+          .aside
+            span.icon-sm.rounded-circle.bg-primary
+              i.fa.fa-money-bill-alt.white
+          figcaption.info
+            h6.title El mejor valor del mercado
+            p.text-muted
+              | Diseñamos todas nuestras computadoras para que tengan el balance
+              |  perfecto entre calidad-precio
 
-          p Muy pronto tendras a tu alcance una experiencia en linea para poder adquirir tu computadora gamer de acuerdo a tus necesidades, por el momento solo estamos trabajando sobre pedidos custom, puedes dirigir tus preguntas y comentarios a #{link_to "contacto@gamercentral.mx", "mailto:contacto@gamercentral.mx"}.
+      .col-md-4
+        figure.itemside
+          .aside
+            span.icon-sm.rounded-circle.bg-danger
+              i.fa.fa-comment-dots.white
+          figcaption.info
+            h6.title Soporte los 365 dias del año
+            p.text-muted
+              | Es muy importante para nosotros que recibas la mejor experiencia
+              |  al recibir tu equipo.
+
+      .col-md-4
+        figure.itemside
+          .aside
+            span.icon-sm.rounded-circle.bg-success
+              i.fa.fa-truck.white
+          figcaption.info
+            h6.title Envios a todo México
+            p.text-muted
+              | Enviamos a cualquier parte de la republica mexicana
+              |  trabajamos con Estafeta, FedEx y UPS
+
+section.section-content.padding-y.bg
+  .container
+    header.section-heading
+      h3.section-title
+        | Nuestra selección
+
+    = render @featured

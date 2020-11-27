@@ -1,0 +1,19 @@
+section.section-content.padding-y.bg
+  .container
+    .card.mb-4
+      .card-body.d-flex.align-items-center
+        nav.flex-fill
+          h3
+            | #{@category.name} gamer
+
+        div
+          button.btn.btn-primary.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button"
+            - if params[:sort].present?
+              | #{params[:sort]}
+            - else
+              | Ordenar Por
+          .dropdown-menu aria-labelledby="btnGroupDrop1"
+            - Product::SORTINGS.each do |name, operation|
+              = link_to name, category_path(@category.slug, sort: name), class: "dropdown-item #{params[:sort] == name ? 'active' : ''}"
+
+    = render @products

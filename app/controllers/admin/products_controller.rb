@@ -28,6 +28,21 @@ module Admin
       end
     end
 
+    def update
+      @product = Product.find(params[:id])
+      @category = @product.category
+
+      respond_to do |format|
+        if @product.update(product_params)
+          format.html { redirect_to admin_products_path, notice: 'Producto actualizado con exito.' }
+          format.json { render json: @product }
+        else
+          format.html { redirect_to admin_products_path, alert: 'Hubo un problema al actualizar el producto.' }
+          format.json { render json: { errors: @product.errors.full_messages }, status: :unprocessable_entity }
+        end
+      end
+    end
+
     def destroy
       @product = Product.find(params[:id])
 
@@ -63,7 +78,8 @@ module Admin
         :stock,
         :category_id,
         :features,
-        metadata: @category.property_names,
+        :featured,
+        metadata: @category.property_names
       )
     end
   end

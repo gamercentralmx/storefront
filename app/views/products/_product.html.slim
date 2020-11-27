@@ -1,0 +1,26 @@
+.row
+  main.col-md-12
+    article.card.card-product-list
+      .card-body
+        .row
+          aside.col-sm-4
+            = link_to category_product_path(product.category_slug, product.slug), class: 'img-wrap' do
+              = image_tag rails_blob_path(product.pictures.first)
+
+          .col-sm-8
+            = link_to product.name, category_product_path(product.category_slug, product.slug), class: 'title mt-2 h5'
+            .d-flex.mb-3
+              .price-wrap.mr-4
+                span.price.h5
+                  = number_to_currency product.price_in_currency
+
+
+            ul.list-check
+              - product.features.each do |feature|
+                li= feature
+
+            .form-row
+              .form-group.col-md
+                = link_to add_cart_index_path(product_id: product.id), class: 'btn btn-success', method: 'PUT' do
+                  span.text Agregar al carrito
+                  i.icon.fas.fa-shopping-cart
