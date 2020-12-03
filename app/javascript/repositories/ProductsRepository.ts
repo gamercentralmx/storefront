@@ -1,7 +1,7 @@
 import { PictureData } from 'definitions/PictureData'
 import { toPairs } from 'lodash'
 
-interface ProductData {
+export interface ProductData {
   name: string
   description: string
   cost: number
@@ -19,7 +19,33 @@ export default class ProductsRepository {
   }
 
   static async save (data: ProductData) {
+    return $.ajax({
+      url: '/admin/products',
+      type: 'POST',
+      data: this.buildFormData(data),
+      processData: false,
+      contentType: false,
+    })
+  }
 
+  static async update (id: number, data: ProductData) {
+    return $.ajax({
+      url: `/admin/products/${id}`,
+      type: 'PUT',
+      data: this.buildFormData(data),
+      processData: false,
+      contentType: false,
+    })
+  }
+
+  static async deletePicture (id: number, pictureId: number) {
+    return $.ajax({
+      url: `/admin/products/${id}/delete_picture?picture_id=${pictureId}`,
+      type: 'DELETE'
+    })
+  }
+
+  private static buildFormData (data: ProductData): FormData {
     let formData = new FormData()
 
     formData.append('product[name]', data.name)
@@ -41,12 +67,6 @@ export default class ProductsRepository {
       formData.append(`product[metadata][${property}]`, value.toString())
     })
 
-    return $.ajax({
-      url: '/admin/products',
-      type: 'POST',
-      data: formData,
-      processData: false,
-      contentType: false,
-    })
+    return formData
   }
 }

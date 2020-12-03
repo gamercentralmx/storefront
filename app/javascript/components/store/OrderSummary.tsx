@@ -2,7 +2,6 @@ import React from 'react'
 import { Order, OrderItem } from 'definitions/Order'
 import { Card, Table } from 'react-bootstrap'
 import moment from 'moment'
-import { toPairs } from 'lodash'
 import { NumberUtils } from 'helpers/NumberUtils'
 
 interface Props {

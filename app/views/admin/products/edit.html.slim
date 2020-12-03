@@ -1,0 +1,7 @@
+.card
+  .card-header
+    h4.card-title
+      | Editar:&nbsp;
+      small #{@product.name}
+  .card-body
+    = react_component 'admin/ProductForm', { categories: @categories, product: @product.as_json(include: [:category]) }

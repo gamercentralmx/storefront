@@ -51,6 +51,7 @@ Rails.application.routes.draw do
       member do
         put :publish
         put :unpublish
+        delete :delete_picture
       end
     end
     resources :orders

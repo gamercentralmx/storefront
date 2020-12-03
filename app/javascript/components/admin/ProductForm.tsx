@@ -1,26 +1,28 @@
 import { Category } from 'definitions/Category'
 import { find } from 'lodash'
 import React, { useState } from 'react'
-import { Button, Col, Form, FormGroup } from 'react-bootstrap'
-import ProductsRepository from 'repositories/ProductsRepository'
+import { Button, Card, CardGroup, Col, Form } from 'react-bootstrap'
+import ProductsRepository, { ProductData } from 'repositories/ProductsRepository'
 import ImageUploader from 'react-images-upload'
 import { PictureData } from 'definitions/PictureData'
+import { Product } from 'definitions/Product'
 
 interface Props {
   categories: Category[]
+  product?: Product
 }
 
 export default function ProductForm (props: Props) {
-  const { categories } = props
-  const [selectedCategory, setSelectedCategory] = useState<Category | undefined>()
-  const [name, setName] = useState('')
-  const [description, setDescription] = useState('')
-  const [price, setPrice] = useState(0)
-  const [cost, setCost] = useState(0)
-  const [stock, setStock] = useState(0)
-  const [metadata, setMetadata] = useState({})
+  const { categories, product } = props
+  const [selectedCategory, setSelectedCategory] = useState<Category | undefined>(product.category)
+  const [name, setName] = useState(product?.name ?? '')
+  const [description, setDescription] = useState(product?.description ?? '')
+  const [price, setPrice] = useState(product?.price ?? 0)
+  const [cost, setCost] = useState(product?.cost ?? 0)
+  const [stock, setStock] = useState(product?.stock ?? 0)
+  const [metadata, setMetadata] = useState(product?.metadata ?? {})
   const [pictures, setPictures] = useState<PictureData[]>([])
-  const [features, setFeatures] = useState<string[]>([])
+  const [features, setFeatures] = useState<string[]>(product?.features ?? [])
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { currentTarget } = event
@@ -92,7 +94,7 @@ export default function ProductForm (props: Props) {
     event.preventDefault()
 
     try {
-      await ProductsRepository.save({
+      const data: ProductData = {
         name,
         description,
         metadata,
@@ -102,9 +104,25 @@ export default function ProductForm (props: Props) {
         category_id: selectedCategory.id!,
         pictures_data: pictures,
         features
-      })
+      }
+
+      if (product) {
+        await ProductsRepository.update(product.id, data)
+      } else {
+        await ProductsRepository.save(data)
+      }
 
       location.href = '/admin/products'
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const handleDeleteImage = async (id: number) => {
+    try {
+      await ProductsRepository.deletePicture(product.id, id)
+
+      location.reload()
     } catch (error) {
       console.error(error)
     }
@@ -113,13 +131,34 @@ export default function ProductForm (props: Props) {
   return <Form onSubmit={handleSubmit}>
     <Form.Group>
       <Form.Label>Nombre</Form.Label>
-      <Form.Control type='text' required name='name' onChange={handleNameChange}></Form.Control>
+      <Form.Control type='text' required name='name' defaultValue={name} onChange={handleNameChange}></Form.Control>
     </Form.Group>
 
     <Form.Group>
       <Form.Label>Descripción</Form.Label>
-      <Form.Control as='textarea' rows={4} required name='description' onChange={handleDescriptionChange}></Form.Control>
+      <Form.Control as='textarea' rows={4} required defaultValue={description} name='description' onChange={handleDescriptionChange}></Form.Control>
     </Form.Group>
+
+    {product?.pictures && <Form.Row>
+      <Form.Group>
+        <Form.Label>Imagenes Actuales</Form.Label>
+
+        <CardGroup>
+          {product.pictures.map((picture) => {
+            return <Card key={`pictures-${picture.id}`}>
+              <Card.Img variant='top' src={picture.url} width={150} style={{ width: '150px' }} />
+              <Card.Body>
+                <Button variant='danger' onClick={(event) => { event.preventDefault(); handleDeleteImage(picture.id) }}>
+                  <i className='fa fa-times'/>
+                  &nbsp;
+                  Eliminar
+                </Button>
+              </Card.Body>
+            </Card>
+          })}
+        </CardGroup>
+      </Form.Group>
+    </Form.Row>}
 
     <Form.Row>
       <Col>
@@ -143,28 +182,28 @@ export default function ProductForm (props: Props) {
       <Col>
         <Form.Group>
           <Form.Label>Costo <small>(en centavos)</small></Form.Label>
-          <Form.Control type='number' required name='cost' onChange={handleCostChange}></Form.Control>
+          <Form.Control type='number' required name='cost' defaultValue={cost} onChange={handleCostChange}></Form.Control>
         </Form.Group>
       </Col>
 
       <Col>
         <Form.Group>
           <Form.Label>Precio <small>(en centavos)</small></Form.Label>
-          <Form.Control type='number' required name='price' onChange={handlePriceChange}></Form.Control>
+          <Form.Control type='number' required name='price' defaultValue={price} onChange={handlePriceChange}></Form.Control>
         </Form.Group>
       </Col>
 
       <Col>
         <Form.Group>
           <Form.Label>Inventario <small>(en unidades)</small></Form.Label>
-          <Form.Control type='number' required name='stock' onChange={handleStockChange}></Form.Control>
+          <Form.Control type='number' required name='stock' defaultValue={stock} onChange={handleStockChange}></Form.Control>
         </Form.Group>
       </Col>
 
       <Col>
         <Form.Group>
           <Form.Label>Categoria</Form.Label>
-          <Form.Control as='select' onChange={handleSelect}>
+          <Form.Control as='select' defaultValue={selectedCategory.id} onChange={handleSelect}>
             <option value=''>Categoria no seleccionada</option>
             {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option> )}
           </Form.Control>
@@ -174,14 +213,14 @@ export default function ProductForm (props: Props) {
 
 
 
-    {selectedCategory && <CategoryForm category={selectedCategory} onChange={handleMetadataChange} />}
+    {selectedCategory && <CategoryForm category={selectedCategory} defaultMetadata={metadata} onChange={handleMetadataChange} />}
 
     <Form.Row>
       <Col>
         <Form.Group>
           <Form.Label>Caracteristicas <small>(una caracteristica por linea)</small></Form.Label>
 
-          <Form.Control as='textarea'rows={4} required onChange={handleFeaturesChange} />
+          <Form.Control as='textarea'rows={4} required defaultValue={features.join('\n')} onChange={handleFeaturesChange} />
         </Form.Group>
       </Col>
     </Form.Row>
@@ -193,12 +232,13 @@ export default function ProductForm (props: Props) {
 
 interface CategoryFormProps {
   category: Category
+  defaultMetadata?: any
   onChange: (metadata: any) => void
 }
 
 function CategoryForm (props: CategoryFormProps) {
-  const { category, onChange } = props
-  const [metadata, setMetadata] = useState<any>({})
+  const { category, defaultMetadata, onChange } = props
+  const [metadata, setMetadata] = useState<any>(defaultMetadata ?? {})
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { currentTarget } = event
@@ -215,7 +255,7 @@ function CategoryForm (props: CategoryFormProps) {
     {category.properties.map((property) => {
       return <Form.Group key={`properties-${property.name}`}>
         <Form.Label>{property.name}</Form.Label>
-        <Form.Control type={property.type} required name={property.name} onChange={handleChange}></Form.Control>
+        <Form.Control type={property.type} required defaultValue={metadata[property.name]} name={property.name} onChange={handleChange}></Form.Control>
       </Form.Group>
     })}
   </>

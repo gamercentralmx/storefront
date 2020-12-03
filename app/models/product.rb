@@ -62,6 +62,12 @@ class Product < ApplicationRecord
     }
   end
 
+  def as_json(opts = {})
+    super(opts).merge(
+      pictures: pictures.map { |p| p.as_json.merge(url: rails_blob_path(p, only_path: true)) }
+    )
+  end
+
   private
 
   def parse_features
