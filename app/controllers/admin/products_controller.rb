@@ -30,8 +30,11 @@ module Admin
     def update
       @category = @product.category
 
+      @product.features = params[:product][:features]
+
       respond_to do |format|
         if @product.update(product_params)
+          @product.attach_pictures(params[:product][:pictures_data]) unless params[:product][:pictures_data].blank?
           format.html { redirect_to admin_products_path, notice: 'Producto actualizado con exito.' }
           format.json { render json: @product }
         else

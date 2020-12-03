@@ -161,7 +161,7 @@ export default function ProductForm (props: Props) {
     <Form.Row>
       <Col>
         <Form.Group>
-          <Form.Label>Imagenes del producto</Form.Label>
+          <Form.Label>Agregar imagenes del producto</Form.Label>
 
           <ImageUploader
             className='form-control'
