@@ -4,7 +4,7 @@ module Admin
     before_action :set_categories!, only: [:new, :edit]
 
     def index
-      @products = Product.includes(:category).all
+      @products = Product.includes(:category).all.order(created_at: :desc)
 
       respond_to do |format|
         format.html
