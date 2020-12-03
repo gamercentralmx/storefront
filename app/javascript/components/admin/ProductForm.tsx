@@ -139,26 +139,24 @@ export default function ProductForm (props: Props) {
       <Form.Control as='textarea' rows={4} required defaultValue={description} name='description' onChange={handleDescriptionChange}></Form.Control>
     </Form.Group>
 
-    {product?.pictures && <Form.Row>
-      <Form.Group>
-        <Form.Label>Imagenes Actuales</Form.Label>
+    {product?.pictures && product.pictures.length > 0 && <Form.Group>
+      <Form.Label>Imagenes Actuales</Form.Label>
 
-        <CardGroup>
-          {product.pictures.map((picture) => {
-            return <Card key={`pictures-${picture.id}`}>
-              <Card.Img variant='top' src={picture.url} width={150} style={{ width: '150px' }} />
-              <Card.Body>
-                <Button variant='danger' onClick={(event) => { event.preventDefault(); handleDeleteImage(picture.id) }}>
-                  <i className='fa fa-times'/>
-                  &nbsp;
-                  Eliminar
-                </Button>
-              </Card.Body>
-            </Card>
-          })}
-        </CardGroup>
-      </Form.Group>
-    </Form.Row>}
+      <CardGroup>
+        {product.pictures.map((picture) => {
+          return <Card key={`pictures-${picture.id}`}>
+            <Card.Img variant='top' src={picture.url} width={150} style={{ width: '150px' }} />
+            <Card.Body>
+              <Button variant='danger' onClick={(event) => { event.preventDefault(); handleDeleteImage(picture.id) }}>
+                <i className='fa fa-times'/>
+                &nbsp;
+                Eliminar
+              </Button>
+            </Card.Body>
+          </Card>
+        })}
+      </CardGroup>
+    </Form.Group>}
 
     <Form.Row>
       <Col>
