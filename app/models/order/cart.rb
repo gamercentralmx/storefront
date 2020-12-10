@@ -45,7 +45,7 @@ class Order::Cart
   end
 
   def items_available?
-    out_of_stock = order.order_items.select { |item| item.product.stock.zero? && item.stock_hold.blank? }
+    out_of_stock = order.order_items.select { |item| item.product.stock.zero? && (item.stock_hold.blank? || item.stock_hold.expired?) }
 
     return true if out_of_stock.empty?
 

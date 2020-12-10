@@ -3,6 +3,8 @@ class OrderItem < ApplicationRecord
   belongs_to :order
   has_one :stock_hold, dependent: :destroy
 
+  before_destroy :delete_holds
+
   def total
     qty * product.price
   end
@@ -30,5 +32,11 @@ class OrderItem < ApplicationRecord
       qty: qty,
       product: product.serialize
     }
+  end
+
+  private
+
+  def delete_holds
+    StockHold.where(order_item_id: id).delete_all
   end
 end
