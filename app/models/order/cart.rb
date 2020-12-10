@@ -1,8 +1,9 @@
 class Order::Cart
-  attr_reader :order, :order_item
+  attr_reader :order, :order_item, :out_of_stock_products
 
   def initialize(order)
     @order = order
+    @out_of_stock_products = []
   end
 
   def add!(product, qty = 1)
@@ -41,6 +42,20 @@ class Order::Cart
     order.order_items.each do |item|
       find_or_create_hold_for(item)
     end
+  end
+
+  def items_available?
+    out_of_stock = order.order_items.select { |item| item.product.stock.zero? && item.stock_hold.blank? }
+
+    return true if out_of_stock.empty?
+
+    out_of_stock.each do |item|
+      product = item.product
+      delete! product
+      out_of_stock_products << "<li>#{product.name}</li>"
+    end
+
+    false
   end
 
   private

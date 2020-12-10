@@ -2,7 +2,8 @@ class CartController < ApplicationController
   before_action :store_location!
   before_action :authenticate_user!
   before_action :find_current_order
-  before_action :set_cart, only: [:add, :subtract, :destroy, :checkout]
+  before_action :set_cart
+  before_action :check_out_of_stock, only: [:index, :checkout]
   before_action :find_product, only: [:add, :subtract, :destroy]
 
   def index; end
@@ -36,6 +37,20 @@ class CartController < ApplicationController
   end
 
   private
+
+  def check_out_of_stock
+    return if @cart.items_available?
+
+    @order.reload
+
+    redirect_to cart_index_path, alert: <<-HTML
+      Los siguientes productos en tu carrito ya no estan disponibles:
+
+      <ul>
+        #{@cart.out_of_stock_products.join("\n")}
+      </ul>
+    HTML
+  end
 
   def set_cart
     @cart = Order::Cart.new(@order)
