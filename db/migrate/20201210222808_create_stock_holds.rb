@@ -5,7 +5,7 @@ class CreateStockHolds < ActiveRecord::Migration[6.0]
       t.integer :qty, default: 0
       t.references :order, foreign_key: true
       t.references :order_item, foreign_key: true
-      t.datetime :expires_in
+      t.datetime :expires_at
       t.datetime :confirmed_at
 
       t.timestamps

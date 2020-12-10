@@ -183,7 +183,7 @@ ActiveRecord::Schema.define(version: 2020_12_10_222808) do
     t.integer "qty", default: 0
     t.bigint "order_id"
     t.bigint "order_item_id"
-    t.datetime "expires_in"
+    t.datetime "expires_at"
     t.datetime "confirmed_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

@@ -11,6 +11,20 @@ class OrderItem < ApplicationRecord
     total.to_f / 100
   end
 
+  def add!(qty)
+    increment! :qty, qty
+    stock_hold.increment! :qty, qty if stock_hold.present? and not stock_hold.expired?
+
+    true
+  end
+
+  def subtract!(qty)
+    decrement! :qty, qty
+    stock_hold.decrement! :qty, qty if stock_hold.present? and not stock_hold.expired?
+
+    true
+  end
+
   def serialize
     {
       qty: qty,

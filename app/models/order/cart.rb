@@ -9,10 +9,10 @@ class Order::Cart
   def add!(product, qty = 1)
     @order_item = order.order_items.find_by(product_id: product.id)
 
-    return false if product.stock.zero?
+    return false if out_of_stock? product, order_item
 
     if order_item.present?
-      order_item.increment! :qty, 1
+      order_item.add! qty
     else
       @order_item = order.order_items.create(product_id: product.id, qty: qty)
 
@@ -24,7 +24,7 @@ class Order::Cart
     @order_item = order.order_items.find_by(product_id: product.id)
 
     if order_item.qty > 1
-      order_item.decrement! :qty, 1
+      order_item.subtract! qty
     else
       order_item.destroy
     end
@@ -59,6 +59,10 @@ class Order::Cart
   end
 
   private
+
+  def out_of_stock?(product, order_item)
+    product.stock.zero? or order_item&.qty == product.stock
+  end
 
   def find_or_create_hold_for(item)
     StockHold.find_or_create(
