@@ -1,6 +1,7 @@
 class OrderItem < ApplicationRecord
   belongs_to :product
   belongs_to :order
+  has_one :stock_hold, dependent: :destroy
 
   def total
     qty * product.price

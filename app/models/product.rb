@@ -64,6 +64,13 @@ class Product < ApplicationRecord
     }
   end
 
+  def stock
+    amount = read_attribute(:stock)
+    on_hold = StockHold.amount_on_hold_for(id)
+
+    amount - on_hold
+  end
+
   def as_json(opts = {})
     super(opts).merge(
       pictures: pictures.map { |p| p.as_json.merge(url: rails_blob_path(p, only_path: true)) }

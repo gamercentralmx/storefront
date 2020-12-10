@@ -36,4 +36,21 @@ class Order::Cart
 
     order_item.destroy
   end
+
+  def hold_items!
+    order.order_items.each do |item|
+      find_or_create_hold_for(item)
+    end
+  end
+
+  private
+
+  def find_or_create_hold_for(item)
+    StockHold.find_or_create(
+      order: order,
+      order_item: item,
+      product: item.product,
+      qty: item.qty
+    )
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_10_174447) do
+ActiveRecord::Schema.define(version: 2020_12_10_222808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -178,6 +178,20 @@ ActiveRecord::Schema.define(version: 2020_12_10_174447) do
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
   end
 
+  create_table "stock_holds", force: :cascade do |t|
+    t.bigint "product_id"
+    t.integer "qty", default: 0
+    t.bigint "order_id"
+    t.bigint "order_item_id"
+    t.datetime "expires_in"
+    t.datetime "confirmed_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["order_id"], name: "index_stock_holds_on_order_id"
+    t.index ["order_item_id"], name: "index_stock_holds_on_order_item_id"
+    t.index ["product_id"], name: "index_stock_holds_on_product_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -227,4 +241,7 @@ ActiveRecord::Schema.define(version: 2020_12_10_174447) do
   add_foreign_key "payment_intents", "users"
   add_foreign_key "payment_methods", "users"
   add_foreign_key "products", "categories"
+  add_foreign_key "stock_holds", "order_items"
+  add_foreign_key "stock_holds", "orders"
+  add_foreign_key "stock_holds", "products"
 end

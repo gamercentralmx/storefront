@@ -21,6 +21,4 @@
 
             .form-row
               .form-group.col-md
-                = link_to add_cart_index_path(product_id: product.id), class: 'btn btn-success', method: 'PUT' do
-                  span.text Agregar al carrito
-                  i.icon.fas.fa-shopping-cart
+                = react_component 'store/AddToCartButton', { product: product }

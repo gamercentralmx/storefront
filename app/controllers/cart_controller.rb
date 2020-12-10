@@ -2,7 +2,7 @@ class CartController < ApplicationController
   before_action :store_location!
   before_action :authenticate_user!
   before_action :find_current_order
-  before_action :set_cart, only: [:add, :subtract, :destroy]
+  before_action :set_cart, only: [:add, :subtract, :destroy, :checkout]
   before_action :find_product, only: [:add, :subtract, :destroy]
 
   def index; end
@@ -31,7 +31,9 @@ class CartController < ApplicationController
     redirect_to cart_index_path, notice: 'Producto eliminado del carrito con exito.'
   end
 
-  def checkout; end
+  def checkout
+    @cart.hold_items!
+  end
 
   private
 
