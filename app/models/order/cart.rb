@@ -8,6 +8,8 @@ class Order::Cart
   def add!(product, qty = 1)
     @order_item = order.order_items.find_by(product_id: product.id)
 
+    return false if product.stock.zero?
+
     if order_item.present?
       order_item.increment! :qty, 1
     else
