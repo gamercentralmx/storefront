@@ -19,6 +19,7 @@ gem 'rolify'
 gem 'react-rails'
 gem 'stripe'
 gem 'figaro'
+gem 'audited', '~> 4.9'
 
 gem 'route_translator'
 
