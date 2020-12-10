@@ -8,6 +8,8 @@ class Order < ApplicationRecord
 
   accepts_nested_attributes_for :order_items
 
+  audited
+
   enum status: {
     pending: 'pending',
     paid: 'paid',

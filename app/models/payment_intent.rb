@@ -13,6 +13,8 @@ class PaymentIntent < ApplicationRecord
     }
   }
 
+  audited
+
   def self.find_or_create_by(user_id:, payment_method_id:, amount:, idempotency_key:)
     where(
       user_id: user_id,

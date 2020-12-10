@@ -5,6 +5,8 @@ class Product < ApplicationRecord
   scope :published, -> { where(published: true) }
   scope :featured, -> { where(featured: true) }
 
+  audited
+
   include SlugBehavior
 
   delegate :name, :slug, to: :category, prefix: 'category'
