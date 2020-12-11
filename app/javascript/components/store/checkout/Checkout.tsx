@@ -170,7 +170,7 @@ export default function Checkout (props: Props) {
         </Card.Body>
 
         <Card.Body className='border-top'>
-          <Summary amountInCurrency={amountInCurrency} selectedPlan={selectedPlan} />
+          <Summary order={order} selectedPlan={selectedPlan} />
 
           <hr />
 

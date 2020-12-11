@@ -2,9 +2,19 @@
   i(class="fab fa-cc-#{payment_method.metadata['brand'].downcase}")
   | &nbsp; **** #{payment_method.metadata['last4']}
 p
+  span
+    | Total de articulos: #{number_to_currency(order.products_total_in_currency, precision: 2)}
+  br
+
+  span
+    | Costo de envío: #{number_to_currency(order.shipping_cost_in_currency, precision: 2)}
+  br
+
   span.b
     | Total: #{number_to_currency order.total_in_currency, precision: 2}
+
   - if payment_intent&.payment_plan.present?
     br
     span
-      | #{payment_intent.payment_plan['count']} pagos de #{number_to_currency((order.total.total_in_currency) / payment_intent.payment_plan['count'], precision: 2)}
+      i.fas.fa-credit-card
+      | &nbsp;#{payment_intent.payment_plan['count']} pagos de #{number_to_currency((order.total_in_currency) / payment_intent.payment_plan['count'], precision: 2)}

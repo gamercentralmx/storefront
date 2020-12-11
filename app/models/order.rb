@@ -46,8 +46,16 @@ class Order < ApplicationRecord
     where(status: 'pending').first_or_create
   end
 
-  def total
+  def products_total
     order_items.map(&:total).sum
+  end
+
+  def total
+    products_total + shipping_cost
+  end
+
+  def products_total_in_currency
+    products_total.to_f / 100
   end
 
   def total_in_currency
@@ -72,7 +80,10 @@ class Order < ApplicationRecord
       status: status,
       created_at: created_at,
       updated_at: updated_at,
-      order_items: order_items.map(&:serialize)
+      total_in_currency: total_in_currency,
+      order_items: order_items.map(&:serialize),
+      shipping_cost_in_currency: shipping_cost_in_currency,
+      products_total_in_currency: products_total_in_currency
     }
   end
 
@@ -89,7 +100,11 @@ class Order < ApplicationRecord
   end
 
   def calculate_shipping!
+    shipping = Order::Shipping.new(self)
 
+    shipping.calculate!
+
+    update(shipping_cost: shipping.cost)
   end
 
   private

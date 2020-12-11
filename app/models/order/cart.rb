@@ -22,10 +22,9 @@ class Order::Cart
     if order_item.present?
       order_item.add! qty
     else
-      @order_item = order.order_items.create(product_id: product.id, qty: qty)
+      order_item = order.order_items.create(product_id: product.id, qty: qty)
+      order_item.valid?
     end
-
-    @order_item.valid?
   end
 
   def subtract!(order_item, _product, qty = 1)

@@ -119,7 +119,7 @@ ActiveRecord::Schema.define(version: 2020_12_11_043921) do
     t.bigint "payment_intent_id"
     t.bigint "invoice_info_id"
     t.datetime "ordered_at"
-    t.integer "shipping_cost"
+    t.integer "shipping_cost", default: 0
     t.index ["address_id"], name: "index_orders_on_address_id"
     t.index ["invoice_info_id"], name: "index_orders_on_invoice_info_id"
     t.index ["payment_intent_id"], name: "index_orders_on_payment_intent_id"
