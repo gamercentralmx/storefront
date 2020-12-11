@@ -166,7 +166,7 @@ ActiveRecord::Schema.define(version: 2020_12_11_043921) do
     t.jsonb "features", default: []
     t.boolean "published", default: false
     t.boolean "featured", default: false
-    t.integer "weight"
+    t.integer "weight", default: 0
     t.index ["category_id"], name: "index_products_on_category_id"
   end
 
