@@ -27,6 +27,12 @@ class OrderItem < ApplicationRecord
     true
   end
 
+  def confirm!
+    product.decrement! :stock, qty
+
+    stock_hold.update(confirmed_at: Time.current)
+  end
+
   def serialize
     {
       qty: qty,

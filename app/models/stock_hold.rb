@@ -17,7 +17,7 @@ class StockHold < ApplicationRecord
   end
 
   def expired?
-    expires_at < Time.current
+    expires_at < Time.current || confirmed_at.present?
   end
 
   private

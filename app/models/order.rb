@@ -74,6 +74,9 @@ class Order < ApplicationRecord
 
   def transition_to_paid!
     update(ordered_at: Time.current)
+
+    order_items.map(&:confirm!)
+
     send_order_confirmation!
   end
 

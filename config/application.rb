@@ -20,5 +20,7 @@ module Storefront
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
 
     config.autoloader = :classic
+
+    config.time_zone = 'America/Mexico_City'
   end
 end
