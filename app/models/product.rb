@@ -65,8 +65,8 @@ class Product < ApplicationRecord
   end
 
   def stock
-    amount = read_attribute(:stock)
-    on_hold = StockHold.amount_on_hold_for(id)
+    amount = read_attribute(:stock) || 0
+    on_hold = StockHold.amount_on_hold_for(id) || 0
 
     amount - on_hold
   end

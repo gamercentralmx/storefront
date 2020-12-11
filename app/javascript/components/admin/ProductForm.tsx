@@ -14,7 +14,7 @@ interface Props {
 
 export default function ProductForm (props: Props) {
   const { categories, product } = props
-  const [selectedCategory, setSelectedCategory] = useState<Category | undefined>(product.category)
+  const [selectedCategory, setSelectedCategory] = useState<Category | undefined>(product?.category)
   const [name, setName] = useState(product?.name ?? '')
   const [description, setDescription] = useState(product?.description ?? '')
   const [price, setPrice] = useState(product?.price ?? 0)
@@ -23,6 +23,7 @@ export default function ProductForm (props: Props) {
   const [metadata, setMetadata] = useState(product?.metadata ?? {})
   const [pictures, setPictures] = useState<PictureData[]>([])
   const [features, setFeatures] = useState<string[]>(product?.features ?? [])
+  const [weight, setWeight] = useState(product?.weight ?? 0)
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { currentTarget } = event
@@ -57,6 +58,13 @@ export default function ProductForm (props: Props) {
     const { value } = currentTarget
 
     setStock(parseInt(value, 10))
+  }
+
+  const handleWeightChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { currentTarget } = event
+    const { value } = currentTarget
+
+    setWeight(parseInt(value, 10))
   }
 
   const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -101,6 +109,7 @@ export default function ProductForm (props: Props) {
         cost,
         price,
         stock,
+        weight,
         category_id: selectedCategory.id!,
         pictures_data: pictures,
         features
@@ -200,8 +209,15 @@ export default function ProductForm (props: Props) {
 
       <Col>
         <Form.Group>
+          <Form.Label>Peso <small>(en gramos)</small></Form.Label>
+          <Form.Control type='number' required name='weight' defaultValue={weight} onChange={handleWeightChange}></Form.Control>
+        </Form.Group>
+      </Col>
+
+      <Col>
+        <Form.Group>
           <Form.Label>Categoria</Form.Label>
-          <Form.Control as='select' defaultValue={selectedCategory.id} onChange={handleSelect}>
+          <Form.Control as='select' defaultValue={selectedCategory?.id} onChange={handleSelect}>
             <option value=''>Categoria no seleccionada</option>
             {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option> )}
           </Form.Control>

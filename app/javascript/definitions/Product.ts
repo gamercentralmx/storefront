@@ -15,4 +15,5 @@ export interface Product {
   updated_at: Date
   features: string[]
   category?: Category
+  weight: number
 }
