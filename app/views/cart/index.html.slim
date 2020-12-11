@@ -34,11 +34,11 @@ section.section-content.bg.pb-4(style='min-height: 50vh')
                 dd.text-right= number_to_currency(@order.total_in_currency)
               dl.dlist-align
                 dt Costo de envío:
-                dd.text-right= number_to_currency(99)
+                dd.text-right= number_to_currency(@order.shipping_cost_in_currency)
               dl.dlist-align
                 dt Total:
                 dd.text-right.h5
-                  strong= number_to_currency(@order.total_in_currency + 99)
+                  strong= number_to_currency(@order.total_in_currency + @order.shipping_cost_in_currency)
 
               hr
 

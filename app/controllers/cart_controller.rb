@@ -10,7 +10,7 @@ class CartController < ApplicationController
 
   def add
     respond_to do |format|
-      if @cart.add! @product, qty
+      if @cart.perform :add!, @product, qty
         format.html { redirect_to cart_index_path, notice: 'Producto agregado al carrito con exito.' }
         format.json { render json: { message: 'Producto agregado al carrito con exito.' } }
       else
@@ -21,13 +21,13 @@ class CartController < ApplicationController
   end
 
   def subtract
-    @cart.subtract! @product, qty
+    @cart.perform :subtract!, @product, qty
 
     redirect_to cart_index_path, notice: 'Producto actualizado en el carrito con exito.'
   end
 
   def destroy
-    @cart.delete! @product
+    @cart.perform :delete!, @product
 
     redirect_to cart_index_path, notice: 'Producto eliminado del carrito con exito.'
   end

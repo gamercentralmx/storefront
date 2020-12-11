@@ -54,6 +54,10 @@ class Order < ApplicationRecord
     total.to_f / 100
   end
 
+  def shipping_cost_in_currency
+    shipping_cost.to_f / 100
+  end
+
   def formatted_order_date
     (ordered_at || created_at).strftime('%d/%m/%Y')
   end
@@ -82,6 +86,10 @@ class Order < ApplicationRecord
 
   def send_order_confirmation!
     OrderMailer.with(order: self).order_confirmation.deliver_now
+  end
+
+  def calculate_shipping!
+
   end
 
   private
