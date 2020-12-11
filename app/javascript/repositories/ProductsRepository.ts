@@ -7,6 +7,7 @@ export interface ProductData {
   cost: number
   price: number
   stock: number
+  weight: number
   metadata: any
   category_id: number
   pictures_data: PictureData[]
@@ -53,6 +54,7 @@ export default class ProductsRepository {
     formData.append('product[cost]', data.cost.toString())
     formData.append('product[price]', data.price.toString())
     formData.append('product[stock]', data.stock.toString())
+    formData.append('product[weight]', data.weight.toString())
     formData.append('product[category_id]', data.category_id.toString())
 
     data.pictures_data.forEach((picture: PictureData, index) => {

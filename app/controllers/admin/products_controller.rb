@@ -90,6 +90,7 @@ module Admin
         :price,
         :cost,
         :stock,
+        :weight,
         :category_id,
         :features,
         :featured,
