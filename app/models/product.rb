@@ -5,6 +5,8 @@ class Product < ApplicationRecord
   scope :published, -> { where(published: true) }
   scope :featured, -> { where(featured: true) }
 
+  audited
+
   include SlugBehavior
 
   delegate :name, :slug, to: :category, prefix: 'category'
@@ -60,6 +62,13 @@ class Product < ApplicationRecord
       category_name: category_name,
       pictures: pictures.map { |p| rails_blob_path(p, only_path: true) }
     }
+  end
+
+  def stock
+    amount = read_attribute(:stock)
+    on_hold = StockHold.amount_on_hold_for(id)
+
+    amount - on_hold
   end
 
   def as_json(opts = {})

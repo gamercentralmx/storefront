@@ -8,6 +8,8 @@ class Order < ApplicationRecord
 
   accepts_nested_attributes_for :order_items
 
+  audited
+
   enum status: {
     pending: 'pending',
     paid: 'paid',
@@ -72,6 +74,9 @@ class Order < ApplicationRecord
 
   def transition_to_paid!
     update(ordered_at: Time.current)
+
+    order_items.map(&:confirm!)
+
     send_order_confirmation!
   end
 

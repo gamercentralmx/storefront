@@ -19,8 +19,8 @@ export default function PicturesGallery (props: Props) {
       </div>
 
       {product.pictures.length > 0 && <div className="thumbs-wrap">
-        {product.pictures.map((picture: string) => {
-          return <a className="item-thumb" onClick={() => setCurrentPicture(picture)}> <img src={picture} /></a>
+        {product.pictures.map((picture: string, index: number) => {
+          return <a className="item-thumb" key={`picture-${index}`} onClick={() => setCurrentPicture(picture)}> <img src={picture} /></a>
         })}
       </div>}
     </article>
