@@ -6,6 +6,9 @@ Rails.application.routes.draw do
     mount Flipper::UI.app(Flipper) => '/admin/features'
   end
 
+  get 'terminos' => 'welcome#terms'
+  get 'privacidad' => 'welcome#privacy'
+
   localized do
     resources :orders, only: [:index, :show, :update] do
       member do
