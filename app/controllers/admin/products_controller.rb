@@ -30,7 +30,7 @@ module Admin
     def update
       @category = @product.category
 
-      @product.features = params[:product][:features]
+      @product.features = params[:product][:features] if params[:product][:features].present?
 
       respond_to do |format|
         if @product.update(product_params)
