@@ -33,6 +33,7 @@ class CartController < ApplicationController
   end
 
   def checkout
+    return redirect_to cart_index_path if @order.order_items.empty?
     @cart.hold_items!
   end
 
