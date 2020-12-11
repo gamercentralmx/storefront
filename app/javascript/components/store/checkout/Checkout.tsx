@@ -119,7 +119,7 @@ export default function Checkout (props: Props) {
 
     const selectedPaymentMethod = find(paymentMethods, { stripe_id: defaultSource })
 
-    PaymentIntentsRepository.create({ payment_method_id: selectedPaymentMethod.id, amount: amount, idempotency_key: `${selectedPaymentMethod.id}-${order.id}` })
+    PaymentIntentsRepository.create({ payment_method_id: selectedPaymentMethod.id, amount: amount, idempotency_key: `${selectedPaymentMethod.id}-${order.id}-${order.total_in_currency.toString()}` })
       .then((paymentIntent) => setPaymentIntent(paymentIntent))
       .catch()
   }, [defaultSource, paymentMethods.length])
