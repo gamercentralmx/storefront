@@ -2,6 +2,10 @@ Rails.application.routes.draw do
   root to: 'welcome#index'
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
+  authenticate :user, ->(u) { u.is_admin? } do
+    mount Flipper::UI.app(Flipper) => '/admin/features'
+  end
+
   localized do
     resources :orders, only: [:index, :show, :update] do
       member do

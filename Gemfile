@@ -20,6 +20,8 @@ gem 'react-rails'
 gem 'stripe'
 gem 'figaro'
 gem 'audited', '~> 4.9'
+gem 'flipper-active_record'
+gem 'flipper-ui'
 
 gem 'route_translator'
 

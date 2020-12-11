@@ -157,17 +157,18 @@ export default function Checkout (props: Props) {
             defaultSource={defaultSource} />
         </Card.Body>
 
-        <Card.Body className='border-top'>
-          <PaymentPlanSelector
-            showForm={showCardForm}
-            onSelectPlan={(selectedPlan?: PaymentPlan) => setSelectedPlan(selectedPlan)}
-            selectedPlan={selectedPlan}
-            paymentIntent={paymentIntent} />
-
-          <NullPaymentPlanSelector
-            showForm={showCardForm}
-            paymentIntent={paymentIntent} />
-        </Card.Body>
+        {paymentIntent && paymentIntent?.payment_method_options?.card?.installments?.enabled &&
+          <Card.Body className='border-top'>
+            <PaymentPlanSelector
+              showForm={showCardForm}
+              onSelectPlan={(selectedPlan?: PaymentPlan) => setSelectedPlan(selectedPlan)}
+              selectedPlan={selectedPlan}
+              paymentIntent={paymentIntent} />
+              <NullPaymentPlanSelector
+                showForm={showCardForm}
+                paymentIntent={paymentIntent} />
+          </Card.Body>
+        }
 
         <Card.Body className='border-top'>
           <Summary order={order} selectedPlan={selectedPlan} />
