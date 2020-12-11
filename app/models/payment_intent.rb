@@ -5,13 +5,6 @@ class PaymentIntent < ApplicationRecord
 
   before_create :create_stripe_payment_intent!
 
-  DEFAULT_PAYMENT_METHOD_OPTIONS = {
-    card: {
-      installments: {
-        enabled: true
-      }
-    }
-  }
 
   audited
 
@@ -43,7 +36,7 @@ class PaymentIntent < ApplicationRecord
         currency: 'mxn',
         customer: user.stripe_id,
         payment_method: payment_method.stripe_id,
-        payment_method_options: DEFAULT_PAYMENT_METHOD_OPTIONS
+        payment_method_options: default_payment_method_options
       }, {
         idempotency_key: idempotency_key
       }
@@ -55,5 +48,15 @@ class PaymentIntent < ApplicationRecord
 
   def available_plans
     @payment_intent.payment_method_options.card.installments.available_plans
+  end
+
+  def default_payment_method_options
+    {
+      card: {
+        installments: {
+          enabled: Flipper.enabled?(:installments, user)
+        }
+      }
+    }
   end
 end

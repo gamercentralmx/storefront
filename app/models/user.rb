@@ -54,4 +54,8 @@ class User < ApplicationRecord
   def stripe_customer
     @stripe_customer ||= stripe_customer_setup? ? Stripe::Customer.retrieve(stripe_id) : nil
   end
+
+  def flipper_id
+    "User;#{self.id}"
+  end
 end
