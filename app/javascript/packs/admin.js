@@ -32,3 +32,8 @@ $(function () {
   $('[data-toggle="tooltip"]').tooltip()
   $('.dropdown-toggle').dropdown()
 })
+
+$(document).on('ready turbolinks:load', function () {
+  $('[data-toggle="tooltip"]').tooltip();
+  $('.dropdown-toggle').dropdown()
+});

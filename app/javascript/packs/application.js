@@ -31,3 +31,7 @@ $.ajaxSetup({
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
+
+$(document).on('ready turbolinks:load', function () {
+  $('[data-toggle="tooltip"]').tooltip();
+});
