@@ -3,7 +3,7 @@ class Product < ApplicationRecord
   has_many :order_items, dependent: :destroy
 
   scope :published, -> { where(published: true) }
-  scope :featured, -> { where(featured: true) }
+  scope :featured, -> { published.where(featured: true).order(price: :asc) }
 
   audited
 
