@@ -157,7 +157,7 @@ export default function Checkout (props: Props) {
             defaultSource={defaultSource} />
         </Card.Body>
 
-        {paymentIntent && paymentIntent.payment_method_options.card.installments.enabled &&
+        {paymentIntent && paymentIntent?.payment_method_options?.card?.installments?.enabled &&
           <Card.Body className='border-top'>
             <PaymentPlanSelector
               showForm={showCardForm}
