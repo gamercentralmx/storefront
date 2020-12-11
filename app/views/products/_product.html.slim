@@ -9,11 +9,16 @@
 
           .col-sm-8
             = link_to product.name, category_product_path(product.category_slug, product.slug), class: 'title mt-2 h5'
+
             .d-flex.mb-3
               .price-wrap.mr-4
                 span.price.h5
                   = number_to_currency product.price_in_currency
-
+                span.text-muted.ml-4
+                  i.fas.fa-box
+                  | &nbsp;
+                  | Disponibles:&nbsp;
+                  = number_with_delimiter product.stock
 
             ul.list-check
               - product.features.each do |feature|
