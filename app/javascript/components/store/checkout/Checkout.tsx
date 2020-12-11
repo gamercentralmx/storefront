@@ -178,6 +178,10 @@ export default function Checkout (props: Props) {
           <Submit status={status} errors={errors} onSubmit={handleSubmitCheckout} />
         </Card.Body>
       </Card>
+
+      <p className='m-2'>
+        Al realizar este pedido usted acepta que ha leído y esta de acuerdo con los <a href='/terminos' target='_blank'>Términos del Servicio</a> y el <a href='/privacidad' target='_blank'>Aviso de Privacidad</a>.
+      </p>
     </Col>
   </Row>
 }
