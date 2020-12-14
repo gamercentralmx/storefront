@@ -1,0 +1,12 @@
+link rel="canonical" href="#{request.url}"
+meta property="og:url" content="#{request.url}"
+
+- unless content_for? :metadata
+  title Gamer Central - Computadoras Gamer y de Alto Rendimiento
+  meta content="Gamer Central - Computadoras Gamer y de Alto Rendimiento" property="og:title"
+  meta content="Encuentra la computadora gamer perfecta que se adapte a tus necesidades de jugador y a un excelente precio. Nos apasiona la tecnología y los videojuegos." name="og:description"
+  meta content="Encuentra la computadora gamer perfecta que se adapte a tus necesidades de jugador y a un excelente precio. Nos apasiona la tecnología y los videojuegos." name="description"
+  meta property="og:image" content="#{image_path("thumbs/gamer-central.png")}"
+  meta name="twitter:card" content="summary_large_image"
+  meta name="author" content="Gamer Central"
+  meta property="og:locale" content="es_MX"
