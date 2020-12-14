@@ -2,7 +2,7 @@
   title #{@product.name} | Gamer Central
   meta name="description" content="#{@product.description}"
 
-  meta property="og:title" content="#{@product.name} | Gamer Central"
+  meta property="og:title" content="#{@product.name} - #{number_to_currency(@product.price_in_currency)}| Gamer Central"
   meta property="og:description" content="#{@product.description}"
   meta property="og:image" content="#{@product.cover_picture.present? ? rails_blob_url(@product.cover_picture) : image_url("thumbs/gamer-central.png")}"
 
