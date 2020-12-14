@@ -2,17 +2,15 @@ link rel="canonical" href="#{request.url}"
 meta property="og:url" content="#{request.url}"
 meta property="og:type" content="website"
 meta property="fb:app_id" content="#{ENV['FACEBOOK_APP_ID']}"
+meta name="twitter:card" content="summary_large_image"
+meta name="author" content="Gamer Central"
+meta property="og:locale" content="es_MX"
 
 - unless content_for? :metadata
   title Gamer Central - Computadoras Gamer y de Alto Rendimiento
-
-  meta name="twitter:card" content="summary_large_image"
-
-  meta name="author" content="Gamer Central"
   meta name="description" content="La computadora Gamer de tus sueños está a un solo click, nosotros diseñamos computadoras Gamer de Alto rendimiento de cualquier presupuesto que se adapten a tus necesidades por que nos apasiona la tecnología y los videojuegos."
 
   meta property="og:image" content="#{image_url("thumbs/gamer-central.png")}"
-  meta property="og:locale" content="es_MX"
   meta property="og:title" content="Gamer Central - Computadoras Gamer y de Alto Rendimiento"
   meta property="og:description" content="La computadora Gamer de tus sueños está a un solo click, nosotros diseñamos computadoras Gamer de Alto rendimiento de cualquier presupuesto que se adapten a tus necesidades por que nos apasiona la tecnología y los videojuegos."
 - else

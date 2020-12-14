@@ -22,6 +22,7 @@ export default function ProductForm (props: Props) {
   const [stock, setStock] = useState(product?.stock ?? 0)
   const [metadata, setMetadata] = useState(product?.metadata ?? {})
   const [pictures, setPictures] = useState<PictureData[]>([])
+  const [coverPicture, setCoverPicture] = useState<PictureData | undefined>()
   const [features, setFeatures] = useState<string[]>(product?.features ?? [])
   const [weight, setWeight] = useState(product?.weight ?? 0)
 
@@ -76,7 +77,19 @@ export default function ProductForm (props: Props) {
     setSelectedCategory(category)
   }
 
-  const handleImageDrop = (files: File[]) => {
+  const handleCoverPictureDrop = (files: File[]) => {
+    const picturesData = files.map((file) => {
+      return {
+        io: file,
+        filename: file.name,
+        content_type: file.type
+      }
+    })
+
+    setCoverPicture(picturesData[0])
+  }
+
+  const handlePicturesDrop = (files: File[]) => {
     const picturesData = files.map((file) => {
       return {
         io: file,
@@ -112,6 +125,7 @@ export default function ProductForm (props: Props) {
         weight,
         category_id: selectedCategory.id!,
         pictures_data: pictures,
+        cover_picture: coverPicture,
         features
       }
 
@@ -148,6 +162,24 @@ export default function ProductForm (props: Props) {
       <Form.Control as='textarea' rows={4} required defaultValue={description} name='description' onChange={handleDescriptionChange}></Form.Control>
     </Form.Group>
 
+    <Form.Row>
+      <Col>
+        <Form.Group>
+          <Form.Label>Agregar Imagen de Portada</Form.Label>
+
+          <ImageUploader
+            className='form-control'
+            withIcon={true}
+            buttonText="Agregar Imagen de Portada"
+            onChange={handleCoverPictureDrop}
+            imgExtension={['.jpg', '.png']}
+            withPreview={true}
+            maxFileSize={5242880}
+          />
+        </Form.Group>
+      </Col>
+    </Form.Row>
+
     {product?.pictures && product.pictures.length > 0 && <Form.Group>
       <Form.Label>Imagenes Actuales</Form.Label>
 
@@ -176,7 +208,7 @@ export default function ProductForm (props: Props) {
             className='form-control'
             withIcon={true}
             buttonText="Agregar Fotos del producto"
-            onChange={handleImageDrop}
+            onChange={handlePicturesDrop}
             imgExtension={['.jpg', '.png']}
             withPreview={true}
             maxFileSize={5242880}

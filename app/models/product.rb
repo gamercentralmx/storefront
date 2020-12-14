@@ -46,6 +46,12 @@ class Product < ApplicationRecord
     update(pictures: pics)
   end
 
+  def attach_cover_picture(upload)
+    attachment = ActiveStorage::Blob.create_after_upload!(filename: upload[:filename], io: upload[:io])
+
+    update(cover_picture: attachment)
+  end
+
   def publish!
     update(published: true)
   end

@@ -1,3 +1,12 @@
+- content_for :metadata do
+  title #{@product.name} | Gamer Central
+  meta name="description" content="#{@product.description}"
+
+  meta property="og:title" content="#{@product.name} | Gamer Central"
+  meta property="og:description" content="#{@product.description}"
+  meta property="og:image" content="#{@product.cover_picture.present? ? rails_blob_url(@product.cover_picture) : image_url("thumbs/gamer-central.png")}"
+
+
 section.section-pagetop.bg
   .container
     ol.breadcrumb
