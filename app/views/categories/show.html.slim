@@ -1,3 +1,11 @@
+- content_for :metadata do
+  title #{@category.name} | Gamer Central
+  meta name="description" content="#{@category.name}"
+
+  meta property="og:title" content="#{@category.name} | Gamer Central"
+  meta property="og:description" content="#{@category.name}"
+  meta property="og:image" content="#{image_url("thumbs/gamer-central.png")}"
+
 section.section-content.padding-y.bg
   .container
     .card.mb-4

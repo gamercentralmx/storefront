@@ -12,6 +12,7 @@ class Product < ApplicationRecord
   delegate :name, :slug, to: :category, prefix: 'category'
 
   has_many_attached :pictures
+  has_one_attached :cover_picture
 
   before_save :parse_features
 
@@ -45,6 +46,12 @@ class Product < ApplicationRecord
     update(pictures: pics)
   end
 
+  def attach_cover_picture(upload)
+    attachment = ActiveStorage::Blob.create_after_upload!(filename: upload[:filename], io: upload[:io])
+
+    update(cover_picture: attachment)
+  end
+
   def publish!
     update(published: true)
   end
@@ -60,7 +67,8 @@ class Product < ApplicationRecord
       metadata: metadata,
       description: description,
       category_name: category_name,
-      pictures: pictures.map { |p| rails_blob_path(p, only_path: true) }
+      pictures: pictures.map { |p| rails_blob_path(p, only_path: true) },
+      cover_picture: cover_picture.present? ? rails_blob_path(cover_picture, only_path: true) : nil
     }
   end
 

@@ -16,10 +16,11 @@ module Admin
       @category = Category.find(params[:product][:category_id])
       @product = Product.new(product_params)
 
-      @product.features = params[:product][:features]
+      set_features
 
       if @product.save
-        @product.attach_pictures(params[:product][:pictures_data])
+        attach_pictures
+
         flash[:notice] = 'Se ha creado el producto de manera exitosa'
         render json: @product, status: :created
       else
@@ -30,11 +31,12 @@ module Admin
     def update
       @category = @product.category
 
-      @product.features = params[:product][:features] if params[:product][:features].present?
+      set_features
 
       respond_to do |format|
         if @product.update(product_params)
-          @product.attach_pictures(params[:product][:pictures_data]) unless params[:product][:pictures_data].blank?
+          attach_pictures
+
           format.html { redirect_to admin_products_path, notice: 'Producto actualizado con exito.' }
           format.json { render json: @product }
         else
@@ -74,6 +76,15 @@ module Admin
     end
 
     private
+
+    def attach_pictures
+      @product.attach_pictures(params[:product][:pictures_data]) if params[:product][:pictures_data].present?
+      @product.attach_cover_picture(params[:product][:cover_picture]) if params[:product][:cover_picture].present?
+    end
+
+    def set_features
+      @product.features = params[:product][:features] if params[:product][:features].present?
+    end
 
     def find_product!
       @product = Product.find(params[:id])

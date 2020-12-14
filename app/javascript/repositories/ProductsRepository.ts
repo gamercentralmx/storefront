@@ -11,6 +11,7 @@ export interface ProductData {
   metadata: any
   category_id: number
   pictures_data: PictureData[]
+  cover_picture?: PictureData
   features: string[]
 }
 
@@ -62,6 +63,12 @@ export default class ProductsRepository {
       formData.append(`product[pictures_data][${index}][filename]`, picture.filename)
       formData.append(`product[pictures_data][${index}][content_type]`, picture.content_type)
     })
+
+    if (data.cover_picture !== undefined) {
+      formData.append(`product[cover_picture][io]`, data.cover_picture.io)
+      formData.append(`product[cover_picture][filename]`, data.cover_picture.filename)
+      formData.append(`product[cover_picture][content_type]`, data.cover_picture.content_type)
+    }
 
     data.features.forEach((feature, index) => formData.append(`product[features][${index}]`, feature))
 

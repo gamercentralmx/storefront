@@ -11,6 +11,7 @@ export interface Product {
   stock: number
   category_name: string
   pictures: any[]
+  cover_picture: any
   created_at: Date
   updated_at: Date
   features: string[]
