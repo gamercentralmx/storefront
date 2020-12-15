@@ -1,0 +1,12 @@
+.col
+  figure.card.card-product-grid
+    .img-wrap
+      = product_image_tag product
+
+    figcaption.info-wrap
+      = link_to product.name.truncate(20), category_product_path(product.category_id, product.id), class: 'title', title: product.name
+
+      .mt-2
+        span.price= number_to_currency(product.price_in_currency)
+        .float-right
+          = react_component 'store/AddToCartButton', { product: product, additionalClasses: 'btn-sm', onlyIcon: true }
