@@ -9,32 +9,35 @@ html lang="en"
     = render 'layouts/application/metadata'
 
     link href="/assets/favicon.ico" rel=("shortcut icon") type="image/x-icon"
-
-    javascript:
-      window.FontAwesomeConfig = { autoReplaceSvg: false }
-
     = render 'layouts/favicons'
 
     = csrf_meta_tags
     = csp_meta_tag
 
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+
     = render 'layouts/application/pixels'
-    = render 'layouts/application/stripe'
-    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+    = yield(:js_includes) if content_for? :js_includes
+    javascript:
+      window.FontAwesomeConfig = { autoReplaceSvg: false }
+
   body
+
     = render 'layouts/application/header'
     = yield
     = render 'layouts/application/footer'
+
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+
     javascript:
-        (function () {
-            var options = {
-                facebook: "102153098371009", // Facebook page ID
-                call_to_action: "Contáctanos", // Call to action
-                position: "right", // Position may be 'right' or 'left'
-            };
-            var proto = document.location.protocol, host = "getbutton.io", url = proto + "//static." + host;
-            var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = url + '/widget-send-button/js/init.js';
-            s.onload = function () { WhWidgetSendButton.init(host, proto, options); };
-            var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
-        })();
+      (function () {
+          var options = {
+              facebook: "102153098371009", // Facebook page ID
+              call_to_action: "Contáctanos", // Call to action
+              position: "right", // Position may be 'right' or 'left'
+          };
+          var proto = document.location.protocol, host = "getbutton.io", url = proto + "//static." + host;
+          var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = url + '/widget-send-button/js/init.js';
+          s.onload = function () { WhWidgetSendButton.init(host, proto, options); };
+          var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
+      })();

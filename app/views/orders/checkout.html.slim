@@ -1,3 +1,6 @@
+- content_for :js_includes do
+  = render 'layouts/application/stripe'
+
 section.section-specials.padding-y.bg
   .container
     - if user_signed_in?
