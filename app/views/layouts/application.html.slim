@@ -17,17 +17,18 @@ html lang="en"
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload', preload: true
 
     = render 'layouts/application/pixels'
+
     = yield(:js_includes) if content_for? :js_includes
+
     javascript:
       window.FontAwesomeConfig = { autoReplaceSvg: false }
 
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
   body
 
     = render 'layouts/application/header'
     = yield
     = render 'layouts/application/footer'
-
-    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
 
     javascript:
       (function () {
