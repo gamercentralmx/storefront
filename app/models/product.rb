@@ -4,6 +4,7 @@ class Product < ApplicationRecord
 
   scope :published, -> { where(published: true) }
   scope :featured, -> { published.where(featured: true).order(price: :asc) }
+  scope :search, ->(term) { where('name ILIKE ?', "%#{term}%") }
 
   audited
 
