@@ -14,7 +14,7 @@ export default function PicturesGallery (props: Props) {
     <article className="gallery-wrap">
       <div className="img-big-wrap" style={{ textAlign: 'center' }}>
         <Zoom>
-          <img src={currentPicture} style={{ width: '100%' }} />
+          <img src={currentPicture} />
         </Zoom>
       </div>
 
