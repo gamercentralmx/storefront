@@ -4,7 +4,7 @@
       = link_to category_product_path(product.category_slug, product.slug) do
         = product_image_tag product
 
-    figcaption.info-wrap
+    figcaption.info-wrap.border-top
       = link_to product.name.truncate(20), category_product_path(product.category_slug, product.slug), class: 'title', title: product.name
 
       .mt-2
