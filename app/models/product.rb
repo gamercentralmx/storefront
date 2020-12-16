@@ -39,10 +39,6 @@ class Product < ApplicationRecord
     cost.to_f / 100
   end
 
-  def related
-    self.class.where(category: category_id).where('id != ?', id).sample(5)
-  end
-
   def attach_pictures(pictures_data)
     pics = pictures_data.values.map do |upload|
       ActiveStorage::Blob.create_after_upload!(filename: upload[:filename], io: upload[:io])

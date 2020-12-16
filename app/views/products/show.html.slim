@@ -48,7 +48,7 @@ section.bg.pb-3
     .row
       .col-12.mb-3.mt-3
         h5 Otros clientes también vieron
-      = render partial: 'product_small', collection: @product.related, as: :product
+      = render partial: 'product_small', collection: @related, as: :product
 
 section.section-specials.bg.pb-3
   .container
