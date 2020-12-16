@@ -43,11 +43,20 @@ section.section-specials.bg.pb-3
               .col.text-right
                 = react_component "store/AddToCartButton", { product: @product }
 
-    article.card.mt-3
+section.bg.pb-3
+  .container
+    .row
+      .col-12.mb-3.mt-3
+        h5 Otros clientes también vieron
+      = render partial: 'product_small', collection: @product.related, as: :product
+
+section.section-specials.bg.pb-3
+  .container
+    .card
       .card-body
         .row
           .col-sm-12
-            h5 Características
+            h5 Especificaciones
         .row
           - @product.metadata.each_slice(3) do |slice|
             - slice.each do |property, value|
