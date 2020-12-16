@@ -1,7 +1,8 @@
 .col
   figure.card.card-product-grid
     .img-wrap
-      = product_image_tag product
+      = link_to category_product_path(product.category_slug, product.slug) do
+        = product_image_tag product
 
     figcaption.info-wrap
       = link_to product.name.truncate(20), category_product_path(product.category_slug, product.slug), class: 'title', title: product.name
