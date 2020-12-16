@@ -31,9 +31,12 @@ export default function AddToCartButton (props: Props) {
 
     } catch (error) {
       console.error(error)
-
-      setShowError(true)
-      setStock(error.responseJSON.stock)
+      if (error.status !== 401) {
+        setShowError(true)
+        setStock(error.responseJSON.stock)
+      } else {
+        location.href = '/users/sign_in'
+      }
     }
   }
 
