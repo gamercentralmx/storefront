@@ -35,13 +35,19 @@ section.section-specials.bg.pb-3
               - @product.features.each do |feature|
                 li= feature
             .row.mt-3.align-items-center
-              .col
+              .col-lg-6.col-md-12
                 span.price.h4= number_to_currency @product.price_in_currency
                 span.text-muted
                   | &nbsp;Incluye IVA
 
-              .col.text-right
+              .col-lg-6.col-md-12.text-right
                 = react_component "store/AddToCartButton", { product: @product }
+
+            - if ['computadoras-gamer', 'hogar-y-oficina'].include? @product.category_slug
+              .mt-4
+                small
+                  i
+                    | * Las imagenes de la computadora son ilustrativas, el gabinete puede variar de acuerdo a la disponibilidad.
 
 section.bg.pb-3
   .container
