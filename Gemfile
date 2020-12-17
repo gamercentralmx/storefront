@@ -50,4 +50,5 @@ group :production do
   gem 'mailgun-ruby', '~>1.1.6'
   gem 'sentry-raven'
   gem 'aws-sdk-s3', require: false
+  gem 'rack-cors'
 end

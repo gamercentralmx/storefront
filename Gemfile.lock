@@ -187,6 +187,8 @@ GEM
     puma (4.3.6)
       nio4r (~> 2.0)
     rack (2.2.3)
+    rack-cors (1.1.1)
+      rack (>= 2.0.0)
     rack-protection (2.1.0)
       rack
     rack-proxy (0.6.5)
@@ -354,6 +356,7 @@ DEPENDENCIES
   omniauth-google-oauth2
   pg (>= 0.18, < 2.0)
   puma (~> 4.1)
+  rack-cors
   rails (~> 6.0.3, >= 6.0.3.3)
   rails_12factor
   react-rails
