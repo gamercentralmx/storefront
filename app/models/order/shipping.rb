@@ -12,6 +12,8 @@ class Order::Shipping
   end
 
   def calculate!
+    return 0 if Flipper.enabled? :free_shipping, order.user
+
     @cost = @shipping_method.calculate_cost!
   end
 end
