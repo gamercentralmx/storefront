@@ -1,8 +1,19 @@
 tr
   td
-    strong= product.category_name
+    span.badge.badge-primary
+      = product.category_name
 
-  td= product.name
+  td
+    - if product.published
+      a(data-toggle='tooltip' placement='top' href='javascript:void(0)' title='Publico')
+        i.fas.fa-eye.green
+    - if product.featured
+      | &nbsp;
+      a(data-toggle='tooltip' placement='top' href='javascript:void(0)' title='En pagina principal')
+        i.fas.fa-star.yellow
+
+  td
+    = product.name
 
   td= number_to_currency(product.cost_in_currency, precision: 2)
 
@@ -14,7 +25,7 @@ tr
     a.dropdown-toggle.btn.btn-sm.btn-secondary(href='javascript:void(0)' data-toggle='dropdown')
       | Acciones
     .dropdown-menu
-      = link_to admin_product_path(product.id, product: { featured: !product.featured }), class: "dropdown-item", method: 'PUT', data: { toggle: 'tooltip', placement: 'top' } do
+      = link_to admin_product_path(product.id, product: { featured: !product.featured }), class: "dropdown-item", method: 'PUT' do
         .fas.fa-star
         | &nbsp;#{product.featured ? 'Ocultar' : 'Mostrar'} en la pagina principal
 
