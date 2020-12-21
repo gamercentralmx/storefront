@@ -1,6 +1,9 @@
 tr
   td
     | ##{category.order} - #{category.name} (#{category.visible ? 'Visible' : 'Oculto'})
+
+  td
+    | #{category.parent&.name}
   td
     - category.properties.each do |property|
       span.badge.badge-primary
@@ -17,18 +20,22 @@ tr
 
     | &nbsp;
 
-    - if category.visible?
-      = link_to admin_category_path(category.id, category: { visible: false }), class: 'btn btn-secondary btn-sm', method: 'PUT', data: { toggle: 'tooltip', placement: 'top' }, title: 'Ocultar' do
-        i.fa.fa-eye-slash
-    - else
-      = link_to admin_category_path(category.id, category: { visible: true }), class: 'btn btn-primary btn-sm', method: 'PUT', data: { toggle: 'tooltip', placement: 'top' }, title: 'Mostrar' do
-        i.fa.fa-eye
+    a.dropdown-toggle.btn.btn-sm.btn-secondary(href='javascript:void(0)' data-toggle='dropdown')
+      | Acciones
+    .dropdown-menu
+      - if category.visible?
+        = link_to admin_category_path(category.id, category: { visible: false }), class: 'dropdown-item', method: 'PUT' do
+          i.fa.fa-eye-slash
+          | &nbsp;Ocultar
+      - else
+        = link_to admin_category_path(category.id, category: { visible: true }), class: 'dropdown-item', method: 'PUT' do
+          i.fa.fa-eye
+          | &nbsp;Mostrar
 
-    | &nbsp;
+      = link_to admin_category_path(category.id), class: 'dropdown-item', method: 'DELETE', data: { confirm: 'Seguro que quieres borrar esta categoria? Esta acción no puede deshacerse' } do
+        i.fa.fa-trash-alt
+        | &nbsp;Borrar
 
-    = link_to admin_category_path(category.id), class: 'btn btn-danger btn-sm', method: 'DELETE', data: { confirm: 'Seguro que quieres borrar esta categoria? Esta acción no puede deshacerse', toggle: 'tooltip', placement: 'top' }, title: 'Eliminar' do
-      i.fa.fa-trash-alt
-    | &nbsp;
-
-    = link_to edit_admin_category_path(category.id), class: 'btn btn-light btn-sm', data: { toggle: 'tooltip', placement: 'top' }, title: 'Editar' do
-      i.fa.fa-pen
+      = link_to edit_admin_category_path(category.id), class: 'dropdown-item' do
+        i.fa.fa-pen
+        | &nbsp;Editar

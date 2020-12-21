@@ -3,6 +3,7 @@ class Category < ApplicationRecord
   belongs_to :parent, class_name: 'Category', optional: true
   has_many :sub_categories, class_name: 'Category', foreign_key: 'parent_id'
 
+  scope :main, -> { where(parent_id: nil) }
   scope :visible, -> { where(visible: true) }
   scope :by_order, -> { order(order: :asc) }
 

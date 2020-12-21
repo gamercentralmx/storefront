@@ -1,6 +1,6 @@
 .card
   .card-body
-    = react_component "admin/CreateCategory"
+    = react_component "admin/CreateCategory", { categories: @categories.main }
 
     hr
 
@@ -9,6 +9,7 @@
         thead
           tr
             th Nombre
+            th Padre
             th Propiedades
             th Acciones
         tbody

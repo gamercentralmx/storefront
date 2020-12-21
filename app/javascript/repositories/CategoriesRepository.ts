@@ -3,6 +3,7 @@ import { Property } from 'definitions/Category'
 interface CategoryData {
   name: string,
   properties: Property[]
+  parent_id?: number
 }
 
 export default class CategoriesRepository {

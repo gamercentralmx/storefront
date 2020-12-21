@@ -26,9 +26,7 @@ header.section-header
 
         #main_nav1.collapse.navbar-collapse
           ul.navbar-nav.mr-auto
-            - visible_categories.each do |category|
-              li.nav-item(class="#{params[:category_id] == category.slug ? 'active' : ''}")
-                = link_to category.name.upcase, category_path(category.slug), class: 'nav-link'
+            = render partial: 'categories/menu_item', collection: visible_categories, as: :category
             li.nav-item.dropdown.d-lg-none
               a.nav-link.dropdown-toggle(data-toggle='dropdown' href='javascript:void(0)')
                 i.fa.fa-user
