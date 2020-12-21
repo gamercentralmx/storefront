@@ -1,0 +1,10 @@
+- if category.sub_categories.visible.empty?
+  li.nav-item(class="#{params[:category_id] == category.slug ? 'active' : ''}")
+    = link_to category.name.upcase, category_path(category.slug), class: 'nav-link'
+- else
+  li.nav-item.dropdown
+    a.nav-link.dropdown-toggle(data-toggle='dropdown' href='javascript:void(0)')
+      | #{category.name.upcase}
+    .dropdown-menu
+      - category.sub_categories.visible.each do |c|
+        = link_to c.name.upcase, category_path(c.slug), class: 'dropdown-item'

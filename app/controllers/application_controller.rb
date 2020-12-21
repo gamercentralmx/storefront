@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   end
 
   def visible_categories
-    Category.visible.by_order
+    Category.visible.by_order.main.includes(:sub_categories)
   end
 
   protected
