@@ -11,21 +11,30 @@ tr
   td= number_to_currency(product.price_in_currency, precision: 2)
 
   td
-    = link_to admin_product_path(product.id, product: { featured: !product.featured }), class: "btn btn-#{product.featured ? 'success' : 'light'} btn-sm mt-1 mr-1", method: 'PUT', data: { toggle: 'tooltip', placement: 'top' }, title: "#{product.featured ? 'Ocultar' : 'Mostrar'} en la pagina principal" do
-      .fas.fa-star
+    a.dropdown-toggle.btn.btn-sm.btn-secondary(href='javascript:void(0)' data-toggle='dropdown')
+      | Acciones
+    .dropdown-menu
+      = link_to admin_product_path(product.id, product: { featured: !product.featured }), class: "dropdown-item", method: 'PUT', data: { toggle: 'tooltip', placement: 'top' } do
+        .fas.fa-star
+        | &nbsp;#{product.featured ? 'Ocultar' : 'Mostrar'} en la pagina principal
 
-    - if product.published
-      = link_to unpublish_admin_product_path(product.id), class: 'btn btn-secondary btn-sm mt-1 mr-1', method: 'PUT', data: { toggle: 'tooltip', placement: 'top' }, title: 'Ocultar producto' do
-        .fas.fa-eye-slash
-    - else
-      = link_to publish_admin_product_path(product.id), class: 'btn btn-primary btn-sm mt-1 mr-1', method: 'PUT', data: { toggle: 'tooltip', placement: 'top' }, title: 'Publicar producto' do
-        .fas.fa-eye
+      - if product.published
+        = link_to unpublish_admin_product_path(product.id), class: 'dropdown-item', method: 'PUT' do
+          .fas.fa-eye-slash
+          | &nbsp;Ocultar producto
+      - else
+        = link_to publish_admin_product_path(product.id), class: 'dropdown-item', method: 'PUT' do
+          .fas.fa-eye
+          | &nbsp;Publicar producto
 
-    = link_to category_product_path(product.category_slug, product.slug), class: 'btn btn-info btn-sm mt-1 mr-1', data: { toggle: 'tooltip', placement: 'top' }, target: '_blank', title: 'Ver pagina de producto' do
-      .fas.fa-shopping-bag
+      = link_to category_product_path(product.category_slug, product.slug), class: 'dropdown-item', target: '_blank' do
+        .fas.fa-shopping-bag
+        | &nbsp;Ver pagina de producto
 
-    = link_to edit_admin_product_path(product.id), class: 'btn btn-info btn-sm mt-1 mr-1', data: { toggle: 'tooltip', placement: 'top' }, title: 'Editar' do
-      .fa.fa-edit
+      = link_to edit_admin_product_path(product.id), class: 'dropdown-item' do
+        .fa.fa-edit
+        | &nbsp;Editar
 
-    = link_to admin_product_path(product.id), class: 'btn btn-danger btn-sm mt-1 mr-1', method: 'DELETE', data: { confirm: 'Seguro que quieres borrar este producto? Esta acción no puede deshacerse', toggle: 'tooltip', placement: 'top' }, title: 'Eliminar' do
-      .fa.fa-trash-alt
+      = link_to admin_product_path(product.id), class: 'dropdown-item', method: 'DELETE', data: { confirm: 'Seguro que quieres borrar este producto? Esta acción no puede deshacerse' } do
+        .fa.fa-trash-alt
+        | &nbsp;Eliminar
