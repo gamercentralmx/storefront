@@ -4,10 +4,10 @@ export interface Property {
 }
 
 export interface Category {
-  id: number
+  id?: number
   name: string
-  created_at: Date
-  updated_at: Date
-  parent_id?: any
+  created_at?: Date
+  updated_at?: Date
+  parent_id?: number
   properties: Property[]
 }

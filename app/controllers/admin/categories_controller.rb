@@ -16,6 +16,7 @@ module Admin
 
     def edit
       @category = Category.find(params[:id])
+      @categories = Category.all.by_order
     end
 
     def update
@@ -43,7 +44,7 @@ module Admin
     private
 
     def category_params
-      params.require(:category).permit(:name, :order, :visible, properties: %i[name type])
+      params.require(:category).permit(:name, :parent_id, :order, :visible, properties: %i[name type])
     end
   end
 end

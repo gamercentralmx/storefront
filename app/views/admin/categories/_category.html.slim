@@ -1,6 +1,9 @@
 tr
   td
     | ##{category.order} - #{category.name} (#{category.visible ? 'Visible' : 'Oculto'})
+
+  td
+    | #{category.parent&.name}
   td
     - category.properties.each do |property|
       span.badge.badge-primary
